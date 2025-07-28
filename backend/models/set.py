@@ -9,8 +9,8 @@ class Set:
         self.match_id = match_id
         self.set_number = set_number
         self.players = players
-        self.touches = [Touch]
-        self.events = [Event]
+        self.touches: list[Touch] = []
+        self.events: list[Event] = []
         self.home_score = 0
         self.guest_score = 0
         self.rotation = []  #da definire

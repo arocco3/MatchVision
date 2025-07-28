@@ -1,0 +1,38 @@
+CREATE TABLE matches (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE sets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    match_id INTEGER NOT NULL,
+    number INTEGER NOT NULL,
+    home_score INTEGER DEFAULT 0,
+    guest_score INTEGER DEFAULT 0,
+    FOREIGN KEY (match_id) REFERENCES matches(id)
+);
+
+CREATE TABLE players (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    surname TEXT NOT NULL,
+    number INTEGER NOT NULL,
+    role TEXT NOT NULL
+);
+
+CREATE TABLE touches (
+    match_id INTEGER NOT NULL,
+    set_number INTEGER NOT NULL,
+    player_id INTEGER NOT NULL,
+    fundamental TEXT NOT NULL,
+    outcome TEXT NOT NULL
+);
+
+CREATE TABLE events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    set_id INTEGER NOT NULL,
+    type TEXT NOT NULL,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (set_id) REFERENCES sets(id)
+);
