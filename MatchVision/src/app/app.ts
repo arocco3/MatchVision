@@ -1,22 +1,29 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterModule } from '@angular/router';
 
+import { HeaderComponent } from './pages/header/header.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { MatchComponent } from './pages/match/match.component';
+import { MatchesComponent } from './pages/matches/matches.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
-import { LoginComponent } from "./pages/login/login.component";
-import { FooterComponent } from "./pages/footer/footer.component";
-import { HeaderComponent } from "./pages/header/header.component";
+import { LoginComponent } from './pages/login/login.component';
+import { PlayersComponent } from './pages/players/players.component';
+import { FooterComponent } from './pages/footer/footer.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,
+    RouterModule,
     LoginComponent,
     DashboardComponent,
+    MatchesComponent,
+    StatisticsComponent,
+    PlayersComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    RegisterComponent,
 ],
   templateUrl: './app.html',
   styleUrls: ['./app.scss', './pages/login/login.component.scss', './pages/dashboard/dashboard.component.scss']

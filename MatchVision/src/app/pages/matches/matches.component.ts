@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-match',
-  templateUrl: './match.component.html',
-  styleUrls: ['./match.component.scss']
+  selector: 'app-matches',
+  standalone: true,
+  templateUrl: './matches.component.html',
+  styleUrls: ['./matches.component.scss']
 })
 
-export class MatchComponent {
+export class MatchesComponent {
+  title = 'Matches';
   matchId: string | null;
 
   constructor(private route: ActivatedRoute) {

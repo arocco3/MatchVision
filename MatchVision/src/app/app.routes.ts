@@ -1,13 +1,18 @@
 import { Routes } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { MatchComponent } from './pages/match/match.component';
+import { MatchesComponent } from './pages/matches/matches.component';
 import { StatisticsComponent } from './pages/statistics/statistics.component';
+import { PlayersComponent } from './pages/players/players.component';
+import { TeamsComponent } from './pages/teams/teams.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 export const routes: Routes = [
-  { path : 'login', component: LoginComponent },
   { path: '', component: DashboardComponent },
-  { path: 'match/:id', component: MatchComponent },
+  { path : 'login', component: LoginComponent },
+  { path : 'register', component: RegisterComponent },
+  { path: 'players', component: PlayersComponent },
+  { path: 'matches', component: MatchesComponent },
+  { path: 'teams', component: TeamsComponent },
   { path: 'statistics', component: StatisticsComponent },
 ];

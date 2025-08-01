@@ -1,24 +1,24 @@
-<div class="container mt-5 d-flex justify-content-center">
-  <mat-card class="p-4" style="width: 400px">
-    <mat-card-title>Login a MatchVision</mat-card-title>
-    <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline" class="w-100">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" />
-          <mat-error *ngIf="loginForm.get('email')?.invalid">Email non valida</mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline" class="w-100 mt-3">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="password" />
-          <mat-error *ngIf="loginForm.get('password')?.invalid">Password richiesta</mat-error>
-        </mat-form-field>
-
-        <button mat-raised-button color="primary" class="w-100 mt-4" [disabled]="loginForm.invalid">
-          Accedi
-        </button>
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <form>
+        <!-- email -->
+        <div class="mb-3">
+          <label for="inputEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">Non la condivideremo con nessuno.</div>
+        </div>
+        <!-- password -->
+        <div class="mb-3">
+          <label for="inputPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="inputPassword">
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <button type="submit" class="btn btn-primary">Login</button>
+          <a [routerLink]="['/register']" class="text-decoration-none pt-4">Non hai un account? Registrati</a>
+        </div>
       </form>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 </div>
+
