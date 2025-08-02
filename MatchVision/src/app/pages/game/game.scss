@@ -1,0 +1,32 @@
+    .court-container {
+      position: relative;
+      width: 100%;
+      max-width: 24vw;
+      aspect-ratio: 1 / 2;
+      margin: 0 auto;
+      background-color: #848484;
+      border: 3px solid black;
+    }
+
+    .linea {
+      position: absolute;
+      background-color: black;
+      left: 0;
+      width: 100%;
+    }
+
+    .linea-centrale {
+      height: 0.8%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .linea-attacco-ospiti {
+      height: 0.4%;
+      top: 33.33%;
+    }
+
+    .linea-attacco-casa {
+      height: 0.4%;
+      bottom: 33.33%;
+    }
