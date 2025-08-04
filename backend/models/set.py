@@ -5,9 +5,9 @@ from models.touch import Touch
 from models.player import Player
 
 class Set:
-    def __init__(self, match_id, set_number: int, players: list[Player]):
+    def __init__(self, match_id, number: int, players: list[Player]):
         self.match_id = match_id
-        self.set_number = set_number
+        self.number = number
         self.players = players
         self.touches: list[Touch] = []
         self.events: list[Event] = []
