@@ -1,41 +1,3 @@
-<!-- <h1>{{ title }}</h1>
-<p>Benvenuto nella Dashboard.</p> -->
-
-<!-- <mat-sidenav-container class="dashboard-container">
-  <mat-sidenav #sidenav mode="side" [opened]="sidebarOpen()">
-    <div class="sidebar-header">
-      <button mat-icon-button (click)="toggleSidebar()">
-        <mat-icon>{{ sidebarOpen() ? 'close' : 'menu' }}</mat-icon>
-      </button>
-    </div>
-    <mat-nav-list>
-      <mat-list-item>Profilo</mat-list-item>
-      <mat-list-item>Matches</mat-list-item>
-      <mat-list-item>Players</mat-list-item>
-      <mat-list-item>Teams</mat-list-item>
-      <mat-list-item>Logout</mat-list-item>
-    </mat-nav-list>
-  </mat-sidenav>
-
-  <mat-sidenav-content>
-    <div class="main-content container text-center mt-5">
-      <h2>Benvenuto su MatchVision</h2>
-      <div class="btn-group-vertical mt-4">
-        <button mat-raised-button color="primary" class="mb-2" (click)="handleAction('New Match')">
-          New Match
-        </button>
-        <button mat-raised-button color="accent" class="mb-2" (click)="handleAction('New Player')">
-          New Player
-        </button>
-        <button mat-raised-button color="warn" class="mb-2" (click)="handleAction('New Team')">
-          New Team
-        </button>
-      </div>
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container> -->
-
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -46,10 +8,8 @@
 </head>
 <body>
     <div id="sidebar">
-        <button class="toggle-btn" id="sidebarToggle">
-            &times; </button>
         <div class="p-3">
-            <h4 class="text-white text-center mb-4">Menu</h4>
+            <h4 class="text-white text-center mb-4">Menu<button class="toggle-btn" id="sidebarToggle">&times;</button></h4>
             <div class="list-group list-group-flush">
                 <a [routerLink]="['/login']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action"><img src="/icons/profile-icon.png"> Profilo</a>
                 <a [routerLink]="['/matches']" routerLinkActive="router-link-active" class="list-group-item list-group-item-action"><img src="/icons/match-icon.png"> Matches</a>
@@ -64,7 +24,7 @@
 <div class="container py-4">
   <div class="row justify-content-center">
     <!-- Card 1 -->
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 col-md-offset-3 mb-4">
       <div class="card h-100">
         <div class="d-flex align-items-center">
           <!-- Contenuto -->
@@ -79,7 +39,7 @@
     </div>
 
     <!-- Card 2 -->
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 mb-4">
       <div class="card h-100">
         <div class="d-flex align-items-center">
           <div class="card-body flex-grow-1">
@@ -92,7 +52,7 @@
     </div>
 
     <!-- Card 3 -->
-    <div class="col-md-4 mb-4">
+    <div class="col-md-3 mb-4">
       <div class="card h-100">
         <div class="d-flex align-items-center">
           <div class="card-body flex-grow-1">
@@ -108,9 +68,9 @@
   <div class="row justify-content-center mt-4">
     <div class="col-md-6">
       <div class="d-grid gap-2">
-        <button class="btn btn-outline-dark" type="button">Nuova partita</button>
-        <button class="btn btn-outline-dark" type="button">Crea nuova squadra</button>
-        <button class="btn btn-outline-dark" type="button">Aggiungi giocatore</button>
+        <button class="btn btn-outline-dark btn-lg" type="button"><img src="/icons/add-icon.png" style="padding-right: 15px;">Nuova partita</button>
+        <button class="btn btn-outline-dark btn-lg" type="button"><img src="/icons/add-icon.png" style="padding-right: 15px;">Crea nuova squadra</button>
+        <button class="btn btn-outline-dark btn-lg" type="button"><img src="/icons/add-icon.png" style="padding-right: 15px;">Aggiungi giocatore</button>
       </div>
     </div>
   </div>

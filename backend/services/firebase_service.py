@@ -1,5 +1,3 @@
-# app/services/firebase_service.py
-
 from fastapi import HTTPException
 from firebase_admin import auth
 
