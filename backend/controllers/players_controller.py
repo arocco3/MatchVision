@@ -6,7 +6,7 @@ from models.player import Player
 app = FastAPI()
 
 # In-memory DB simulato
-players_db: List[Player] = []
+players_db: list[Player] = []
 
 # POST /players/
 @app.post('/players/', response_model = Player)

@@ -7,12 +7,71 @@
 </head>
 <body>
 
-    <div class="court-container">
-      <div class="linea linea-attacco-ospiti"></div>
-      <div class="linea linea-centrale"></div>
-      <div class="linea linea-attacco-casa"></div>
+  <div>
+    <!-- top bar -->
+    <div class="d-flex justify-content-between align-items-center top-bar p-2" style="background-color: green; margin-bottom: 1%;">
+      <div class="manage-home-score">Casa
+        <button class="btn btn-secondary mx-1" (click)="decreaseScore('home')">--</button>
+        <button class="btn btn-secondary mx-1" (click)="increaseScore('home')">+</button>
+      </div>
+      <div class="score mx-2 p-3" style="background-color: rgb(255, 0, 0);">prova punteggio</div>
+      <!-- {{ score.home }} - {{ score.guests }} da inserire sopra nello score -->
+      <div class="manage-guests-score">Ospiti
+        <button class="btn btn-secondary mx-1" (click)="decreaseScore('guests')">--</button>
+        <button class="btn btn-secondary mx-1" (click)="increaseScore('guests')">+</button> 
+      </div>
     </div>
 
+    <!-- Court -->
+    <div class="court-container">
+      <div class="line attack-line-guests"></div>
+      <div class="line center-line"></div>
+      <div class="line attack-line-home"></div>
+
+      <!-- Players icons -->
+      <!-- <div @for (player of players; track $index){
+          class="player-icon btn btn-primary position-absolute"
+          style="{ top: player.position.y + '%', left: player.position.x + '%' }"
+          (click)="insertTouch(player)"
+          {{ player.number }} }>
+
+      </div> -->
+
+      <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="console.log('ciao')">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    </div>
+
+    <!-- bottom bar -->
+    <div class="d-flex justify-content-between align-items-center bottom-bar p-2" style="background-color: red; margin-top: 1%;">
+      <button (click)="toggleEventMenu()">Registra evento</button>
+      <button (click)="endSet()">Fine set</button>
+    </div>
     
+
+  </div>
+
 </body>
 </html>

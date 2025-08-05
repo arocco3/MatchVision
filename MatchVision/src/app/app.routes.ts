@@ -6,6 +6,7 @@ import { StatisticsComponent } from './pages/statistics/statistics.component';
 import { PlayersComponent } from './pages/players/players.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { GameComponent } from './pages/game/game';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -15,4 +16,5 @@ export const routes: Routes = [
   { path: 'matches', component: MatchesComponent },
   { path: 'teams', component: TeamsComponent },
   { path: 'statistics', component: StatisticsComponent },
+  { path: 'game', component: GameComponent },
 ];

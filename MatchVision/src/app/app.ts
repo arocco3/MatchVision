@@ -9,6 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { PlayersComponent } from './pages/players/players.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { GameComponent} from './pages/game/game';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,7 @@ import { RegisterComponent } from './pages/register/register.component';
     FooterComponent,
     HeaderComponent,
     RegisterComponent,
+    GameComponent,
 ],
   templateUrl: './app.html',
   styleUrls: ['./app.scss', './pages/login/login.component.scss', './pages/dashboard/dashboard.component.scss']
