@@ -3,6 +3,7 @@
             display: flex;
             min-height: 100vh;
             overflow-x: hidden; /* Prevent horizontal scroll when sidebar is open */
+            background-color: #f4f6ff
         }
         #sidebar {
             width: 250px;
@@ -66,4 +67,8 @@
             margin-bottom: 20px;
             width: 200px;
             font-size: 1.2rem;
+        }
+
+        .card:hover{
+            cursor: pointer;
         }
