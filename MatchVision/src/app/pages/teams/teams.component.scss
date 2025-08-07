@@ -1,0 +1,39 @@
+body{
+    color: #10375c;
+}
+
+.container{
+    background-color: #f4f6ff
+}
+
+.card, 
+.card-h5, 
+.card-p,
+.card-a{
+    background-color: #f3c623;
+    color: #10375c;
+}
+
+.btn{
+    background-color: #eb8317;
+    border-color: #10375c;
+    color: #10375c;
+}
+
+// Add button
+.btn-floating{
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
+    bottom: 85px;
+    right: 55px;
+    font-size: xx-large;
+    border-radius: 50%;
+}
+
+.btn-floating:hover{
+    cursor: pointer;
+    background-color:#d76f00
+}

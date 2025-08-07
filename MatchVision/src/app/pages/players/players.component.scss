@@ -19,3 +19,21 @@ body{
     border-color: #10375c;
     color: #10375c;
 }
+
+// Add button
+.btn-floating{
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
+    bottom: 85px;
+    right: 55px;
+    font-size: xx-large;
+    border-radius: 50%;
+}
+
+.btn-floating:hover{
+    cursor: pointer;
+    background-color:#d76f00
+}

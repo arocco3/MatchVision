@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Squadre</title>
+</head>
+<body>
+    
+    <div class="container py-5 mb-4">
+        <h1 class="mb-4 text-center">Squadre</h1>
+
+        <div class="searchForTeam mb-4">
+            <div class="row">
+                <div class="col-4 mx-auto">
+                    <div class="input-group mx-auto">
+                        <input type="text" class="form-control" placeholder="Cerca tra le squadre..." aria-label="Cerca tra le squadre" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Cerca</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teams list -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+            <div class="col">    
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">BottaVolley 1div</h5>
+                        <!-- <h5 class="card-title">{{team.name}}</h5> -->
+                        <a class="btn btn-primary mt-3">Dettagli</a>
+                    </div>
+                </div>    
+            </div>
+
+            <div class="col">    
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">BottaVolley serie d</h5>
+                        <!-- <h5 class="card-title">{{team.name}}</h5> -->
+                        <a class="btn btn-primary mt-3">Dettagli</a>
+                    </div>
+                </div>    
+            </div>
+
+        </div>
+
+        <button type="button" class="btn btn-floating" data-bs-toggle="modal" data-bs-target="#newTeamModal">+</button>
+
+    </div>
+
+</body>
+</html>
