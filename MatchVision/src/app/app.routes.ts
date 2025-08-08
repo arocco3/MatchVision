@@ -7,6 +7,9 @@ import { PlayersComponent } from './pages/players/players.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { GameComponent } from './pages/game/game';
+import { MatchesDetailsComponent } from './pages/details/matches_details/matches_details.component';
+import { TeamsDetailsComponent } from './pages/details/teams_details/teams_details.component';
+import { PlayersDetailsComponent } from './pages/details/players_details/players_details.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -17,4 +20,7 @@ export const routes: Routes = [
   { path: 'teams', component: TeamsComponent },
   { path: 'statistics', component: StatisticsComponent },
   { path: 'game', component: GameComponent },
+  { path: 'matches_details', component: MatchesDetailsComponent },
+  { path: 'teams_details', component: TeamsDetailsComponent },
+  { path: 'players_details', component: PlayersDetailsComponent },
 ];

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-matches',
-  standalone: true,
+  standalone: true,imports: [
+    RouterModule,
+  ],
   templateUrl: './matches.component.html',
   styleUrls: ['./matches.component.scss']
 })
