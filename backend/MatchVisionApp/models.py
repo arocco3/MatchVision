@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.db import models
 
+
 class Role(models.TextChoices):
     SETTER = "Alzatore"
     OUTSIDE_HITTER = "Lato"
@@ -22,28 +23,23 @@ class Player(models.Model):
 
     def __str__(self):
         full_name = f"{self.name or ''} {self.surname or ''}".strip()
-        role_display = self.get_role_display() if self.role else "Senza ruolo"
-        return f"{full_name} ({role_display})"
+        return f"{full_name})"
 
 
 class EventType(models.TextChoices):
-    TECHNICAL_TIMEOUT = "TimeOut tecnico", "Time-out tecnico"
-    CHANGE = "Cambio", "Cambio"
-    DOUBLE_CHANGE = "Doppio cambio", "Doppio cambio"
-    MEDICAL_CHANGE = "Cambio medico", "Cambio medico"
-    YELLOW_CARD = "Cartellino giallo", "Cartellino giallo"
-    RED_CARD = "Cartellino rosso", "Cartellino rosso"
-    SCORED_POINT = "Punto generico eseguito", "Punto eseguito"
-    CONCEDED_POINT = "Punto generico subito", "Punto subito"
-    DOUBLE_FAULT = "Palla contesa", "Palla contesa"
+    TECHNICAL_TIMEOUT = "TimeOut tecnico"
+    CHANGE = "Cambio"
+    DOUBLE_CHANGE = "Doppio cambio"
+    MEDICAL_CHANGE = "Cambio medico"
+    YELLOW_CARD = "Cartellino giallo"
+    RED_CARD = "Cartellino rosso"
+    SCORED_POINT = "Punto generico eseguito"
+    CONCEDED_POINT = "Punto generico subito"
+    DOUBLE_FAULT = "Palla contesa"
 
 
 class Event(models.Model):
-    event_type = models.CharField(
-        max_length=30,
-        choices=EventType.choices,
-        verbose_name="Tipo evento"
-    )
+    event_type = models.CharField(max_length=30, choices=EventType.choices, verbose_name="Tipo evento")
 
     class Meta:
         verbose_name = "Evento"
@@ -53,22 +49,10 @@ class Event(models.Model):
         return f"Evento: {self.get_event_type_display()}"
 
 
-class Match(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Nome partita")
-    ts = models.DateTimeField(default=timezone.now)
-
-    class Meta:
-        ordering = ["-ts"]
-        verbose_name = "Partita"
-        verbose_name_plural = "Partite"
-
-    def __str__(self):
-        return f"Match: {self.name}"
-
-
 class Set(models.Model):
-    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="sets")
+    match = models.ForeignKey('Match', related_name='sets', on_delete=models.CASCADE)
     number = models.PositiveIntegerField(verbose_name="Numero set")
+    players = models.ManyToManyField(Player, related_name='sets', blank=True)
     home_score = models.PositiveIntegerField(default=0, verbose_name="Punteggio casa")
     guest_score = models.PositiveIntegerField(default=0, verbose_name="Punteggio ospite")
 
@@ -81,9 +65,24 @@ class Set(models.Model):
         return f"Set {self.number} ({self.match.name})"
 
 
+class Match(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nome partita")
+    timestamp = models.DateTimeField(default=timezone.now)
+    teams = models.ManyToManyField('Team', related_name='matches')
+    results = models.JSONField(default=list, blank=True)
+
+    class Meta:
+        ordering = ["-timestamp"]
+        verbose_name = "Partita"
+        verbose_name_plural = "Partite"
+
+    def __str__(self):
+        return f"Match: {self.name}"
+
+
 class Team(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nome squadra")
-    players = models.ManyToManyField('Player', related_name='teams', blank=True)
+    players = models.ManyToManyField(Player, related_name='teams', blank=True)
 
     class Meta:
         verbose_name = "Squadra"
@@ -123,3 +122,13 @@ class Touch(models.Model):
     def __str__(self):
         player_name = f"{self.player}" if self.player else "Sconosciuto"
         return f"{player_name} - {self.get_fundamental_display()} ({self.get_outcome_display()})"
+
+
+class User(models.Model):
+    email = models.EmailField(max_length=100)
+    password = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)    
+    surname = models.CharField(max_length=100)
+    matches = models.ManyToManyField(Match, related_name='users')
+    players = models.ManyToManyField(Player, related_name='users')
+    teams = models.ManyToManyField(Team, related_name='users')

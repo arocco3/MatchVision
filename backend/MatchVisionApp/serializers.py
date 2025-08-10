@@ -1,12 +1,18 @@
 from rest_framework import serializers
-from MatchVisionApp.models import Player, Match, Event, Set, Team, Touch
+from MatchVisionApp.models import Player, Match, Event, Set, Team, Touch, User
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
 
 class PlayerSerializer(serializers.ModelSerializer):
     role_display = serializers.CharField(source="get_role_display", read_only=True)
 
     class Meta:
         model = Player
-        fields = ["id", "name", "surname", "number", "role", "role_display"]
+        fields = '__all__'
 
 
 class TeamSerializer(serializers.ModelSerializer):
@@ -14,7 +20,7 @@ class TeamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Team
-        fields = ["id", "name", "players"]
+        fields = '__all__'
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -22,7 +28,7 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
-        fields = ["id", "event_type", "event_type_display"]
+        fields = '__all__'
 
 
 class TouchSerializer(serializers.ModelSerializer):
@@ -32,8 +38,7 @@ class TouchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Touch
-        fields = [
-            "id", "set", "player", "fundamental", "fundamental_display", "outcome", "outcome_display"]
+        fields = '__all__'
 
 
 class SetSerializer(serializers.ModelSerializer):
@@ -41,7 +46,7 @@ class SetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Set
-        fields = ["id", "match", "number", "home_score", "guest_score", "touches"]
+        fields = '__all__'
 
 
 class MatchSerializer(serializers.ModelSerializer):
@@ -49,4 +54,4 @@ class MatchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Match
-        fields = ["id", "name", "created_at", "sets"]
+        fields = '__all__'
