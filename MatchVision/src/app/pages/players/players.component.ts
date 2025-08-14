@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { PlayersService } from '../../services/players.service';
 
 interface Player {
   id: number;
@@ -22,9 +23,9 @@ interface Player {
 
 export class PlayersComponent implements OnInit{
 
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  constructor(private playersService: PlayersService){}
+
+  ngOnInit(): void { console.log(this.playersService.playerarray) }
 
   players: Player[] = [];
   

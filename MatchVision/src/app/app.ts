@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { HeaderComponent } from './pages/header/header.component';
 import { FooterComponent } from './pages/footer/footer.component';
@@ -10,6 +11,7 @@ import { FooterComponent } from './pages/footer/footer.component';
   imports: [
     RouterOutlet,
     RouterModule,
+    FormsModule,
     FooterComponent,
     HeaderComponent,
 ],

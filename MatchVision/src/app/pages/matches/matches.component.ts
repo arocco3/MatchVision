@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { MatchesService } from '../../services/matches.service';
 
 @Component({
   selector: 'app-matches',
@@ -10,11 +11,9 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
   styleUrls: ['./matches.component.scss']
 })
 
-export class MatchesComponent {
-  title = 'Matches';
-  matchId: string | null;
+export class MatchesComponent implements OnInit{
 
-  constructor(private route: ActivatedRoute) {
-    this.matchId = this.route.snapshot.paramMap.get('id');
-  }
+  constructor(matchesService: MatchesService) {}
+  
+  ngOnInit(): void {  }
 }

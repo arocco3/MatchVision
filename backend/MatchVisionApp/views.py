@@ -63,6 +63,13 @@ def getTeams(request):
     serializer = TeamSerializer(teams, many = True)
     return Response(serializer.data)
 
+# get specific team
+@api_view(['GET'])
+def getTeam(request, pk):
+    team = Team.objects.get(id=pk)
+    serializer = TeamSerializer(team)
+    return Response(serializer.data)
+
 # create team
 @api_view(['POST'])
 def createTeam(request):
