@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { PlayersService } from '../../services/players.service';
 
@@ -23,9 +23,12 @@ interface Player {
 
 export class PlayersComponent implements OnInit{
 
-  constructor(private playersService: PlayersService){}
+  constructor(private playersService: PlayersService, private route: ActivatedRoute){}
 
-  ngOnInit(): void { console.log(this.playersService.playerarray) }
+  ngOnInit(): void { 
+    console.log(this.playersService.playerarray) 
+    console.log(this.playersService.playerarray) 
+  }
 
   players: Player[] = [];
   
