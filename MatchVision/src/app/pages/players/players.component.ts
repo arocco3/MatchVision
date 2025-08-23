@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { PlayersService } from '../../services/players.service';
+import { NewPlayerModalComponent } from './newPlayerModal/newPlayerModal.component';
 
 interface Player {
-  id: number;
+  id?: number;
   name: string;
   surname: string;
   number: number;
@@ -16,21 +16,40 @@ interface Player {
   standalone: true,
   imports: [
     RouterModule,
+    NewPlayerModalComponent,
   ],
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.scss']
 })
 
-export class PlayersComponent implements OnInit{
+export class PlayersComponent implements OnInit, AfterViewInit{
 
-  constructor(private playersService: PlayersService, private route: ActivatedRoute){}
-
-  ngOnInit(): void { 
-    console.log(this.playersService.playerarray) 
-    console.log(this.playersService.playerarray) 
-  }
+  @ViewChild(NewPlayerModalComponent) newPlayerModal!: NewPlayerModalComponent;
 
   players: Player[] = [];
-  
-  title = 'Players';
+
+  constructor(private playersService: PlayersService){}
+
+  ngOnInit(): void {
+    this.playersService.getPlayers().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.players = data;
+      },
+      error: (err) => console.error('Errore caricamento players', err)
+    });
+  }
+
+  ngAfterViewInit(): void {
+    
+  }
+
+  openNewPlayerModal(){
+    this.newPlayerModal.open();
+  }
+
+  closeNewPlayerModal() {
+    console.log(this.newPlayerModal.closeResult);
+  }
+
 }

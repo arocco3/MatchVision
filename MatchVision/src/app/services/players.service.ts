@@ -13,14 +13,10 @@ export interface Player {
 @Injectable({
   providedIn: 'root' 
 })
+
 export class PlayersService {
-  private apiUrl = 'http://localhost:8000/api';
 
-
-playerarray=[
-  {nome:"alessandrooo"}
-]
-
+  private apiUrl = 'http://localhost:8000';
 
   constructor(private http: HttpClient) {}
 

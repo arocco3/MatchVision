@@ -23,45 +23,30 @@
 
         <!-- Players list -->
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
+@for (player of this.players; track player.id){
             <div class="col">    
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Alessandro Rocco     |       #12     |   <small>schiacciatore</small></h5>
-                        <!-- <h5 class="card-title">{{player.name}} {{player.surname}}   |   #{{player.number}}     |   {{player.role}}</h5> -->
+                        <!-- <h5 class="card-title">Alessandro Rocco     |       #12     |   <small>schiacciatore</small></h5> -->
+                        <h5 class="card-title">{{player.name}} {{player.surname}} | #{{player.number}} | {{player.role}}</h5>
                         <p class="card-text">BottaVolley 1div</p>
+                        <!-- <p class="card-text">{{ player.team }}</p> -->
                         <a class="btn btn-primary"  [routerLink]="['/players_details']" routerLinkActive="router-link-active">Dettagli</a>
                     </div>
                 </div>    
             </div>
+}
 
         </div>
 
         <!-- Button for modal -->
-        <button type="button" class="btn btn-floating" data-bs-toggle="modal" data-bs-target="#newPlayerModal">+</button>
+        <button type="button" class="btn btn-floating" (click)="openNewPlayerModal()" data-bs-toggle="modal" data-bs-target="#newPlayerModal">+</button>
+        <!-- <pre>{{ closeNewPlayerModal() }}</pre> -->
+
+            <!-- Inserimento modale -->
+             <app-new-player-modal #newPlayerModal></app-new-player-modal>
         
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="newPlayerModal" tabindex="-1" aria-labelledby="Nuovo-giocatore" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="Nuovo-giocatore">Nuovo giocatore</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>ciao</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

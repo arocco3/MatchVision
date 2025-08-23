@@ -18,7 +18,7 @@ def createUser(request):
 # PLAYER CRUD
 # get all players
 @api_view(['GET']) 
-def getplayers(request):
+def getPlayers(request):
     players = Player.objects.all()
     serializer = PlayerSerializer(players, many = True)
     return Response(serializer.data)
