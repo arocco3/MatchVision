@@ -30,6 +30,7 @@ export class PlayersComponent implements OnInit, AfterViewInit{
 
   constructor(private playersService: PlayersService){}
 
+  // To get all players
   ngOnInit(): void {
     this.playersService.getPlayers().subscribe({
       next: (data) => {
@@ -51,5 +52,8 @@ export class PlayersComponent implements OnInit, AfterViewInit{
   closeNewPlayerModal() {
     console.log(this.newPlayerModal.closeResult);
   }
+
+  // To delete a specific player
+  
 
 }

@@ -6,7 +6,7 @@
     <title>Giocatori</title>
 </head>
 <body>
-    
+
     <div class="container py-5 mb-4">
         <h1 class="mb-4 text-center">Giocatori</h1>
 
@@ -22,21 +22,27 @@
         </div>
 
         <!-- Players list -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+        <table class="table table-striped align-middle fs-5" >
+            <thead>
+                <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Cognome</th>
+                <th scope="col">Ruolo</th>
+                </tr>
+            </thead>        
 @for (player of this.players; track player.id){
-            <div class="col">    
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <!-- <h5 class="card-title">Alessandro Rocco     |       #12     |   <small>schiacciatore</small></h5> -->
-                        <h5 class="card-title">{{player.name}} {{player.surname}} | #{{player.number}} | {{player.role}}</h5>
-                        <p class="card-text">BottaVolley 1div</p>
-                        <!-- <p class="card-text">{{ player.team }}</p> -->
-                        <a class="btn btn-primary"  [routerLink]="['/players_details']" routerLinkActive="router-link-active">Dettagli</a>
-                    </div>
-                </div>    
-            </div>
+
+            <tbody class="table-group-divider">
+                <tr>
+                <td>{{player.name}}</td>
+                <td>{{player.surname}}</td>
+                <td>{{player.role}}</td>
+                <td><a class="btn btn-primary"  [routerLink]="['/players_details']" routerLinkActive="router-link-active">Dettagli</a>     <button style="margin-left: 5%;" class="btn btn-secondary"><img src="/icons/delete-icon.png"></button></td>
+                </tr>
+            </tbody>
 }
-        </div>
+        </table>
 
         <!-- Button for modal -->
         <button type="button" class="btn btn-floating" (click)="openNewPlayerModal()" data-bs-toggle="modal" data-bs-target="#newPlayerModal">+</button>

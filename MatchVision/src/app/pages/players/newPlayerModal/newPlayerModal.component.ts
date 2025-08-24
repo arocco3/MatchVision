@@ -46,11 +46,11 @@ newPlayer: Player = {
         next: (res) => {
           console.log('Giocatore salvato:', res);
           modal.close('Save click');
-          // Reset form
-          this.newPlayer = { name: '', surname: '', number: 0, role: '' };
         },
         error: (err) => console.error('Errore salvataggio nuovo player', err)
       });
+      // Reset form
+      this.newPlayer = { name: '', surname: '', number: 0, role: '' };
     }
   }
      

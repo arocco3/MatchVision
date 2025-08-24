@@ -49,10 +49,18 @@ export const routes: Routes = [
   // { path: 'sets/delete/<int:pk>', views.deleteSet },
 
   // Events
-  // path: 'events', views.getEvents },
+  // { path: 'events', views.getEvents },
   // { path: 'events/create', views.createEvent },
 
   // Touches
   // { path: 'touches', views.getTouches },
   // { path: 'touches/create', views.createTouch },
+
+  // Details
+  //    Players
+  { path: 'players_details', component: PlayersDetailsComponent},
+  //    Matches
+  { path: 'matches_details', component: MatchesDetailsComponent},
+  //    Teams
+  { path: 'teams_details', component: TeamsDetailsComponent},
 ];
