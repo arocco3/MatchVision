@@ -15,38 +15,29 @@ export const routes: Routes = [
   { path: '', component: DashboardComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  // { path: 'players', component: PlayersComponent },
-  // { path: 'matches', component: MatchesComponent },
-  // { path: 'teams', component: TeamsComponent },
   { path: 'statistics', component: StatisticsComponent },
   { path: 'game', component: GameComponent },
-  { path: 'matches_details', component: MatchesDetailsComponent },
-  // { path: 'teams_details', component: TeamsDetailsComponent },
-
 
   // Players
   { path: 'players', component: PlayersComponent },
-  { path: 'players/<int:pk>', component: PlayersDetailsComponent },
   // { path: 'players/create', views.createPlayer },
-  // { path: 'players/update/<int:pk>', views.updatePlayer },
-  // { path: 'players/delete/<int:pk>', views.deletePlayer },
+  // { path: 'players/update/:id', views.updatePlayer },
+  // { path: 'players/delete/:id', views.deletePlayer },
 
   // Teams
   { path: 'teams', component: TeamsComponent },
-  { path: 'teams/<int:pk>', component: TeamsDetailsComponent },
   // { path: 'teams/create', views.createTeam },
-  // { path: 'teams/delete/<int:pk>', views.deleteTeam },
+  // { path: 'teams/delete/:id', views.deleteTeam },
 
   // Matches
   { path: 'matches', component: MatchesComponent },
-  { path: 'matches/<int:pk>', component: MatchesDetailsComponent },
   // { path: 'matches/create', views.createMatch },
-  // { path: 'matches/delete/<int:pk>', views.deleteMatch },
+  // { path: 'matches/delete/:id', views.deleteMatch },
 
   // Sets
   // { path: 'sets', views.getSets },
   // { path: 'sets/create', views.createSet },
-  // { path: 'sets/delete/<int:pk>', views.deleteSet },
+  // { path: 'sets/delete/:id', views.deleteSet },
 
   // Events
   // { path: 'events', views.getEvents },
@@ -58,9 +49,9 @@ export const routes: Routes = [
 
   // Details
   //    Players
-  { path: 'players_details', component: PlayersDetailsComponent},
+  { path: 'players_details/:id', component: PlayersDetailsComponent},
   //    Matches
-  { path: 'matches_details', component: MatchesDetailsComponent},
+  { path: 'matches_details/:id', component: MatchesDetailsComponent},
   //    Teams
-  { path: 'teams_details', component: TeamsDetailsComponent},
+  { path: 'teams_details/:id', component: TeamsDetailsComponent},
 ];

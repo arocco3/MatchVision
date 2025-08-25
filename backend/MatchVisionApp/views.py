@@ -1,6 +1,6 @@
-from django.http import HttpRequest, HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 
 from .models import Player, Team, Match, Set, Touch, Event
 from .serializers import PlayerSerializer, TeamSerializer, MatchSerializer, SetSerializer, TouchSerializer, EventSerializer, UserSerializer
@@ -50,9 +50,12 @@ def updatePlayer(request, pk):
 # delete specific player
 @api_view(['DELETE'])
 def deletePlayer(request, pk):
-    player = Player.objects.get(id = pk)
-    player.delete()
-
+    try:
+        player = Player.objects.get(id = pk)
+        player.delete()
+        return Response({"message": "Player deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except Player.DoesNotExist:
+        return Response({"error": "Player not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 # TEAM CRUD
@@ -81,8 +84,12 @@ def createTeam(request):
 # delete specific team
 @api_view(['DELETE'])
 def deleteTeam(request, pk):
-    team = Team.objects.get(id = pk)
-    team.delete()
+    try:
+        team = Team.objects.get(id = pk)
+        team.delete()
+        return Response({"message": "Team deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except Team.DoesNotExist:
+        return Response({"error": "Team not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -112,8 +119,12 @@ def createMatch(request):
 # delete specific match
 @api_view(['DELETE'])
 def deleteMatch(request, pk):
-    match = Match.objects.get(id = pk)
-    match.delete()
+    try:
+        match = Match.objects.get(id = pk)
+        match.delete()
+        return Response({"message": "Match deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except Match.DoesNotExist:
+        return Response({"error": "Match not found"}, status=status.HTTP_404_NOT_FOUND)
     
 
 
@@ -136,8 +147,12 @@ def createSet(request):
 # delete specific set
 @api_view(['DELETE'])
 def deleteSet(request, pk):
-    set = Set.objects.get(id = pk)
-    set.delete()
+    try:
+        set = Set.objects.get(id = pk)
+        set.delete()
+        return Response({"message": "Set deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except Set.DoesNotExist:
+        return Response({"error": "Set not found"}, status=status.HTTP_404_NOT_FOUND)
 
 
 
@@ -150,6 +165,10 @@ def createEvent(request):
         serializer.save()
         return Response(serializer.data)
     
+# delete specific event
+    
+
+
 
 # TOUCH CRUD
 # get all touches

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { Player, PlayersService } from '../../../services/players.service';
 
 @Component({
   selector: 'app-players_details',
@@ -11,6 +13,22 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./players_details.component.scss']
 })
 
-export class PlayersDetailsComponent {
+export class PlayersDetailsComponent implements OnInit{
   title = 'PlayersDetails';
+  player: any;
+
+  constructor(private route: ActivatedRoute, private playersService: PlayersService, private cdr: ChangeDetectorRef){}
+
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id){
+      this.playersService.getPlayer(id).subscribe({
+        next: (res) => {
+          this.player = res;
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Errore caricamento dettagli player', err)
+      });
+    }
+  }
 }
