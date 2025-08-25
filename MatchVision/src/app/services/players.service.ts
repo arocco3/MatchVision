@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Player {
-  id?: number;
+  id: number;
   name: string;
   surname: string;
   number: number;

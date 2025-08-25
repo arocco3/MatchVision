@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'MatchVision.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'MatchVisionDB',
+        'NAME': 'MatchVisionAppDB',
         'USER': 'postgres',
         'PASSWORD': 'adminPostgres',
         'HOST': 'localhost',

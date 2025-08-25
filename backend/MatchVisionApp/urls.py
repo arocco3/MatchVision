@@ -19,30 +19,30 @@ from . import views
 urlpatterns = [
     # Players
     path('players/', views.getPlayers),
-    path('players/<int:pk>', views.getPlayer),
+    path('players/<int:pk>/', views.getPlayer),
     path('players/create/', views.createPlayer),
-    path('players/update/<int:pk>', views.updatePlayer),
-    path('players/delete/<int:pk>', views.deletePlayer),
+    path('players/update/<int:pk>/', views.updatePlayer),
+    path('players/delete/<int:pk>/', views.deletePlayer),
 
     # Teams
     path('teams/', views.getTeams),
-    path('teams/<int:pk>', views.getTeam),
+    path('teams/<int:pk>/', views.getTeam),
     path('teams/create/', views.createTeam),
-    path('teams/delete/<int:pk>', views.deleteTeam),
+    path('teams/delete/<int:pk>/', views.deleteTeam),
 
     # Matches
     path('matches/', views.getMatches),
-    path('matches/<int:pk>', views.getMatch),
+    path('matches/<int:pk>/', views.getMatch),
     path('matches/create/', views.createMatch),
-    path('matches/delete/<int:pk>', views.deleteMatch),
+    path('matches/delete/<int:pk>/', views.deleteMatch),
 
     # Sets
     path('sets/', views.getSets),
     path('sets/create/', views.createSet),
-    path('sets/delete/<int:pk>', views.deleteSet),
+    path('sets/delete/<int:pk>/', views.deleteSet),
 
     # Events
-    # path('events', views.getEvents),
+    # path('events/', views.getEvents),
     path('events/create/', views.createEvent),
 
     # Touches

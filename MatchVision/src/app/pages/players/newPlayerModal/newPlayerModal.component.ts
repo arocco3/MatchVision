@@ -1,6 +1,6 @@
 import { Player, PlayersService } from '../../../services/players.service'
 
-import { Component, inject, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'
 
@@ -18,12 +18,15 @@ export class NewPlayerModalComponent {
   private modalService = inject(NgbModal);
   public closeResult: WritableSignal<string> = signal('');
 
-newPlayer: Player = {
-  name: '',
-  surname: '',
-  number: 0,
-  role: ''
-};
+  newPlayer: Player = {
+    id: 0,
+    name: '',
+    surname: '',
+    number: 0,
+    role: ''
+  };
+
+  @Output() playerCreated = new EventEmitter<void>();
 
   @ViewChild('content', { static: true }) content!: TemplateRef<any>;
 
@@ -44,13 +47,14 @@ newPlayer: Player = {
     if (form.valid) {
       this.playersService.createPlayer(this.newPlayer).subscribe({
         next: (res) => {
+          this.playerCreated.emit();
           console.log('Giocatore salvato:', res);
           modal.close('Save click');
         },
         error: (err) => console.error('Errore salvataggio nuovo player', err)
       });
       // Reset form
-      this.newPlayer = { name: '', surname: '', number: 0, role: '' };
+      this.newPlayer = { id: 0, name: '', surname: '', number: 0, role: '' };
     }
   }
      

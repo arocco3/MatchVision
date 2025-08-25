@@ -38,7 +38,8 @@
                 <td>{{player.name}}</td>
                 <td>{{player.surname}}</td>
                 <td>{{player.role}}</td>
-                <td><a class="btn btn-primary"  [routerLink]="['/players_details']" routerLinkActive="router-link-active">Dettagli</a>     <button style="margin-left: 5%;" class="btn btn-secondary"><img src="/icons/delete-icon.png"></button></td>
+                <td><a class="btn btn-primary"  [routerLink]="['/players_details']" routerLinkActive="router-link-active">Dettagli</a>  
+                       <button style="margin-left: 5%;" class="btn btn-secondary" (click)="deletePlayer(player.id)"><img src="/icons/delete-icon.png"></button></td>
                 </tr>
             </tbody>
 }
@@ -49,7 +50,7 @@
         <!-- <pre>{{ closeNewPlayerModal() }}</pre> -->
 
             <!-- Inserimento modale -->
-             <app-new-player-modal #newPlayerModal></app-new-player-modal>
+             <app-new-player-modal #newPlayerModal (playerCreated)="loadPlayers()"></app-new-player-modal>
         
     </div>
 

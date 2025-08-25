@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef  } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PlayersService } from '../../services/players.service';
 import { NewPlayerModalComponent } from './newPlayerModal/newPlayerModal.component';
 
 interface Player {
-  id?: number;
+  id: number;
   name: string;
   surname: string;
   number: number;
@@ -22,27 +22,28 @@ interface Player {
   styleUrls: ['./players.component.scss']
 })
 
-export class PlayersComponent implements OnInit, AfterViewInit{
+export class PlayersComponent implements OnInit{
 
   @ViewChild(NewPlayerModalComponent) newPlayerModal!: NewPlayerModalComponent;
 
   players: Player[] = [];
 
-  constructor(private playersService: PlayersService){}
+  constructor(private playersService: PlayersService, private cdr: ChangeDetectorRef){}
 
   // To get all players
   ngOnInit(): void {
+    this.loadPlayers();
+  }
+
+  loadPlayers() {
     this.playersService.getPlayers().subscribe({
       next: (data) => {
         console.log(data);
-        this.players = data;
+        this.players = data
+        this.cdr.detectChanges(); // Forces data refresh
       },
       error: (err) => console.error('Errore caricamento players', err)
     });
-  }
-
-  ngAfterViewInit(): void {
-    
   }
 
   openNewPlayerModal(){
@@ -54,6 +55,16 @@ export class PlayersComponent implements OnInit, AfterViewInit{
   }
 
   // To delete a specific player
+  deletePlayer(id: any){
+    this.playersService.deletePlayer(id).subscribe({
+      next: () => {
+        console.log('Player eliminato');
+        this.loadPlayers(); // ricarica tabella
+      },
+      error: (err) => console.error('Errore eliminazione player', err)
+    })
+  }
+
   
 
 }
