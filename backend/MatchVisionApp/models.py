@@ -15,7 +15,7 @@ class Player(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Nome")
     surname = models.CharField(max_length=100, null=True, blank=True, verbose_name="Cognome")
     number = models.PositiveIntegerField(null=True, blank=True, db_index=True, verbose_name="Numero")
-    role = models.CharField(max_length=20,  null=True, blank=True, verbose_name="Ruolo")
+    role = models.CharField(max_length=20, null=True, blank=True, verbose_name="Ruolo")
 
     class Meta:
         ordering = ["surname", "name"]
@@ -27,21 +27,21 @@ class Player(models.Model):
         return f"{full_name})"
 
 
-EVENT_TYPE_CHOICES = [
-    ("TECHNICAL_TIMEOUT", "TimeOut tecnico"),
-    ("CHANGE", "Cambio"),
-    ("DOUBLE_CHANGE", "Doppio cambio"),
-    ("MEDICAL_CHANGE", "Cambio medico"),
-    ("YELLOW_CARD", "Cartellino giallo"),
-    ("RED_CARD", "Cartellino rosso"),
-    ("SCORED_POINT", "Punto generico eseguito"),
-    ("CONCEDED_POINT", "Punto generico subito"),
-    ("DOUBLE_FAULT", "Palla contesa")
-]
+# EVENT_TYPE_CHOICES = [
+#     ("TECHNICAL_TIMEOUT", "TimeOut tecnico"),
+#     ("CHANGE", "Cambio"),
+#     ("DOUBLE_CHANGE", "Doppio cambio"),
+#     ("MEDICAL_CHANGE", "Cambio medico"),
+#     ("YELLOW_CARD", "Cartellino giallo"),
+#     ("RED_CARD", "Cartellino rosso"),
+#     ("SCORED_POINT", "Punto generico eseguito"),
+#     ("CONCEDED_POINT", "Punto generico subito"),
+#     ("DOUBLE_FAULT", "Palla contesa")
+# ]
 
 
 class Event(models.Model):
-    event_type = models.CharField(max_length=30, choices=EVENT_TYPE_CHOICES, verbose_name="Tipo evento")
+    event_type = models.CharField(max_length=30, verbose_name="Tipo evento")
 
     class Meta:
         verbose_name = "Evento"
@@ -94,29 +94,29 @@ class Team(models.Model):
         return f"Team: {self.name}"
 
 
-FUNDAMENTAL_TYPE_CHOICES = [
-   ( "SERVE", "Servizio"),
-    ("SERVE_RECEIVE", "Ricezione"),
-    ("SET", "Alzata"),
-    ("ATTACK", "Attacco"),
-    ("BLOCK", "Muro"),
-    ("DEFENSE", "Difesa")
-]
+# FUNDAMENTAL_TYPE_CHOICES = [
+#    ( "SERVE", "Servizio"),
+#     ("SERVE_RECEIVE", "Ricezione"),
+#     ("SET", "Alzata"),
+#     ("ATTACK", "Attacco"),
+#     ("BLOCK", "Muro"),
+#     ("DEFENSE", "Difesa")
+# ]
 
-TOUCH_RESULT_CHOICES = [
-    ("POSITIVA", "++"),
-    ("BUONA", "+"),
-    ("NEUTRA", "/"),
-    ("NEGATIVA", "-"),
-    ("ERRORE", "--")
-]
+# TOUCH_RESULT_CHOICES = [
+#     ("POSITIVA", "++"),
+#     ("BUONA", "+"),
+#     ("NEUTRA", "/"),
+#     ("NEGATIVA", "-"),
+#     ("ERRORE", "--")
+# ]
 
 
 class Touch(models.Model):
     set = models.ForeignKey('Set', on_delete=models.CASCADE, related_name='touches')
     player = models.ForeignKey('Player', on_delete=models.CASCADE, null=True, blank=True, related_name='touches')
-    fundamental = models.CharField(max_length=15, choices=FUNDAMENTAL_TYPE_CHOICES, verbose_name="Fondamentale")
-    outcome = models.CharField(max_length=8, choices=TOUCH_RESULT_CHOICES, verbose_name="Esito")
+    fundamental = models.CharField(max_length=15, verbose_name="Fondamentale")
+    outcome = models.CharField(max_length=8, verbose_name="Esito")
 
     class Meta:
         verbose_name = "Tocco"

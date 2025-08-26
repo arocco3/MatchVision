@@ -3,19 +3,6 @@ from django import urls
 from rest_framework.routers import DefaultRouter
 from . import views
 
-# router = DefaultRouter()
-# router.register(r'players', PlayerViewSet)
-# router.register(r'teams', TeamViewSet)
-# router.register(r'matches', MatchViewSet)
-# router.register(r'sets', SetViewSet)
-# router.register(r'touches', TouchViewSet)
-# router.register(r'events', EventViewSet)
-
-# urlpatterns = [
-#     path('', include(router.urls)),
-# ]
-
-
 urlpatterns = [
     # Players
     path('players/', views.getPlayers),
@@ -48,5 +35,9 @@ urlpatterns = [
     # Touches
     path('touches/', views.getTouches),
     path('touches/create/', views.createTouch),
+
+    # Details
+    path('players_details/<int:pk>/', views.getPlayersMatches),
+    path('players_details/<int:pk>/', views.getPlayersTeams),
 
 ]

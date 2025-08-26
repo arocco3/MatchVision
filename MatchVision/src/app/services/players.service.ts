@@ -9,6 +9,18 @@ export interface Player {
   number: number;
   role: string;
 }
+export interface Match {
+  id: number;
+  name: string;
+  timestamp: string;
+  teams: Team[];
+  results: string;
+}
+export interface Team {
+  id: number;
+  name: string;
+  players: Player[];
+}
 
 @Injectable({
   providedIn: 'root' 
@@ -38,5 +50,13 @@ export class PlayersService {
 
   deletePlayer(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/players/delete/${id}/`);
+  }
+  
+  getPlayerTeams(id: number): Observable<Team[]> {
+    return this.http.get<Team[]>(`${this.apiUrl}/players_details/${id}/`);
+  }
+
+  getPlayerMatches(id: number): Observable<Match[]> {
+    return this.http.get<Match[]>(`${this.apiUrl}/players_details/${id}/`);
   }
 }

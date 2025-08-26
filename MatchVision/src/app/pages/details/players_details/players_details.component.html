@@ -9,10 +9,27 @@
 
     <div class="player-details">
         <!-- Info base -->
+         <h1>Info giocatore:</h1>
         <div class="player-info">
             <h2>{{player?.name}} {{player?.surname}}</h2>
             <p>Ruolo: {{player?.role}}</p>
         </div>
+
+        <!-- Matches -->
+        <h2>Partite disputate:</h2>
+@for (match of matches; track match.id){
+        <div class="player-matches">
+            <h2>{{match.name}} {{match.teams}}</h2>
+            <p>Risultati: {{match.results}}</p>
+        </div>
+}
+        <!-- Teams -->
+         <h2>Squadre:</h2>
+@for (team of teams; track team.id){
+        <div class="player-teams">
+            <h2>Nomi teams: {{team.name}}</h2>
+        </div>
+}
     </div>
 
 </body>

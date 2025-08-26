@@ -185,3 +185,20 @@ def createTouch(request):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
+    
+
+
+# Details
+# player teams
+@api_view(['GET'])
+def getPlayersTeams(request, pk):
+    player = Player.objects.get(pk=pk)
+    teams = player.teams.all()
+    return Response(TeamSerializer(teams, many=True).data)
+
+# player matches
+@api_view(['GET'])
+def getPlayersMatches(request, pk):
+    player = Player.objects.get(pk=pk)
+    matches = Match.objects.filter(sets__players=player).distinct()
+    return Response(MatchSerializer(matches, many=True).data)
