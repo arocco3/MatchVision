@@ -3,14 +3,41 @@
 		<h4 class="modal-title" id="modal-basic-title">Cambio giocatori</h4>
 		<button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
 	</div>
-	<div class="modal-body">
+	<div class="modal-body row">
 		
+        <div class="starting-players col">
+            <h3>In campo</h3>
+            <div class="exiting-players">
+                @for (player of starting_players; track $index){
+                    <div class="list"><button class="change-btn" (click)="(this.exitingPlayer = player)">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
+                }
+            </div>
+        </div>
 
+        <div class="bench-players col">
+            <h3>In panchina</h3>
+            <div class="entering-players">
+                @for (player of bench_players; track $index){
+                    <div class="list"><button class="change-btn" (click)="(this.enteringPlayer = player)">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
+                }
+            </div>
+        </div>
 
+        <div class="list" style="padding: 0;">
+            <span class="placeholder col-11 placeholder-xs" style="margin: 2%;"></span>
+        </div>
 
+        <h3>Liberi</h3>
+        <div class="libero col list">
+            <button class="change-btn">{{ libero.number }} | {{ libero.name }} {{ libero.surname }}</button>
+        </div>
+
+        <div class="bench-libero col list">
+            <button class="change-btn">{{ bench_libero.number }} | {{ bench_libero.name }} {{ bench_libero.surname }}</button>
+        </div>
 
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-secondary" (click)="modal.close()">Conferma</button>
+		<button type="button" class="btn btn-outline-secondary" (click)="modal.close()" (click)="changePlayers()">Conferma</button>
 	</div>
 </ng-template>

@@ -8,7 +8,7 @@ import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersM
     standalone: true,
     imports: [
     RouterModule,
-    ChangePlayersModalComponent
+    ChangePlayersModalComponent,
 ],
     templateUrl: './game.html',
     styleUrls: ['./game.scss']
@@ -18,7 +18,7 @@ export class GameComponent{
 
      @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent;
 
-        // Coordinates [x%, y%]
+    // Coordinates [x%, y%]
     pos: [number, number][] = [
         [15, 80], // pos 1
         [42, 80], // pos 2
@@ -31,9 +31,12 @@ export class GameComponent{
     libero_pos: [number, number] = [0, 99] // Libero
 
     score = {home: 0, guests: 0};
+
+    // To insert a touch
     selectedPlayer: any = null;
     selectedFundamental: string = '';
     selectedOutcome: string = '';
+
     //players: Player[] = [];
 
     // players di prova sarbbero i titolari
@@ -53,11 +56,16 @@ export class GameComponent{
         { id: 8, name: "1luca1",   surname: "Rossi",   number: 8, role: "Setter"},
         { id: 9, name: "Marco2",  surname: "Bianchi", number: 9, role: "Opposto" },
         { id: 10, name: "Gianni3r4", surname: "Verdi",   number: 10, role: "Centrale"},
-        { id: 11, name: "Paolo34",  surname: "Neri",    number: 11, role: "Schiacciatore"},
+        { id: 11, name: "Paolo34",  surname: "Neri",  number: 11, role: "Schiacciatore"},
         { id: 12, name: "Andrea34t3", surname: "Russo",   number: 12, role: "Centrale"},
         { id: 13, name: "Matteo3t3", surname: "Ferrari", number: 13, role: "Schiacciatore"}
     ];
 
+    bench_libero: Player = { id: 14, name: "Simoneee", surname: "Galliiii",  number: 14, role: "Libero"};
+
+    // To change players
+    changeCounter: number = 3
+    doubleChangeCounter: number = 2
     
     increaseScore(team: 'home' | 'guests') {
         this.score[team]++;

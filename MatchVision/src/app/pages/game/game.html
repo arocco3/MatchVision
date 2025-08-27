@@ -38,7 +38,13 @@
 
 
     <!-- Modal for players changes -->
-     <app-change-players-modal [starting_players]="this.players"></app-change-players-modal>
+     <app-change-players-modal [starting_players]="this.players"
+        [bench_players]="this.players_in_panchina"
+        [libero]="this.libero"
+        [bench_libero]="this.bench_libero"
+        [changeCounter]="this.changeCounter"
+        [doubleChangeCounter]="this.doubleChangeCounter">
+      </app-change-players-modal>
 
 
     <!-- bottom bar -->
