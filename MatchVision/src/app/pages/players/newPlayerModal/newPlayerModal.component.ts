@@ -1,7 +1,7 @@
 import { Player, PlayersService } from '../../../services/players.service'
 
-import { Component, EventEmitter, inject, Input, Output, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, inject, Output, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'
 
 @Component({

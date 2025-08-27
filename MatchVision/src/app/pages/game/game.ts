@@ -1,18 +1,22 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Player } from '../../services/players.service';
+import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersModal.component";
 
 @Component({
     selector: 'app-game',
     standalone: true,
     imports: [
-        RouterModule,
-    ],
+    RouterModule,
+    ChangePlayersModalComponent
+],
     templateUrl: './game.html',
     styleUrls: ['./game.scss']
 })
 
 export class GameComponent{
+
+     @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent;
 
         // Coordinates [x%, y%]
     pos: [number, number][] = [
@@ -82,8 +86,8 @@ export class GameComponent{
     }
 
     //change player
-    change_player(): void {
-        //apre modale e scambia i giocatori tra le due liste
+    change_players(): void {
+        this.changePlayersModal.open();
     }
 
     endSet() {

@@ -36,10 +36,15 @@
               [style.left.%]="libero_pos[0]" [style.top.%]="libero_pos[1]" (click)="insertTouch(libero)">{{ libero.number }}</button>
     </div>
 
+
+    <!-- Modal for players changes -->
+     <app-change-players-modal [starting_players]="this.players"></app-change-players-modal>
+
+
     <!-- bottom bar -->
     <div class="d-flex justify-content-between align-items-center bottom-bar p-2" style="background-color: red; margin-top: 2%;">
       <button (click)="toggleEventMenu()">Registra evento</button>
-      <button (click)="change_player()">Cambio</button>
+      <button (click)="change_players()">Cambio</button>
       <button (click)="do_rotation()">Rotazione</button>
       <button (click)="endSet()">Fine set</button>
     </div>
