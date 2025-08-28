@@ -1,7 +1,8 @@
-import { Component, signal, ViewChild } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { Player } from '../../services/players.service';
-import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersModal.component";
+import { Component, ViewChild } from '@angular/core'
+import { RouterModule } from '@angular/router'
+import { Player } from '../../services/players.service'
+import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersModal.component"
+import { NewTouchModalComponent } from "./newTouchModal/newTouchModal.component"
 
 @Component({
     selector: 'app-game',
@@ -9,6 +10,7 @@ import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersM
     imports: [
     RouterModule,
     ChangePlayersModalComponent,
+    NewTouchModalComponent
 ],
     templateUrl: './game.html',
     styleUrls: ['./game.scss']
@@ -16,7 +18,8 @@ import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersM
 
 export class GameComponent{
 
-     @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent;
+     @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent
+     @ViewChild(NewTouchModalComponent) newTouchModal!: NewTouchModalComponent
 
     // Coordinates [x%, y%]
     pos: [number, number][] = [
@@ -30,12 +33,12 @@ export class GameComponent{
 
     libero_pos: [number, number] = [0, 99] // Libero
 
-    score = {home: 0, guests: 0};
+    score = {home: 0, guests: 0}
 
     // To insert a touch
-    selectedPlayer: any = null;
-    selectedFundamental: string = '';
-    selectedOutcome: string = '';
+    selectedPlayer!: any
+    selectedFundamental!: string
+    selectedOutcome!: string
 
     //players: Player[] = [];
 
@@ -47,7 +50,7 @@ export class GameComponent{
         { id: 4, name: "Paolo",  surname: "Neri",    number: 4, role: "Schiacciatore"},
         { id: 5, name: "Andrea", surname: "Russo",   number: 5, role: "Centrale"},
         { id: 6, name: "Matteo", surname: "Ferrari", number: 6, role: "Schiacciatore"}
-    ];
+    ]
 
     libero: Player = { id: 7, name: "Simone", surname: "Galli",  number: 7, role: "Libero"};
 
@@ -59,9 +62,9 @@ export class GameComponent{
         { id: 11, name: "Paolo34",  surname: "Neri",  number: 11, role: "Schiacciatore"},
         { id: 12, name: "Andrea34t3", surname: "Russo",   number: 12, role: "Centrale"},
         { id: 13, name: "Matteo3t3", surname: "Ferrari", number: 13, role: "Schiacciatore"}
-    ];
+    ]
 
-    bench_libero: Player = { id: 14, name: "Simoneee", surname: "Galliiii",  number: 14, role: "Libero"};
+    bench_libero: Player = { id: 14, name: "Simoneee", surname: "Galliiii",  number: 14, role: "Libero"}
 
     // To change players
     changeCounter: number = 3
@@ -77,12 +80,13 @@ export class GameComponent{
 
     // cancelLastAction(){}
 
-    toggleEventMenu() {
-        throw new Error('Method not implemented.');
-    }
+    // toggleEventMenu() {
+    //     throw new Error('Method not implemented.');
+    // }
 
-    insertTouch(p: Player) {
-        console.log("Premuto su insertouch di", p.id, p.name );
+    // Inserting a new touch for the player
+    openNewTouchModal(p: Player) {
+        this.newTouchModal.open();
     }
 
     // Rotation of players
@@ -94,7 +98,7 @@ export class GameComponent{
     }
 
     //change player
-    openModalChangePlayers(): void {
+    openChangePlayersModal(): void {
         this.changePlayersModal.open();
     }
 
@@ -102,6 +106,14 @@ export class GameComponent{
         let temp = this.libero
         this.libero = this.bench_libero
         this.bench_libero = temp
+    }
+
+    registerNewTouch(): void{
+        
+    }
+
+    openNewEventModal(): void {
+
     }
 
     endSet() {

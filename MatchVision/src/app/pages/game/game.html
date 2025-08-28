@@ -30,15 +30,16 @@
       <!-- Players icons -->
 @for (player of players; track $index){
         <button class="player-icon btn btn-primary position-absolute" [style.left.%]="pos[$index][0]" [style.top.%]="pos[$index][1]"
-          (click)="insertTouch(player)">{{ player.number }}</button>
+          (click)="openNewTouchModal(player)">{{ player.number }}</button>
 }          <!-- Positioning libero -->
-            <button class="player-icon btn btn-primary position-absolute" 
-              [style.left.%]="libero_pos[0]" [style.top.%]="libero_pos[1]" (click)="insertTouch(libero)">{{ libero.number }}</button>
+        <button class="player-icon btn btn-primary position-absolute" 
+          [style.left.%]="libero_pos[0]" [style.top.%]="libero_pos[1]" (click)="openNewTouchModal(libero)">{{ libero.number }}</button>
     </div>
 
 
     <!-- Modal for players changes -->
-     <app-change-players-modal [starting_players]="this.players"
+     <app-change-players-modal 
+        [starting_players]="this.players"
         [bench_players]="this.players_in_panchina"
         [libero]="this.libero"
         [bench_libero]="this.bench_libero"
@@ -47,11 +48,20 @@
         (swapLiberosClicked)="swapLiberos()">
       </app-change-players-modal>
 
+      <!-- Modal for a new touch -->
+      <app-new-touch-modal
+        [touchType]="this.selectedFundamental"
+        [touchQuality]="this.selectedOutcome"
+        [player]="this.selectedPlayer"
+        (newTouchCreated)="registerNewTouch()">
+
+      </app-new-touch-modal>
+
 
     <!-- bottom bar -->
     <div class="d-flex justify-content-between align-items-center bottom-bar p-2" style="background-color: red; margin-top: 2%;">
-      <button (click)="toggleEventMenu()">Registra evento</button>
-      <button (click)="openModalChangePlayers()">Cambio</button>
+      <button (click)="openNewEventModal()">Registra evento</button>
+      <button (click)="openChangePlayersModal()">Cambio</button>
       <button (click)="do_rotation()">Rotazione</button>
       <button (click)="endSet()">Fine set</button>
     </div>

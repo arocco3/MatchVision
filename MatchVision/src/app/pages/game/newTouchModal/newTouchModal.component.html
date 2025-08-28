@@ -1,0 +1,44 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Registra tocco</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+	</div>
+	<div class="modal-body row">
+		
+        <div class="col touch-type">
+            <div class="btn-group-vertical btn-group-lg" role="group" aria-label="Touches list">
+                <input type="radio" class="btn-check" name="touches-radio" id="serve-btn" value="Battuta" [(ngModel)]="touchType">
+                <label class="btn btn-outline-secondary" for="serve-btn">Battuta</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="receive-btn" value="Ricezione" [(ngModel)]="touchType">
+                <label class="btn btn-outline-secondary" for="receive-btn">Ricezione</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="defense-btn" value="Difesa" [(ngModel)]="touchType">
+                <label class="btn btn-outline-secondary" for="defense-btn">Difesa</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="set-btn" value="Alzata" [(ngModel)]="touchType">
+                <label class="btn btn-outline-secondary" for="set-btn">Alzata</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="spike-btn" value="Attacco" [(ngModel)]="touchType">
+                <label class="btn btn-outline-secondary" for="spike-btn">Attacco</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="block-btn" value="Muro" [(ngModel)]="touchType">
+                <label class="btn btn-outline-secondary" for="block-btn">Muro</label>
+            </div>
+        </div>
+
+        <div class="col touch-quality">
+            <div class="btn-group-vertical btn-group-lg" role="group" aria-label="Quality touches list">
+                <input type="radio" class="btn-check" name="quality-radio" id="++-btn" value="++" [(ngModel)]="touchQuality">
+                <label class="btn btn-outline-secondary bg-success bg-gradient" for="++-btn">++</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="+-btn" value="+" [(ngModel)]="touchQuality">
+                <label class="btn btn-outline-secondary bg-primary bg-gradient" for="+-btn">+</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="!-btn" value="!" [(ngModel)]="touchQuality">
+                <label class="btn btn-outline-secondary" for="!-btn">!</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="—-btn" value="—" [(ngModel)]="touchQuality">
+                <label class="btn btn-outline-secondary bg-warning bg-gradient" for="—-btn">—</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="— —-btn" value="— —" [(ngModel)]="touchQuality">
+                <label class="btn btn-outline-secondary bg-danger bg-gradient" for="— —-btn">— —</label>
+            </div>
+        </div>
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary" (click)="modal.close()" (click)="notifyNewTouch()">Conferma</button>
+	</div>
+</ng-template>
