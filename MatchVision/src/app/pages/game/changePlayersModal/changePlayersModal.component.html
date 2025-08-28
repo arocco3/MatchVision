@@ -28,16 +28,18 @@
         </div>
 
         <h3>Liberi</h3>
-        <div class="libero col list">
-            <button class="change-btn">{{ libero.number }} | {{ libero.name }} {{ libero.surname }}</button>
-        </div>
-
-        <div class="bench-libero col list">
-            <button class="change-btn">{{ bench_libero.number }} | {{ bench_libero.name }} {{ bench_libero.surname }}</button>
+        <div class="row">
+            <div class="libero col list">
+                <button class="change-btn">{{ libero.number }} | {{ libero.name }} {{ libero.surname }}</button>
+            </div>
+            <!-- swap image --><div class="col-2 list"><img src="/icons/swap-icon.png" alt="Scambia liberi" (click)="change_confirmed = !change_confirmed"></div>
+            <div class="bench-libero col list">
+                <button class="change-btn">{{ bench_libero.number }} | {{ bench_libero.name }} {{ bench_libero.surname }}</button>
+            </div>
         </div>
 
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-secondary" (click)="modal.close()" (click)="changePlayers()">Conferma</button>
+		<button type="button" class="btn btn-outline-secondary" (click)="modal.close()" (click)="changePlayers()" (click)="swapLiberos()">Conferma</button>
 	</div>
 </ng-template>

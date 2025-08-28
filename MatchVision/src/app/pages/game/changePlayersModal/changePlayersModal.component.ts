@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, inject, TemplateRef, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Player } from '../../../services/players.service';
 
@@ -21,6 +21,9 @@ export class ChangePlayersModalComponent implements OnInit {
   @Input() bench_libero!: Player
   @Input() changeCounter!: number
   @Input() doubleChangeCounter!: number
+  
+  @Output() swapLiberosClicked = new EventEmitter<void>();
+  change_confirmed: boolean = false
 
   enteringPlayer!: Player;
   exitingPlayer!: Player;
@@ -38,9 +41,14 @@ export class ChangePlayersModalComponent implements OnInit {
       this.bench_players.splice(this.bench_players.indexOf(this.enteringPlayer), 1)
       this.bench_players.push(this.exitingPlayer)
     }
-      
+
   }
 
+  swapLiberos(): void {
+    if(this.change_confirmed)
+      this.swapLiberosClicked.emit();
+    this.change_confirmed=false
+  }
 
   open() {
 		this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title', size: "lg" });

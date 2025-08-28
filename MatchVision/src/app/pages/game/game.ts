@@ -94,8 +94,14 @@ export class GameComponent{
     }
 
     //change player
-    change_players(): void {
+    openModalChangePlayers(): void {
         this.changePlayersModal.open();
+    }
+
+    swapLiberos(): void {
+        let temp = this.libero
+        this.libero = this.bench_libero
+        this.bench_libero = temp
     }
 
     endSet() {

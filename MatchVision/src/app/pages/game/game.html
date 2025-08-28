@@ -43,14 +43,15 @@
         [libero]="this.libero"
         [bench_libero]="this.bench_libero"
         [changeCounter]="this.changeCounter"
-        [doubleChangeCounter]="this.doubleChangeCounter">
+        [doubleChangeCounter]="this.doubleChangeCounter"
+        (swapLiberosClicked)="swapLiberos()">
       </app-change-players-modal>
 
 
     <!-- bottom bar -->
     <div class="d-flex justify-content-between align-items-center bottom-bar p-2" style="background-color: red; margin-top: 2%;">
       <button (click)="toggleEventMenu()">Registra evento</button>
-      <button (click)="change_players()">Cambio</button>
+      <button (click)="openModalChangePlayers()">Cambio</button>
       <button (click)="do_rotation()">Rotazione</button>
       <button (click)="endSet()">Fine set</button>
     </div>
