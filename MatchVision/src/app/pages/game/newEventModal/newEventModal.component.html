@@ -1,0 +1,21 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-new-event">Registra tocco</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+	</div>
+	<div class="modal-body">
+        <div class="btn-group-vertical btn-group-lg" role="group" aria-label="Touches list">
+            <input type="radio" class="btn-check" name="events-radio" id="time-out-btn" value="Technical time-out" [(ngModel)]="eventType">
+            <label class="btn btn-outline-secondary" for="time-out-btn">Time-out <img src="/icons/time-out-icon.png" alt="time-out-icon"></label>
+            <input type="radio" class="btn-check" name="events-radio" id="red-card-btn" value="Red card" [(ngModel)]="eventType">
+            <label class="btn btn-outline-secondary" for="red-card-btn">Cartellino rosso <img src="/icons/cards-icon.png" alt="cards-icon"></label>
+            <input type="radio" class="btn-check" name="events-radio" id="yellow-card-btn" value="Yellow card" [(ngModel)]="eventType">
+            <label class="btn btn-outline-secondary" for="yellow-card-btn">Cartellino giallo <img src="/icons/cards-icon.png" alt="cards-icon"></label>
+            <input type="radio" class="btn-check" name="events-radio" id="double-fault-btn" value="Double fault" [(ngModel)]="eventType">
+            <label class="btn btn-outline-secondary" for="double-fault-btn">Palla contesa <img src="/icons/double-fault-icon.png" alt="cards-icon"></label>
+        </div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary" (click)="modal.close()" (click)="notifyNewEvent()">Conferma</button>
+	</div>
+</ng-template>

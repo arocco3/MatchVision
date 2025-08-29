@@ -48,6 +48,6 @@ export class ChangePlayersModalComponent implements OnInit {
   }
 
   open() {
-    this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title', size: 'lg' });
+    this.modalService.open(this.content, { ariaLabelledBy: 'modal-change-players', size: 'lg' });
   }
 }

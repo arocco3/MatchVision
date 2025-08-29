@@ -1,8 +1,9 @@
 import { Component, ViewChild } from '@angular/core'
-import { RouterModule } from '@angular/router'
+import { EventType, RouterModule } from '@angular/router'
 import { Player } from '../../services/players.service'
 import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersModal.component"
 import { NewTouchModalComponent } from "./newTouchModal/newTouchModal.component"
+import { NewEventModalComponent } from './newEventModal/newEventModal.component'
 
 @Component({
     selector: 'app-game',
@@ -10,7 +11,8 @@ import { NewTouchModalComponent } from "./newTouchModal/newTouchModal.component"
     imports: [
     RouterModule,
     ChangePlayersModalComponent,
-    NewTouchModalComponent
+    NewTouchModalComponent,
+    NewEventModalComponent
 ],
     templateUrl: './game.html',
     styleUrls: ['./game.scss']
@@ -20,6 +22,7 @@ export class GameComponent{
 
      @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent
      @ViewChild(NewTouchModalComponent) newTouchModal!: NewTouchModalComponent
+     @ViewChild(NewEventModalComponent) newEventModal!: NewEventModalComponent
 
     // Coordinates [x%, y%]
     pos: [number, number][] = [
@@ -36,7 +39,7 @@ export class GameComponent{
     score = {home: 0, guests: 0}
 
     // To insert a touch
-    selectedPlayer!: any
+    selectedPlayer!: Player
     selectedFundamental!: string
     selectedOutcome!: string
 
@@ -69,6 +72,10 @@ export class GameComponent{
     // To change players
     changeCounter: number = 3
     doubleChangeCounter: number = 2
+
+    // To register events
+    eventType!: string
+    leftTimeOuts: number = 3
     
     increaseScore(team: 'home' | 'guests') {
         this.score[team]++;
@@ -80,24 +87,18 @@ export class GameComponent{
 
     // cancelLastAction(){}
 
-    // toggleEventMenu() {
-    //     throw new Error('Method not implemented.');
-    // }
-
     // Inserting a new touch for the player
     openNewTouchModal(p: Player) {
         this.newTouchModal.open();
     }
 
-    // Rotation of players
-    do_rotation(): void {
-        const last = this.pos.pop();
-        if (last) {
-            this.pos.unshift(last);
-        }
+    registerNewTouch(): void {
+        // this.selectedPlayer
+        // this.selectedFundamental
+        // this.selectedOutcome
     }
 
-    //change player
+    // Change players
     openChangePlayersModal(): void {
         this.changePlayersModal.open();
     }
@@ -108,12 +109,20 @@ export class GameComponent{
         this.bench_libero = temp
     }
 
-    registerNewTouch(): void{
-        
+    openNewEventModal(): void {
+        this.newEventModal.open();
     }
 
-    openNewEventModal(): void {
+    registerNewEvent(): void {
+        // this.eventType...
+    }
 
+    // Rotation of players
+    do_rotation(): void {
+        const last = this.pos.pop();
+        if (last) {
+            this.pos.unshift(last);
+        }
     }
 
     endSet() {

@@ -27,7 +27,9 @@ export class NewTouchModalComponent{
     }
 
     open() {
-		this.modalService.open(this.content, { ariaLabelledBy: 'modal-basic-title' })
+        this.touchType = '';
+        this.touchQuality = '';
+		this.modalService.open(this.content, { ariaLabelledBy: 'modal-new-touch' })
 	}
 
 }
