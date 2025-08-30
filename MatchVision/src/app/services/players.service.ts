@@ -1,27 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface Player {
-  id: number;
-  name: string;
-  surname: string;
-  number: number;
-  role: string;
-}
-export interface Match {
-  id: number;
-  name: string;
-  timestamp: string;
-  teams: Team[];
-  results: string;
-}
-export interface Team {
-  id: number;
-  name: string;
-  players: Player[];
-}
-
+import { Match } from '../Models/Match';
+import { Player } from '../Models/Player';
+import { Team } from '../Models/Team';
 @Injectable({
   providedIn: 'root' 
 })

@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-export interface Match {
-  
-}
+import { Match } from '../Models/Match';
 
 @Injectable({
   providedIn: 'root'
