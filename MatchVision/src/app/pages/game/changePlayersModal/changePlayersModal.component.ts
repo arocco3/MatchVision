@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, inject, TemplateRef, ViewChild, Output, EventEmitter } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { Player } from '../../../services/players.service'
+import { Player } from '../../../Models/Player'
 
 @Component({
   selector: 'app-change-players-modal',

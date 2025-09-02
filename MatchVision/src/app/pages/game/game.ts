@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core'
-import { EventType, RouterModule } from '@angular/router'
-import { Player } from '../../services/players.service'
+import { RouterModule } from '@angular/router'
 import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersModal.component"
 import { NewTouchModalComponent } from "./newTouchModal/newTouchModal.component"
 import { NewEventModalComponent } from './newEventModal/newEventModal.component'
+import { Player, Role } from '../../Models/Player'
 
 @Component({
     selector: 'app-game',
@@ -47,27 +47,27 @@ export class GameComponent{
 
     // players di prova sarbbero i titolari
     players: Player[] = [
-        { id: 1, name: "Luca",   surname: "Rossi",   number: 1, role: "Setter"},
-        { id: 2, name: "Marco",  surname: "Bianchi", number: 2, role: "Opposto" },
-        { id: 3, name: "Gianni", surname: "Verdi",   number: 3, role: "Centrale"},
-        { id: 4, name: "Paolo",  surname: "Neri",    number: 4, role: "Schiacciatore"},
-        { id: 5, name: "Andrea", surname: "Russo",   number: 5, role: "Centrale"},
-        { id: 6, name: "Matteo", surname: "Ferrari", number: 6, role: "Schiacciatore"}
+        { id: 1, name: "Luca",   surname: "Rossi",   number: 1, role: Role.SETTER },
+        { id: 2, name: "Marco",  surname: "Bianchi", number: 2, role: Role.OPPOSITE_HITTER },
+        { id: 3, name: "Gianni", surname: "Verdi",   number: 3, role: Role.MIDDLE_BLOCKER },
+        { id: 4, name: "Paolo",  surname: "Neri",    number: 4, role: Role.OUTSIDE_HITTER },
+        { id: 5, name: "Andrea", surname: "Russo",   number: 5, role: Role.MIDDLE_BLOCKER },
+        { id: 6, name: "Matteo", surname: "Ferrari", number: 6, role: Role.OUTSIDE_HITTER }
     ]
 
-    libero: Player = { id: 7, name: "Simone", surname: "Galli",  number: 7, role: "Libero"};
+    libero: Player = { id: 7, name: "Simone", surname: "Galli",  number: 7, role: Role.LIBERO};
 
     // panchinari
     players_in_panchina: Player[] = [
-        { id: 8, name: "1luca1",   surname: "Rossi",   number: 8, role: "Setter"},
-        { id: 9, name: "Marco2",  surname: "Bianchi", number: 9, role: "Opposto" },
-        { id: 10, name: "Gianni3r4", surname: "Verdi",   number: 10, role: "Centrale"},
-        { id: 11, name: "Paolo34",  surname: "Neri",  number: 11, role: "Schiacciatore"},
-        { id: 12, name: "Andrea34t3", surname: "Russo",   number: 12, role: "Centrale"},
-        { id: 13, name: "Matteo3t3", surname: "Ferrari", number: 13, role: "Schiacciatore"}
+        { id: 8, name: "1luca1",   surname: "Rossi",   number: 8, role: Role.SETTER },
+        { id: 9, name: "Marco2",  surname: "Bianchi", number: 9, role: Role.OPPOSITE_HITTER },
+        { id: 10, name: "Gianni3r4", surname: "Verdi",   number: 10, role: Role.MIDDLE_BLOCKER },
+        { id: 11, name: "Paolo34",  surname: "Neri",  number: 11, role: Role.OUTSIDE_HITTER },
+        { id: 12, name: "Andrea34t3", surname: "Russo",   number: 12, role: Role.MIDDLE_BLOCKER },
+        { id: 13, name: "Matteo3t3", surname: "Ferrari", number: 13, role: Role.OUTSIDE_HITTER }
     ]
 
-    bench_libero: Player = { id: 14, name: "Simoneee", surname: "Galliiii",  number: 14, role: "Libero"}
+    bench_libero: Player = { id: 14, name: "Simoneee", surname: "Galliiii",  number: 14, role: Role.LIBERO}
 
     // To change players
     changeCounter: number = 3

@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-4 mx-auto">
                     <div class="input-group mx-auto">
-                        <input type="text" class="form-control" placeholder="Cerca tra le squadre..." aria-label="Cerca tra le squadre" aria-describedby="button-addon2">
+                        <input type="text" class="form-control" placeholder="Cerca tra le squadre..." aria-label="Cerca tra le squadre" aria-describedby="button-addon2" [(ngModel)]="searchText">
                         <button class="btn btn-outline-secondary" type="button" id="button-addon2">Cerca</button>
                     </div>
                 </div>
@@ -22,33 +22,27 @@
         </div>
 
         <!-- Teams list -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 teams-list">
 
+@for (team of filteredTeams; track team.id){
             <div class="col">    
                 <div class="card mb-3">
+                    <button [ngClass]="this.showDeleteButtons ? 'btn-del-team': 'btn-del-team-hidden'" (click)="deleteTeam(team.id)">—</button>
                     <div class="card-body">
-                        <h5 class="card-title">BottaVolley 1div</h5>
-                        <!-- <h5 class="card-title">{{team.name}}</h5> -->
-                        <a class="btn btn-primary mt-3" [routerLink]="['/teams_details']" routerLinkActive="router-link-active">Dettagli</a>
+                        <h5 class="card-title">{{team.name}}</h5>
+                        <a class="btn btn-primary mt-3" [routerLink]="['/team_details/', team.id]" routerLinkActive="router-link-active">Dettagli</a>
                     </div>
                 </div>    
             </div>
-
-            <div class="col">    
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">BottaVolley serie d</h5>
-                        <!-- <h5 class="card-title">{{team.name}}</h5> -->
-                        <a class="btn btn-primary mt-3" [routerLink]="['/teams_details']" routerLinkActive="router-link-active">Dettagli</a>
-                    </div>
-                </div>    
-            </div>
-
+}
         </div>
 
-        <button type="button" class="btn btn-floating" data-bs-toggle="modal" data-bs-target="#newTeamModal">+</button>
+        <button type="button" class="btn btn-floating manage-teams" (click)="toggleDeleteMode()">{{ showDeleteButtons ? 'Fatto' : 'Modifica partite' }}</button>
+        <button type="button" class="btn btn-floating" data-bs-toggle="modal" (click)="openNewTeamModal()">+</button>
 
     </div>
+
+    <app-new-team-modal></app-new-team-modal>
 
 </body>
 </html>

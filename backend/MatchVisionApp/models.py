@@ -84,7 +84,7 @@ class Match(models.Model):
 
 class Team(models.Model):
     name = models.CharField(max_length=100, verbose_name="Nome squadra")
-    players = models.ManyToManyField(Player, related_name='teams', blank=True)
+    playersList = models.ManyToManyField(Player, related_name='teams', blank=True)
 
     class Meta:
         verbose_name = "Squadra"

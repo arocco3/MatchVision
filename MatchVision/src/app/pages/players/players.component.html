@@ -37,7 +37,7 @@
                     <td>{{player.name}}</td>
                     <td>{{player.surname}}</td>
                     <td>{{player.role}}</td>
-                    <td><a class="btn btn-primary" [routerLink]="['/players_details/', player.id]" routerLinkActive="router-link-active">Dettagli</a>  
+                    <td><a class="btn btn-primary" [routerLink]="['/player_details/', player.id]" routerLinkActive="router-link-active">Dettagli</a>  
                         <button style="margin-left: 5%;" class="btn btn-secondary" (click)="deletePlayer(player.id)"><img src="/icons/delete-icon.png"></button></td>
                 </tr>
             </tbody>

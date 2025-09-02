@@ -1,5 +1,3 @@
-
-
 export enum Role {
   SETTER = 'SETTER',
   OUTSIDE_HITTER = 'OUTSIDE_HITTER',
@@ -10,9 +8,10 @@ export enum Role {
 
 export class Player {
   constructor(
+    public id: number,
     public name: string,
     public surname: string,
-    public number: number,
-    public role: Role
+    public number: number | null,
+    public role: Role | ''
   ) {}
 }

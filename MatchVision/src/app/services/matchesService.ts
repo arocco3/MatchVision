@@ -8,7 +8,7 @@ import { Match } from '../Models/Match';
 })
 export class MatchesService {
 
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'http://localhost:8000';
   
     constructor(private http: HttpClient) {}
   

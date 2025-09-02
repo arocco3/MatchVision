@@ -1,6 +1,4 @@
-from django.urls import path, include
-from django import urls
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 from . import views
 
 urlpatterns = [
@@ -37,7 +35,11 @@ urlpatterns = [
     path('touches/create/', views.createTouch),
 
     # Details
-    path('players_details/<int:pk>/', views.getPlayersMatches),
-    path('players_details/<int:pk>/', views.getPlayersTeams),
+    path('player_details/<int:pk>/', views.getPlayersMatches),
+    path('player_details/<int:pk>/', views.getPlayersTeams),
+    path('team_details/<int:pk>/', views.getTeamMatches),
+    path('team_details/<int:pk>/', views.getTeamPlayers),
+    path('match_details/<int:pk>/', views.getMatchTeams),
+    # path('match_details/<int:pk>/', views.getMatchStats),
 
 ]

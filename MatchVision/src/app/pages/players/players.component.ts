@@ -1,16 +1,9 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PlayersService } from '../../services/players.service';
+import { PlayersService } from '../../services/playersService';
 import { NewPlayerModalComponent } from './newPlayerModal/newPlayerModal.component';
 import { FormsModule } from '@angular/forms';
-
-interface Player {
-  id: number;
-  name: string;
-  surname: string;
-  number: number;
-  role: string;
-}
+import { Player } from '../../Models/Player';
 
 @Component({
   selector: 'app-players',
@@ -74,9 +67,8 @@ export class PlayersComponent implements OnInit{
   return this.players.filter(p =>
     p.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
     p.surname.toLowerCase().includes(this.searchText.toLowerCase()) ||
-    p.role.toLowerCase().includes(this.searchText.toLowerCase())
+    p.role!.toLowerCase().includes(this.searchText.toLowerCase())
   );
 }
-
 
 }

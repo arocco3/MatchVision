@@ -11,7 +11,7 @@
         <!-- Info base -->
          <h1>Info giocatore:</h1>
         <div class="player-info">
-            <h2>{{player?.name}} {{player?.surname}}</h2>
+            <h2>{{ player?.name }} {{ player?.surname }}</h2>
             <p>Ruolo: {{player?.role}}</p>
         </div>
 
@@ -19,8 +19,8 @@
         <h2>Partite disputate:</h2>
 @for (match of matches; track match.id){
         <div class="player-matches">
-            <h2>{{match.name}} {{match.teams}}</h2>
-            <p>Risultati: {{match.results}}</p>
+            <h2>{{ match.name }} {{ match.team1 }} - {{ match.team2 }}</h2>
+            <p>Risultati: {{match.result}}</p>
         </div>
 }
         <!-- Teams -->

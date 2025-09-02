@@ -1,0 +1,20 @@
+    <!-- Modal -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="new-match-modal">Nuova partita</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Dismiss click')"></button>
+  </div>
+
+  <div class="modal-body">
+    <form #matchForm="ngForm" (ngSubmit)="saveMatch(matchForm, modal)">
+      
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('Cancel click')">Annulla</button>
+        <button type="submit" class="btn btn-primary" [disabled]="matchForm.invalid">Salva</button>
+      </div>
+
+    </form>
+  </div>
+</ng-template>

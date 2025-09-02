@@ -1,8 +1,9 @@
-import { Player, PlayersService } from '../../../services/players.service'
+import { PlayersService } from '../../../services/playersService'
 
 import { Component, EventEmitter, inject, Output, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'
+import { Player } from '../../../Models/Player';
 
 @Component({
 	selector: 'app-new-player-modal',
@@ -22,9 +23,10 @@ export class NewPlayerModalComponent {
     id: 0,
     name: '',
     surname: '',
-    number: 0,
+    number: null,
     role: ''
   };
+
 
   @Output() playerCreated = new EventEmitter<void>();
 
@@ -54,7 +56,7 @@ export class NewPlayerModalComponent {
         error: (err) => console.error('Errore salvataggio nuovo player', err)
       });
       // Reset form
-      this.newPlayer = { id: 0, name: '', surname: '', number: 0, role: '' };
+      this.newPlayer = { id: 0, name: '', surname: '', number: null, role: '' };
     }
   }
      

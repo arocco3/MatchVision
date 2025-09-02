@@ -189,16 +189,37 @@ def createTouch(request):
 
 
 # Details
-# player teams
+# teams with player
 @api_view(['GET'])
 def getPlayersTeams(request, pk):
     player = Player.objects.get(pk=pk)
-    teams = player.teams.all()
+    teams = Team.objects.filter(matches__sets__players=player).distinct()
     return Response(TeamSerializer(teams, many=True).data)
 
-# player matches
+# matches with player
 @api_view(['GET'])
 def getPlayersMatches(request, pk):
     player = Player.objects.get(pk=pk)
     matches = Match.objects.filter(sets__players=player).distinct()
+    return Response(MatchSerializer(matches, many=True).data)
+
+# team of the match
+@api_view(['GET'])
+def getMatchTeams(request, pk):
+    match = Match.objects.get(pk=pk)
+    teams = match.teams.all()
+    return Response(TeamSerializer(teams, many=True).data)
+
+# players of the team
+@api_view(['GET'])
+def getTeamPlayers(request, pk):
+    team = Team.objects.get(pk=pk)
+    players = Player.objects.filter(sets__match__teams=team).distinct()
+    return Response(PlayerSerializer(players, many=True).data)
+
+# matches of a team
+@api_view(['GET'])
+def getTeamMatches(request, pk):
+    team = Team.objects.get(pk=pk)
+    matches = Match.objects.filter(sets__players__sets__match__teams=team).distinct()    
     return Response(MatchSerializer(matches, many=True).data)

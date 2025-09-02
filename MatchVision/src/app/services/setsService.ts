@@ -10,7 +10,7 @@ import { Set } from '../Models/Set';
 })
 export class setService {
 
-  private apiUrl = 'http://localhost:8000/api';
+  private apiUrl = 'http://localhost:8000';
   
     constructor(private http: HttpClient) {}
   

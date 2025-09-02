@@ -16,11 +16,16 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 
 class TeamSerializer(serializers.ModelSerializer):
-    players = PlayerSerializer(many=True, read_only=True)
+    playersList = serializers.PrimaryKeyRelatedField(
+        queryset=Player.objects.all(), many=True, write_only=True
+    )
+    players = PlayerSerializer(many=True, read_only=True, source='playersList')
 
     class Meta:
         model = Team
-        fields = '__all__'
+        fields = ['id', 'name', 'playersList', 'players']
+
+
 
 
 class EventSerializer(serializers.ModelSerializer):

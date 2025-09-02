@@ -49,9 +49,9 @@ export const routes: Routes = [
 
   // Details
   //    Players
-  { path: 'players_details/:id', component: PlayersDetailsComponent},
+  { path: 'player_details/:id', component: PlayersDetailsComponent},
   //    Matches
-  { path: 'matches_details/:id', component: MatchesDetailsComponent},
+  { path: 'match_details/:id', component: MatchesDetailsComponent},
   //    Teams
-  { path: 'teams_details/:id', component: TeamsDetailsComponent},
+  { path: 'team_details/:id', component: TeamsDetailsComponent},
 ];

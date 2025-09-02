@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Player } from '../../../services/players.service';
+import { Player } from '../../../Models/Player';
 
 @Component({
     selector: 'app-new-touch-modal',
