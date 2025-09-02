@@ -31,7 +31,6 @@ export class NewTeamModalComponent implements OnInit{
 
     @ViewChild('content', { static: true }) content!: TemplateRef<any>
 
-    constructor(private cdr: ChangeDetectorRef){}
 
     ngOnInit(): void {
         // get all players
@@ -83,7 +82,6 @@ export class NewTeamModalComponent implements OnInit{
             next: (data) => {
                 console.log(data);
                 this.allPlayers = data;
-                this.cdr.detectChanges(); // Forces data refresh
             },
             error: (err) => console.error('Errore caricamento players', err)
         });
