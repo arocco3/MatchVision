@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Match } from '../Models/Match';
+import { Team } from '../Models/Team';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,9 @@ export class MatchesService {
   
     deleteMatch(id: number): Observable<any> {
       return this.http.delete(`${this.apiUrl}/matches/delete/${id}/`);
+    }
+
+    getTeams(): Observable<Team[]> {
+            return this.http.get<Team[]>(`${this.apiUrl}/teams/`);
     }
 }

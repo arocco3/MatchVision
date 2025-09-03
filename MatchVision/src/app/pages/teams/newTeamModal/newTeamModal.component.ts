@@ -66,17 +66,6 @@ export class NewTeamModalComponent implements OnInit{
         }
     }
 
-      // To delete a specific player
-    deleteTeam(id: any){
-        this.teamsService.deleteTeam(id).subscribe({
-        next: () => {
-            console.log('Team eliminato');
-            // this.loadTeams();
-        },
-        error: (err) => console.error('Errore eliminazione team', err)
-        })
-    }
-
     loadPlayers() {
         this.teamsService.getPlayers().subscribe({
             next: (data) => {

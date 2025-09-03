@@ -28,8 +28,8 @@ body{
     width: 50px;
     padding-top: 0;
     padding-bottom: 0;
-    bottom: 85px;
-    right: 55px;
+    bottom: 10%;
+    right: 5%;
     font-size: xx-large;
     border-radius: 50%;
 }
@@ -37,4 +37,32 @@ body{
 .btn-floating:hover{
     cursor: pointer;
     background-color:#d76f00
+}
+
+.manage-matches {
+    width: auto;
+    right: 10%;
+    font-size: large;
+    border-radius: 50px;
+}
+
+.matches-list {
+    margin-bottom: 8%;
+}
+
+.btn-del-match {
+    position: absolute;
+    border: none;
+    background-color: rgb(255, 0, 34);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    right: 0;
+    top: 0;
+    transform: translate(50%, -50%);
+}
+
+.btn-del-match-hidden {
+    display: none;
 }

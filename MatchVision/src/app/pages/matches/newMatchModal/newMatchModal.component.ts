@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'
 import { MatchesService } from '../../../services/matchesService';
 import { Match } from '../../../Models/Match';
+import { Team } from '../../../Models/Team';
 
 @Component({
 	selector: 'app-new-match-modal',
@@ -21,15 +22,21 @@ export class NewMatchModalComponent {
     newMatch: Match = {
         id: 0,
         name: '',
-        team1: '',
-        team2: '',
-        date: '',
-        result: ''
+        team_id: 0,
+        date: Date(),
+        result: null
     }
+
+    allTeams!: Team[] // All inserted teams in db
 
     @Output() matchCreated = new EventEmitter<void>();
 
     @ViewChild('content', { static: true }) content!: TemplateRef<any>;
+
+    ngOnInit(): void {
+        // get all teams
+        this.loadTeams();
+    }
 
     // To open the modal
     public open() {
@@ -43,20 +50,31 @@ export class NewMatchModalComponent {
         );
     }
 
-    // To save the team
+    // To save the match
     public saveMatch(form: any, modal: any) {
         if (form.valid) {
+            console.log(this.newMatch.name, this.newMatch.team_id, this.newMatch.date)
             this.matchesService.createMatch(this.newMatch).subscribe({
             next: (res) => {
                 this.matchCreated.emit();
-                console.log('Giocatore salvato:', res);
+                console.log('Partita salvata:', res);
                 modal.close('Save click');
             },
             error: (err) => console.error('Errore salvataggio nuovo match', err)
             });
             // Reset form
-            this.newMatch = { id: 0, name: '', team1: null, team2: null, date: Date(), result: null };
+            this.newMatch = { id: 0, name: '', team_id: 0, date: Date(), result: null };
         }
+    }
+
+    loadTeams() {
+        this.matchesService.getTeams().subscribe({
+            next: (data) => {
+                console.log(data);
+                this.allTeams = data;
+            },
+            error: (err) => console.error('Errore caricamento squadre', err)
+        });
     }
         
 }

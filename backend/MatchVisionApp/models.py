@@ -12,6 +12,7 @@ from django.db import models
 
 
 class Player(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='players', null=True, blank=True)
     name = models.CharField(max_length=100, null=True, blank=True, verbose_name="Nome")
     surname = models.CharField(max_length=100, null=True, blank=True, verbose_name="Cognome")
     number = models.PositiveIntegerField(null=True, blank=True, db_index=True, verbose_name="Numero")
@@ -68,9 +69,10 @@ class Set(models.Model):
 
 
 class Match(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='matches', null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name="Nome partita")
     timestamp = models.DateTimeField(default=timezone.now)
-    teams = models.ManyToManyField('Team', related_name='matches')
+    team = models.ForeignKey('Team', on_delete=models.CASCADE, related_name='matches')
     results = models.JSONField(default=list, blank=True)
 
     class Meta:
@@ -83,6 +85,7 @@ class Match(models.Model):
 
 
 class Team(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='teams', null=True, blank=True)
     name = models.CharField(max_length=100, verbose_name="Nome squadra")
     playersList = models.ManyToManyField(Player, related_name='teams', blank=True)
 
@@ -132,6 +135,6 @@ class User(models.Model):
     password = models.CharField(max_length=100)
     name = models.CharField(max_length=100)    
     surname = models.CharField(max_length=100)
-    matches = models.ManyToManyField(Match, related_name='users')
-    players = models.ManyToManyField(Player, related_name='users')
-    teams = models.ManyToManyField(Team, related_name='users')
+    # matches = models.ManyToManyField(Match, related_name='users')
+    # players = models.ManyToManyField(Player, related_name='users')
+    # teams = models.ManyToManyField(Team, related_name='users')

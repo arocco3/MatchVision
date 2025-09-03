@@ -10,55 +10,44 @@
   <div class="container py-5 mb-4">
     <h1 class="mb-4 text-center">Partite Salvate</h1>
 
+    <div class="searchForTeam mb-4">
+            <div class="row">
+                <div class="col-4 mx-auto">
+                    <div class="input-group mx-auto">
+                        <input type="text" class="form-control" placeholder="Cerca tra le partite..." aria-label="Cerca tra le partite" aria-describedby="button-addon2" [(ngModel)]="searchText">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Cerca</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     <!-- Matches list -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
 
-      <!-- Card partita 1 -->
-      <div class="col">
-        <div class="card shadow">
-          <div class="card-body">
-            <h5 class="card-title">Team A vs Team B</h5>
-            <p class="card-text">Punteggio: 3 - 2</p>
-            <p class="card-text"><small class="text-muted">Data: 01/08/2025</small></p>
-            <a [routerLink]="['/teams_details']" routerLinkActive="router-link-active" class="btn btn-primary">Dettagli</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card partita 2 -->
-      <div class="col">
-        <div class="card shadow">
-          <div class="card-body">
-            <h5 class="card-title">Team C vs Team D</h5>
-            <p class="card-text">Punteggio: 1 - 3</p>
-            <p class="card-text"><small class="text-muted">Data: 28/07/2025</small></p>
-            <a [routerLink]="['/teams_details']" routerLinkActive="router-link-active" class="btn btn-primary">Dettagli</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card partita 2 -->
-      <div class="col">
-        <div class="card shadow">
-          <div class="card-body">
-            <h5 class="card-title">Team C vs Team D</h5>
-            <p class="card-text">Punteggio: 1 - 3</p>
-            <p class="card-text"><small class="text-muted">Data: 28/07/2025</small></p>
-            <a [routerLink]="['/teams_details']" routerLinkActive="router-link-active" class="btn btn-primary">Dettagli</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Altre partite possono essere aggiunte qui -->
-      
+        @for (match of filteredMatches; track match.id){
+            <div class="col">
+                <div class="card shadow">
+                    <button [ngClass]="this.showDeleteButtons ? 'btn-del-match': 'btn-del-match-hidden'" (click)="deleteMatch(match.id)">—</button>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ match.name }}</h5>
+                        <p class="card-text">{{ match.result }}</p>
+                        <p class="card-text"><small class="text-muted">{{ match.date }}</small></p>
+                        <a [routerLink]="['/match_details/', match.id]" routerLinkActive="router-link-active" class="btn btn-primary">Dettagli</a>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 
-    <button type="button" class="btn btn-floating" data-bs-toggle="modal" data-bs-target="#new-match-modal" (click)="openNewMatchrModal()">+</button>
+    <button type="button" class="btn btn-floating manage-matches" (click)="toggleDeleteMode()">{{ showDeleteButtons ? 'Fatto' : 'Gestisci partite' }}</button>
+    <button type="button" class="btn btn-floating" data-bs-toggle="modal" data-bs-target="#new-match-modal" (click)="openNewMatchModal()">+</button>
 
   </div>
 
   <!-- New match modal -->
-   <app-new-match-modal></app-new-match-modal>
+    <app-new-match-modal
+        (matchCreated)="loadMatches()">
+    </app-new-match-modal>
 
   
 </body>

@@ -37,12 +37,14 @@
 }
         </div>
 
-        <button type="button" class="btn btn-floating manage-teams" (click)="toggleDeleteMode()">{{ showDeleteButtons ? 'Fatto' : 'Modifica partite' }}</button>
+        <button type="button" class="btn btn-floating manage-teams" (click)="toggleDeleteMode()">{{ showDeleteButtons ? 'Fatto' : 'Gestisci squadre' }}</button>
         <button type="button" class="btn btn-floating" data-bs-toggle="modal" (click)="openNewTeamModal()">+</button>
 
     </div>
 
-    <app-new-team-modal (teamCreated)="loadTeams()"></app-new-team-modal>
+    <app-new-team-modal
+        (teamCreated)="loadTeams()">
+    </app-new-team-modal>
 
 </body>
 </html>

@@ -1,20 +1,32 @@
     <!-- Modal -->
 <ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="new-match-modal">Nuova partita</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Dismiss click')"></button>
-  </div>
+    <div class="modal-header">
+        <h4 class="modal-title" id="new-match-modal">Nuova partita</h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Dismiss click')"></button>
+    </div>
 
-  <div class="modal-body">
-    <form #matchForm="ngForm" (ngSubmit)="saveMatch(matchForm, modal)">
-      
+    <div class="modal-body">
+        <form #matchForm="ngForm" (ngSubmit)="saveMatch(matchForm, modal)">
+        
+            <div class="subtitle"><h5>Scegli il nome</h5></div>
 
+            <div class="insert-name"><input type="text" class="form-control" id="floatingInput" 
+                placeholder="Inserisci il nome della partita" required [(ngModel)]="newMatch.name" name="matchName"/></div>
+            
+            <div class="subtitle"><h5>Scegli la squadra da schierare</h5></div>
+            
+            <div class="btn-group-vertical w-100" role="group" aria-label="Team selection">
+                @for (team of allTeams; track team.id){
+                    <input type="radio" class="btn-check" id="team-{{team.id}}" name="selected-team" [value]="team.id" [(ngModel)]="newMatch.team_id" />
+                    <label class="btn btn-outline-secondary text-start" for="team-{{team.id}}">{{ team.name }}</label>
+                }
+            </div>          
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('Cancel click')">Annulla</button>
-        <button type="submit" class="btn btn-primary" [disabled]="matchForm.invalid">Salva</button>
-      </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('Cancel click')">Annulla</button>
+            <button type="submit" class="btn btn-primary" [disabled]="matchForm.invalid">Salva</button>
+        </div>
 
-    </form>
-  </div>
+        </form>
+    </div>
 </ng-template>

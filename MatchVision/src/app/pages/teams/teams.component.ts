@@ -56,23 +56,22 @@ export class TeamsComponent implements OnInit {
     }
 
       // To delete a specific player
-  deleteTeam(id: any){
-    this.teamsService.deleteTeam(id).subscribe({
-      next: () => {
-        console.log('Team eliminato')
-        this.loadTeams()
-      },
-      error: (err) => console.error('Errore eliminazione team', err)
-    })
-  }
+    deleteTeam(id: any){
+        this.teamsService.deleteTeam(id).subscribe({
+        next: () => {
+            console.log('Team eliminato')
+            this.loadTeams()
+        },
+        error: (err) => console.error('Errore eliminazione team', err)
+        })
+    }
 
   // To filter teams
     get filteredTeams(): Team[] {
-    if (!this.searchText) 
-        return this.teams;
-    return this.teams.filter(t =>
-      t.name.toLowerCase().includes(this.searchText.toLowerCase())
+        if (!this.searchText) return this.teams;
+        return this.teams.filter(t =>
+            t.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
-  }
+}
 
 }

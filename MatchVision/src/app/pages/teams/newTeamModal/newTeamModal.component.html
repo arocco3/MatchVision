@@ -15,7 +15,7 @@
             <div class="subtitle"><h5>Scegli i giocatori</h5></div>
             
             <div class="btn-group-vertical w-100" role="group" aria-label="Player selection">
-                @for (player of allPlayers; track $index){
+                @for (player of allPlayers; track player.id){
                     <input type="checkbox" class="btn-check" id="player-{{player.id}}" name="player-{{player.id}}"
                         [value]="player" (change)="onCheckboxChange($event, player)" />
                     <label class="btn btn-outline-secondary text-start" for="player-{{player.id}}">{{ player.name }} {{ player.surname }}</label>

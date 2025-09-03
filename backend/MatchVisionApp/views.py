@@ -80,7 +80,8 @@ def createTeam(request):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
-    
+    return Response(serializer.errors, status=400)
+
 # delete specific team
 @api_view(['DELETE'])
 def deleteTeam(request, pk):
