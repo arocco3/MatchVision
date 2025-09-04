@@ -22,10 +22,11 @@ export class ChangePlayersModalComponent implements OnInit {
     @Input() doubleChangeCounter!: number
     
     @Output() changeOccurred = new EventEmitter<void>()
+    @Output() doubleChangeOccurred = new EventEmitter<void>()
     @Output() swapLiberosClicked = new EventEmitter<void>()
 
-    enteringPlayer!: Player
-    exitingPlayer!: Player
+    enteringPlayers: Player[] = []
+    exitingPlayers: Player[] = []
     changePlayersOccurring: boolean = false
     
 
@@ -35,13 +36,19 @@ export class ChangePlayersModalComponent implements OnInit {
 
     // Dopo la conferma del cambio
     changePlayers(): void {
-            let index = this.starting_players.indexOf(this.exitingPlayer)
-            this.starting_players[index] = this.enteringPlayer
-            this.bench_players.splice(this.bench_players.indexOf(this.enteringPlayer), 1)
-            this.bench_players.push(this.exitingPlayer)
+        this.exitingPlayers.forEach((p, index) => {
+            let pos = this.starting_players.indexOf(p) // To maintain the rotation
+            this.starting_players[pos] = this.enteringPlayers[index]
+            this.bench_players.splice(this.bench_players.indexOf(this.enteringPlayers[index]), 1)
+            this.bench_players.push(p)
+        })
 
+        if (this.exitingPlayers.length === 2 && this.enteringPlayers.length === 2)
+            this.doubleChangeOccurred.emit()
+        else if (this.exitingPlayers.length === 1 && this.enteringPlayers.length === 1)
             this.changeOccurred.emit()
-            this.changePlayersOccurring = false
+        this.changePlayersOccurring = false
+        this.exitingPlayers, this.enteringPlayers = []
     }
 
     changeLiberos(): void {

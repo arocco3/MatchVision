@@ -9,7 +9,7 @@
             <h3>In campo</h3>
             <div class="exiting-players">
                 @for (player of starting_players; track $index){
-                    <div class="list"><button class="change-btn" (click)="(this.exitingPlayer = player)">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
+                    <div class="list"><button class="change-btn exiting-player-btn" (click)="(this.exitingPlayers.push(player))">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
                 }
             </div>
         </div>
@@ -18,8 +18,8 @@
             <h3>In panchina</h3>
             <div class="entering-players">
                 @for (player of bench_players; track $index){
-                    <div class="list"><button class="change-btn" (click)="(this.enteringPlayer = player)" 
-                        (click)="changePlayersOccurring = !changePlayersOccurring">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
+                    <div class="list"><button class="change-btn entering-player-btn" (click)="this.enteringPlayers.push(player); this.changePlayersOccurring = true">
+                        {{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
                 }
             </div>
         </div>
@@ -41,7 +41,7 @@
 
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-secondary" (click)="modal.close()" (click)="changePlayersOccurring = false">Annulla</button>
-		<button type="button" class="btn btn-outline-secondary" (click)="modal.close()" (click)="changePlayersOccurring ? changePlayers() : modal.close()">Conferma</button>
+		<button type="button" class="btn btn-outline-secondary" (click)="modal.close(); changePlayersOccurring = false">Annulla</button>
+		<button type="button" class="btn btn-outline-secondary" (click)="modal.close(); changePlayersOccurring ? changePlayers() : modal.close()">Conferma</button>
 	</div>
 </ng-template>
