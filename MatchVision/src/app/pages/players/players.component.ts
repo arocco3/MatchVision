@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { PlayersService } from '../../services/playersService';
 import { NewPlayerModalComponent } from './newPlayerModal/newPlayerModal.component';
 import { FormsModule } from '@angular/forms';
 import { Player } from '../../Models/Player';
+import { GlobalService } from '../../services/globalService';
 
 @Component({
   selector: 'app-players',
@@ -19,56 +20,45 @@ import { Player } from '../../Models/Player';
 
 export class PlayersComponent implements OnInit{
 
-  @ViewChild(NewPlayerModalComponent) newPlayerModal!: NewPlayerModalComponent;
+    constructor(private playersService: PlayersService, public globalService: GlobalService){}
 
-  players: Player[] = [];
-  searchText: string = '';
+    @ViewChild(NewPlayerModalComponent) newPlayerModal!: NewPlayerModalComponent;
 
-  constructor(private playersService: PlayersService, private cdr: ChangeDetectorRef){}
+    searchText: string = '';
 
-  // To get all players
-  ngOnInit(): void {
-    this.loadPlayers();
-  }
+    // To get all players
+    ngOnInit(): void {
+        this.globalService.loadPlayers()
+    }
 
-  loadPlayers() {
-    this.playersService.getPlayers().subscribe({
-      next: (data) => {
-        console.log(data);
-        this.players = data;
-        this.cdr.detectChanges(); // Forces data refresh
-      },
-      error: (err) => console.error('Errore caricamento players', err)
-    });
-  }
+    openNewPlayerModal(){
+        this.newPlayerModal.open();
+        console.log(this.globalService.allPlayers())
+    }
 
-  openNewPlayerModal(){
-    this.newPlayerModal.open();
-  }
+    closeNewPlayerModal() {
+        console.log(this.newPlayerModal.closeResult);
+    }
 
-  closeNewPlayerModal() {
-    console.log(this.newPlayerModal.closeResult);
-  }
+    // To delete a specific player
+    deletePlayer(id: any){
+        this.playersService.deletePlayer(id).subscribe({
+        next: () => {
+            console.log('Player eliminato');
+            this.globalService.loadPlayers();
+        },
+        error: (err) => console.error('Errore eliminazione player', err)
+        })
+    }
 
-  // To delete a specific player
-  deletePlayer(id: any){
-    this.playersService.deletePlayer(id).subscribe({
-      next: () => {
-        console.log('Player eliminato');
-        this.loadPlayers();
-      },
-      error: (err) => console.error('Errore eliminazione player', err)
-    })
-  }
-
-  // To filter players
-  get filteredPlayers(): Player[] {
-  if (!this.searchText) return this.players;
-  return this.players.filter(p =>
-    p.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
-    p.surname.toLowerCase().includes(this.searchText.toLowerCase()) ||
-    p.role!.toLowerCase().includes(this.searchText.toLowerCase())
-  );
-}
+    // To filter players
+    get filteredPlayers(): Player[] {
+        if (!this.searchText) return this.globalService.allPlayers()
+            return this.globalService.allPlayers().filter(p =>
+            p.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
+            p.surname.toLowerCase().includes(this.searchText.toLowerCase()) ||
+            p.role!.toLowerCase().includes(this.searchText.toLowerCase())
+        );
+    }
 
 }

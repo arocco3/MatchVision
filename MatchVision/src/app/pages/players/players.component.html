@@ -48,7 +48,10 @@
         <button type="button" class="btn btn-floating" (click)="openNewPlayerModal()" data-bs-toggle="modal" data-bs-target="#newPlayerModal">+</button>
 
             <!-- Inserimento modale -->
-             <app-new-player-modal #newPlayerModal (playerCreated)="loadPlayers()"></app-new-player-modal>
+            <app-new-player-modal
+                #newPlayerModal 
+                (playerCreated)="this.globalService.loadPlayers()">
+            </app-new-player-modal>
         
     </div>
 

@@ -32,8 +32,4 @@ export class MatchesService {
     deleteMatch(id: number): Observable<any> {
       return this.http.delete(`${this.apiUrl}/matches/delete/${id}/`);
     }
-
-    getTeams(): Observable<Team[]> {
-            return this.http.get<Team[]>(`${this.apiUrl}/teams/`);
-    }
 }

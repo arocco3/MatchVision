@@ -46,7 +46,7 @@
 
   <!-- New match modal -->
     <app-new-match-modal
-        (matchCreated)="loadMatches()">
+        (matchCreated)="this.globalService.loadMatches()">
     </app-new-match-modal>
 
   

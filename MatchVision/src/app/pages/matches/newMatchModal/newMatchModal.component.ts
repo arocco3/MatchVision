@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'
 import { MatchesService } from '../../../services/matchesService';
 import { Match } from '../../../Models/Match';
-import { Team } from '../../../Models/Team';
+import { GlobalService } from '../../../services/globalService';
 
 @Component({
 	selector: 'app-new-match-modal',
@@ -14,7 +14,13 @@ import { Team } from '../../../Models/Team';
 })
 
 export class NewMatchModalComponent {
+
+    constructor(public globalService: GlobalService) {}
   
+    @Output() matchCreated = new EventEmitter<void>();
+
+    @ViewChild('content', { static: true }) content!: TemplateRef<any>;
+
     private matchesService = inject(MatchesService);
     private modalService = inject(NgbModal);
     public closeResult: WritableSignal<string> = signal('');
@@ -27,15 +33,8 @@ export class NewMatchModalComponent {
         result: null
     }
 
-    allTeams!: Team[] // All inserted teams in db
-
-    @Output() matchCreated = new EventEmitter<void>();
-
-    @ViewChild('content', { static: true }) content!: TemplateRef<any>;
-
     ngOnInit(): void {
-        // get all teams
-        this.loadTeams();
+        this.globalService.loadTeams();
     }
 
     // To open the modal
@@ -65,16 +64,6 @@ export class NewMatchModalComponent {
             // Reset form
             this.newMatch = { id: 0, name: '', team_id: 0, date: Date(), result: null };
         }
-    }
-
-    loadTeams() {
-        this.matchesService.getTeams().subscribe({
-            next: (data) => {
-                console.log(data);
-                this.allTeams = data;
-            },
-            error: (err) => console.error('Errore caricamento squadre', err)
-        });
-    }
+    }    
         
 }

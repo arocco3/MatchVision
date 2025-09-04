@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Team } from '../../Models/Team';
 import { TeamsService } from '../../services/teamsService';
 import { NewTeamModalComponent } from './newTeamModal/newTeamModal.component';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
+import { GlobalService } from '../../services/globalService';
 
 @Component({
   selector: 'app-teams',
@@ -21,30 +22,18 @@ import { FormsModule } from '@angular/forms';
 
 export class TeamsComponent implements OnInit {
 
-  @ViewChild(NewTeamModalComponent) newTeamModal!: NewTeamModalComponent;
+    constructor(private teamsService: TeamsService, public globalService: GlobalService){}
 
-  teams: Team[] = [];
-  searchText: string = '';
+    @ViewChild(NewTeamModalComponent) newTeamModal!: NewTeamModalComponent;
 
-  // to delete teams
-  showDeleteButtons = false;
+    searchText: string = '';
 
-  constructor(private teamsService: TeamsService, private cdr: ChangeDetectorRef){}
+    // to delete teams
+    showDeleteButtons = false;
 
-  // To get all teams
+    // To get all teams
     ngOnInit(): void {
-        this.loadTeams();
-    }
-
-    loadTeams() {
-        this.teamsService.getTeams().subscribe({
-        next: (data) => {
-            console.log(data);
-            this.teams = data;
-            this.cdr.detectChanges(); // Forces data refresh
-            },
-            error: (err) => console.error('Errore caricamento teams', err)
-        });
+        this.globalService.loadTeams();
     }
 
     openNewTeamModal(): void{
@@ -60,16 +49,16 @@ export class TeamsComponent implements OnInit {
         this.teamsService.deleteTeam(id).subscribe({
         next: () => {
             console.log('Team eliminato')
-            this.loadTeams()
+            this.globalService.loadTeams()
         },
         error: (err) => console.error('Errore eliminazione team', err)
         })
     }
 
-  // To filter teams
+    // To filter teams
     get filteredTeams(): Team[] {
-        if (!this.searchText) return this.teams;
-        return this.teams.filter(t =>
+        if (!this.searchText) return this.globalService.allTeams();
+        return this.globalService.allTeams().filter(t =>
             t.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
 }

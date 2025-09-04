@@ -1,9 +1,10 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, inject, OnInit, Output, QueryList, signal, TemplateRef, ViewChild, ViewChildren, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, inject, OnInit, Output, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'
 import { TeamsService } from '../../../services/teamsService';
 import { Team } from '../../../Models/Team';
 import { Player } from '../../../Models/Player';
+import { GlobalService } from '../../../services/globalService';
 
 @Component({
 	selector: 'app-new-team-modal',
@@ -14,6 +15,8 @@ import { Player } from '../../../Models/Player';
 })
 
 export class NewTeamModalComponent implements OnInit{
+    
+    constructor(public globalService: GlobalService) {}
   
     private teamsService = inject(TeamsService);
     private modalService = inject(NgbModal);
@@ -25,8 +28,6 @@ export class NewTeamModalComponent implements OnInit{
         playersList: []
     }
 
-    allPlayers!: Player[] // All inserted players in db
-
     @Output() teamCreated = new EventEmitter<void>();
 
     @ViewChild('content', { static: true }) content!: TemplateRef<any>
@@ -34,7 +35,7 @@ export class NewTeamModalComponent implements OnInit{
 
     ngOnInit(): void {
         // get all players
-        this.loadPlayers();
+        this.globalService.loadPlayers();
     }
 
     // To open the modal
@@ -66,23 +67,13 @@ export class NewTeamModalComponent implements OnInit{
         }
     }
 
-    loadPlayers() {
-        this.teamsService.getPlayers().subscribe({
-            next: (data) => {
-                console.log(data);
-                this.allPlayers = data;
-            },
-            error: (err) => console.error('Errore caricamento players', err)
-        });
-    }
-
     onCheckboxChange(event: any, player: Player): void {
-        if(event.target.checked)
-            {this.newTeam.playersList.push(player.id);console.log(this.newTeam.playersList)
+        if(event.target.checked) {
+            this.newTeam.playersList.push(player.id);console.log(this.newTeam.playersList)
         }
-
-        else
+        else{
             this.newTeam.playersList = this.newTeam.playersList.filter(p => p !== player.id)
+        }
     }
 
 }

@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core'
+import { Component, OnInit, ViewChild } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { MatchesService } from '../../services/matchesService'
 import { NewMatchModalComponent } from './newMatchModal/newMatchModal.component';
 import { Match } from '../../Models/Match';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
+import { GlobalService } from '../../services/globalService';
 
 @Component({
   selector: 'app-matches',
@@ -21,29 +22,17 @@ import { FormsModule } from '@angular/forms';
 
 export class MatchesComponent implements OnInit{
 
+    constructor(private matchesService: MatchesService, public globalService: GlobalService) {}
+    
     @ViewChild(NewMatchModalComponent) newMatchModal!: NewMatchModalComponent
 
     searchText: string = ''
-    matches: Match[] = []
 
     // to delete matches
     showDeleteButtons = false
-
-    constructor(private matchesService: MatchesService, private cdr: ChangeDetectorRef) {}
-  
+    
     ngOnInit(): void { 
-        this.loadMatches()
-    }
-
-    loadMatches() {
-        this.matchesService.getMatches().subscribe({
-        next: (data) => {
-            console.log(data)
-            this.matches = data
-            this.cdr.detectChanges() // Forces data refresh
-            },
-            error: (err) => console.error('Errore caricamento partite', err)
-        });
+        this.globalService.loadMatches()
     }
 
     openNewMatchModal(){
@@ -58,22 +47,22 @@ export class MatchesComponent implements OnInit{
         this.showDeleteButtons = !this.showDeleteButtons;
     }
 
-    // To delete a specific player
+    // To delete a specific match
     deleteMatch(id: any){
         this.matchesService.deleteMatch(id).subscribe({
         next: () => {
-            console.log('Team eliminato')
-            this.loadMatches()
+            console.log('Match eliminato')
+            this.globalService.loadMatches()
         },
-        error: (err) => console.error('Errore eliminazione team', err)
+        error: (err) => console.error('Errore eliminazione match', err)
         })
     }
 
     // To filter matches
     get filteredMatches(): Match[] {
         if (!this.searchText) 
-            return this.matches
-        return this.matches.filter(m =>
+            return this.globalService.allMatches()
+        return this.globalService.allMatches().filter(m =>
         m.name.toLowerCase().includes(this.searchText.toLowerCase())
         );
     }
