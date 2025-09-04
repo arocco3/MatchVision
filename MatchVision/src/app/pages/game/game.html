@@ -77,8 +77,8 @@
             [changeCounter]="changeCounter"
             [doubleChangeCounter]="doubleChangeCounter"
             (swapLiberosClicked)="swapLiberos()"
-            (changeOccurred)="changeCounter = changeCounter - 1"
-            (douleChangeOccurred)="doubleChangeCounter= doubleChangeCounter - 1">
+            (changeOccurred)="changeCounter > 0 ? changeCounter = changeCounter - 1 : changeCounter"
+            (doubleChangeOccurred)="doubleChangeCounter > 0 ? doubleChangeCounter = doubleChangeCounter - 1 : doubleChangeCounter">
         </app-change-players-modal>
 
         <!-- Modal for a new touch -->

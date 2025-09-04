@@ -9,7 +9,7 @@
             <h3>In campo</h3>
             <div class="exiting-players">
                 @for (player of starting_players; track $index){
-                    <div class="list"><button class="change-btn exiting-player-btn" (click)="(this.exitingPlayers.push(player))">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
+                    <div class="list"><button class="change-btn btn btn-outline-secondary" (click)="(this.exitingPlayers.push(player))">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
                 }
             </div>
         </div>
@@ -18,7 +18,7 @@
             <h3>In panchina</h3>
             <div class="entering-players">
                 @for (player of bench_players; track $index){
-                    <div class="list"><button class="change-btn entering-player-btn" (click)="this.enteringPlayers.push(player); this.changePlayersOccurring = true">
+                    <div class="list"><button class="change-btn btn btn-outline-secondary" (click)="this.enteringPlayers.push(player); this.changePlayersOccurring = true">
                         {{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
                 }
             </div>
@@ -29,19 +29,19 @@
         </div>
 
         <h3>Liberi</h3>
-        <div class="row">
-            <div class="libero col list">
-                <button class="change-btn">{{ libero.number }} | {{ libero.name }} {{ libero.surname }}</button>
+        <div class="row liberos">
+            <div class="libero col-5 list">
+                <button class="change-btn btn btn-outline-secondary">{{ libero.number }} | {{ libero.name }} {{ libero.surname }}</button>
             </div>
-            <!-- swap image --><div class="col-2 list"><img src="/icons/swap-icon.png" alt="Scambia liberi" (click)="changeLiberos()"></div>
-            <div class="bench-libero col list">
-                <button class="change-btn">{{ bench_libero.number }} | {{ bench_libero.name }} {{ bench_libero.surname }}</button>
+            <!-- swap image --><div class="col-2 list"><button class="btn"><img src="/icons/swap-icon.png" alt="Scambia liberi" (click)="changeLiberos()"></button></div>
+            <div class="bench-libero col-5 list">
+                <button class="change-btn btn btn-outline-secondary">{{ bench_libero.number }} | {{ bench_libero.name }} {{ bench_libero.surname }}</button>
             </div>
         </div>
 
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-secondary" (click)="modal.close(); changePlayersOccurring = false">Annulla</button>
-		<button type="button" class="btn btn-outline-secondary" (click)="modal.close(); changePlayersOccurring ? changePlayers() : modal.close()">Conferma</button>
+		<button type="button" class="btn btn-outline-secondary btn-cancel" (click)="modal.close(); changePlayersOccurring = false">Annulla</button>
+		<button type="button" class="btn btn-outline-secondary btn-confirm" (click)="modal.close(); changePlayersOccurring ? changePlayers() : modal.close()">Conferma</button>
 	</div>
 </ng-template>

@@ -113,12 +113,6 @@ export class GameComponent{
             case EventType.TECHNICAL_TIMEOUT:
                 this.leftTimeOuts--
                 break
-            case EventType.CHANGE:
-                this.changeCounter--
-                break
-            case EventType.DOUBLE_CHANGE:
-                 this.doubleChangeCounter--
-                break
             case EventType.YELLOW_CARD:
                  this.y_card_counter++
                 break
