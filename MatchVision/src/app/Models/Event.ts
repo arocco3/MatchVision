@@ -1,4 +1,3 @@
-
 export enum EventType {
   TECHNICAL_TIMEOUT = 'TECHNICAL_TIMEOUT',
   CHANGE = 'CHANGE',
@@ -6,13 +5,11 @@ export enum EventType {
   MEDICAL_CHANGE = 'MEDICAL_CHANGE',
   YELLOW_CARD = 'YELLOW_CARD',
   RED_CARD = 'RED_CARD',
-  SCORED_POINT = 'SCORED_POINT',
-  CONCEDED_POINT = 'CONCEDED_POINT',
   DOUBLE_FAULT = 'DOUBLE_FAULT'
 }
 
 export class Event {
   constructor(
-    public event_type: EventType
+    public event_type: EventType | string
   ) {}
 }

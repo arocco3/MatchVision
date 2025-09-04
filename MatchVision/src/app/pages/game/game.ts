@@ -4,6 +4,7 @@ import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersM
 import { NewTouchModalComponent } from "./newTouchModal/newTouchModal.component"
 import { NewEventModalComponent } from './newEventModal/newEventModal.component'
 import { Player, Role } from '../../Models/Player'
+import { Event, EventType } from '../../Models/Event'
 
 @Component({
     selector: 'app-game',
@@ -43,9 +44,7 @@ export class GameComponent{
     selectedFundamental!: string
     selectedOutcome!: string
 
-    //players: Player[] = [];
-
-    // players di prova sarbbero i titolari
+    // players di prova sarebbero i titolari
     players: Player[] = [
         { id: 1, name: "Luca",   surname: "Rossi",   number: 1, role: Role.SETTER },
         { id: 2, name: "Marco",  surname: "Bianchi", number: 2, role: Role.OPPOSITE_HITTER },
@@ -69,13 +68,16 @@ export class GameComponent{
 
     bench_libero: Player = { id: 14, name: "Simoneee", surname: "Galliiii",  number: 14, role: Role.LIBERO}
 
+    // Counters
     // To change players
-    changeCounter: number = 3
+    changeCounter: number = 6
     doubleChangeCounter: number = 2
-
     // To register events
-    eventType!: string
     leftTimeOuts: number = 3
+    y_card_counter: number = 0
+    r_card_counter: number = 0
+
+    eventOccurred: Event = {event_type: ''}
     
     increaseScore(team: 'home' | 'guests') {
         this.score[team]++;
@@ -85,22 +87,19 @@ export class GameComponent{
         if (this.score[team] > 0) this.score[team]--;
     }
 
-    // cancelLastAction(){}
 
     // Inserting a new touch for the player
     openNewTouchModal(p: Player) {
         this.newTouchModal.open();
     }
 
-    registerNewTouch(): void {
-        // this.selectedPlayer
-        // this.selectedFundamental
-        // this.selectedOutcome
-    }
-
     // Change players
     openChangePlayersModal(): void {
         this.changePlayersModal.open();
+    }
+
+    openNewEventModal(): void {
+        this.newEventModal.open();
     }
 
     swapLiberos(): void {
@@ -109,13 +108,37 @@ export class GameComponent{
         this.bench_libero = temp
     }
 
-    openNewEventModal(): void {
-        this.newEventModal.open();
+    registerNewEvent(): void {
+        switch(this.eventOccurred.event_type) {
+            case EventType.TECHNICAL_TIMEOUT:
+                this.leftTimeOuts--
+                break
+            case EventType.CHANGE:
+                this.changeCounter--
+                break
+            case EventType.DOUBLE_CHANGE:
+                 this.doubleChangeCounter--
+                break
+            case EventType.YELLOW_CARD:
+                 this.y_card_counter++
+                break
+            case EventType.RED_CARD:
+                 this.r_card_counter++
+                break
+            case EventType.DOUBLE_FAULT:
+                //cancelLastAction() annulla le ultime azioni 
+                break
+        }
+        this.eventOccurred = {event_type: ''}
     }
 
-    registerNewEvent(): void {
-        // this.eventType...
+    registerNewTouch(): void {
+        // this.selectedPlayer
+        // this.selectedFundamental
+        // this.selectedOutcome
     }
+
+    // cancelLastAction(){}
 
     // Rotation of players
     do_rotation(): void {
