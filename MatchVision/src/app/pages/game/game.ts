@@ -5,6 +5,9 @@ import { NewTouchModalComponent } from "./newTouchModal/newTouchModal.component"
 import { NewEventModalComponent } from './newEventModal/newEventModal.component'
 import { Player, Role } from '../../Models/Player'
 import { Event, EventType } from '../../Models/Event'
+import { Touch } from '../../Models/Touch'
+import { GlobalService } from '../../services/globalService'
+import { TouchesService } from '../../services/touchesService'
 
 @Component({
     selector: 'app-game',
@@ -20,6 +23,8 @@ import { Event, EventType } from '../../Models/Event'
 })
 
 export class GameComponent{
+
+    constructor(private touchesService: TouchesService, public globalService: GlobalService) {}
 
      @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent
      @ViewChild(NewTouchModalComponent) newTouchModal!: NewTouchModalComponent
@@ -41,8 +46,12 @@ export class GameComponent{
 
     // To insert a touch
     selectedPlayer!: Player
-    selectedFundamental!: string
-    selectedOutcome!: string
+    newTouch: Touch = {
+        set: -1, 
+        player: -1,
+        fundamental: "",
+        outcome: "" 
+    }
 
     // players di prova sarebbero i titolari
     players: Player[] = [
@@ -89,7 +98,7 @@ export class GameComponent{
 
 
     // Inserting a new touch for the player
-    openNewTouchModal(p: Player) {
+    openNewTouchModal() {
         this.newTouchModal.open();
     }
 
@@ -111,7 +120,8 @@ export class GameComponent{
     registerNewEvent(): void {
         switch(this.eventOccurred.event_type) {
             case EventType.TECHNICAL_TIMEOUT:
-                this.leftTimeOuts--
+                if(this.leftTimeOuts > 0)
+                    this.leftTimeOuts--
                 break
             case EventType.YELLOW_CARD:
                  this.y_card_counter++
@@ -125,14 +135,25 @@ export class GameComponent{
         }
         this.eventOccurred = {event_type: ''}
     }
+    
+    cancelLastAction(){}
 
-    registerNewTouch(): void {
-        // this.selectedPlayer
-        // this.selectedFundamental
-        // this.selectedOutcome
+    registerNewTouch(event: {fundamental: string; outcome: string}): void {
+        // this.newTouch.set = this.globalService.currentSet().id
+        this.newTouch.set = 10
+        this.newTouch.fundamental = event.fundamental
+        // if form is valid
+        // if((this.newTouch.fundamental != "") && (this.newTouch.outcome != "")) {
+            this.newTouch.player = this.selectedPlayer.id
+            this.newTouch.outcome = event.outcome
+            console.log(this.newTouch)
+            this.touchesService.createTouch(this.newTouch).subscribe({
+                next: (res) => {console.log(res)},
+                error: (err) => console.error('Errore salvataggio nuovo tocco', err)
+            });
+            this.newTouch = {set: -1, player: -1, fundamental: '', outcome: ''}
+        // }
     }
-
-    // cancelLastAction(){}
 
     // Rotation of players
     do_rotation(): void {

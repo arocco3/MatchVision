@@ -118,17 +118,17 @@ class SetSerializer(serializers.ModelSerializer):
 
 # --- TOUCH ---
 class TouchSerializer(serializers.ModelSerializer):
-    player = PlayerSerializer(read_only=True)
-    player_id = serializers.PrimaryKeyRelatedField(
-        queryset=Player.objects.all(),
-        source='player',
-        write_only=True,
-        allow_null=True
+    set = serializers.PrimaryKeyRelatedField(
+        queryset=Set.objects.all()
     )
+    player = serializers.PrimaryKeyRelatedField(
+        queryset=Player.objects.all()
+    )
+
 
     class Meta:
         model = Touch
-        fields = ['id', 'set', 'player', 'player_id', 'fundamental', 'outcome']
+        fields = ['id', 'set', 'player', 'fundamental', 'outcome']
 
 
 # --- EVENT ---

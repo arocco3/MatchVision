@@ -14,22 +14,24 @@ import { Player } from '../../../Models/Player';
 })
 
 export class NewTouchModalComponent{
+    
     private modalService = inject(NgbModal)
     @ViewChild('content', { static: true }) content!: TemplateRef<any>
-
-    @Input() touchType!: string
-    @Input() touchQuality!: string
+    
+    @Output() newTouchCreated = new EventEmitter<{fundamental: string; outcome: string}>()
     @Input() player!: Player
-    @Output() newTouchCreated = new EventEmitter<void>()
 
-    notifyNewTouch(): void{
-        this.newTouchCreated.emit()
-    }
+    fundamental = ''
+    outcome = ''
 
     open() {
-        this.touchType = '';
-        this.touchQuality = '';
-		this.modalService.open(this.content, { ariaLabelledBy: 'modal-new-touch' })
+        this.modalService.open(this.content, { ariaLabelledBy: 'modal-new-touch' })
 	}
 
+    notifyNewTouch(): void {
+        this.newTouchCreated.emit({
+            fundamental: this.fundamental,
+            outcome: this.outcome
+        })
+    }
 }

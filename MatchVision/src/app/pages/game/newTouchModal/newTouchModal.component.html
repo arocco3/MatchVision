@@ -8,38 +8,38 @@
 		
         <div class="col touch-type">
             <div class="btn-group-vertical btn-group-lg" role="group" aria-label="Touches list">
-                <input type="radio" class="btn-check" name="touches-radio" id="serve-btn" value="Battuta" [(ngModel)]="touchType">
+                <input type="radio" class="btn-check" name="touches-radio" id="serve-btn" value="Serve" [(ngModel)]="fundamental">
                 <label class="btn btn-outline-secondary" for="serve-btn">Battuta</label>
-                <input type="radio" class="btn-check" name="touches-radio" id="receive-btn" value="Ricezione" [(ngModel)]="touchType">
+                <input type="radio" class="btn-check" name="touches-radio" id="receive-btn" value="Ricezione" [(ngModel)]="fundamental">
                 <label class="btn btn-outline-secondary" for="receive-btn">Ricezione</label>
-                <input type="radio" class="btn-check" name="touches-radio" id="defense-btn" value="Difesa" [(ngModel)]="touchType">
+                <input type="radio" class="btn-check" name="touches-radio" id="defense-btn" value="Difesa" [(ngModel)]="fundamental">
                 <label class="btn btn-outline-secondary" for="defense-btn">Difesa</label>
-                <input type="radio" class="btn-check" name="touches-radio" id="set-btn" value="Alzata" [(ngModel)]="touchType">
+                <input type="radio" class="btn-check" name="touches-radio" id="set-btn" value="Alzata" [(ngModel)]="fundamental">
                 <label class="btn btn-outline-secondary" for="set-btn">Alzata</label>
-                <input type="radio" class="btn-check" name="touches-radio" id="spike-btn" value="Attacco" [(ngModel)]="touchType">
+                <input type="radio" class="btn-check" name="touches-radio" id="spike-btn" value="Attacco" [(ngModel)]="fundamental">
                 <label class="btn btn-outline-secondary" for="spike-btn">Attacco</label>
-                <input type="radio" class="btn-check" name="touches-radio" id="block-btn" value="Muro" [(ngModel)]="touchType">
+                <input type="radio" class="btn-check" name="touches-radio" id="block-btn" value="Muro" [(ngModel)]="fundamental">
                 <label class="btn btn-outline-secondary" for="block-btn">Muro</label>
             </div>
         </div>
 
         <div class="col touch-quality">
             <div class="btn-group-vertical btn-group-lg" role="group" aria-label="Quality touches list">
-                <input type="radio" class="btn-check" name="quality-radio" id="++-btn" value="++" [(ngModel)]="touchQuality">
-                <label class="btn btn-outline-secondary bg-success bg-gradient" for="++-btn">++</label>
-                <input type="radio" class="btn-check" name="quality-radio" id="+-btn" value="+" [(ngModel)]="touchQuality">
-                <label class="btn btn-outline-secondary bg-primary bg-gradient" for="+-btn">+</label>
-                <input type="radio" class="btn-check" name="quality-radio" id="!-btn" value="!" [(ngModel)]="touchQuality">
+                <input type="radio" class="btn-check" name="quality-radio" id="++-btn" value="++" [(ngModel)]="outcome">
+                <label class="btn btn-outline-secondary bg-success" for="++-btn">++</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="+-btn" value="+" [(ngModel)]="outcome">
+                <label class="btn btn-outline-secondary bg-primary" for="+-btn">+</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="!-btn" value="!" [(ngModel)]="outcome">
                 <label class="btn btn-outline-secondary" for="!-btn">!</label>
-                <input type="radio" class="btn-check" name="quality-radio" id="—-btn" value="—" [(ngModel)]="touchQuality">
-                <label class="btn btn-outline-secondary bg-warning bg-gradient" for="—-btn">—</label>
-                <input type="radio" class="btn-check" name="quality-radio" id="— —-btn" value="— —" [(ngModel)]="touchQuality">
-                <label class="btn btn-outline-secondary bg-danger bg-gradient" for="— —-btn">— —</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="—-btn" value="—" [(ngModel)]="outcome">
+                <label class="btn btn-outline-secondary bg-warning" for="—-btn">—</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="— —-btn" value="— —" [(ngModel)]="outcome">
+                <label class="btn btn-outline-secondary bg-danger" for="— —-btn">— —</label>
             </div>
         </div>
 
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-secondary" (click)="modal.close()" (click)="notifyNewTouch()">Conferma</button>
+		<button type="button" class="btn btn-outline-secondary confirm-btn" (click)="notifyNewTouch(); modal.close()">Conferma</button>
 	</div>
 </ng-template>

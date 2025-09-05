@@ -173,11 +173,11 @@ def createEvent(request):
 
 # TOUCH CRUD
 # get all touches
-@api_view(['GET'])
-def getTouches(request):
-    touches = Touch.objects.all()
-    serializer = TouchSerializer(touches, many = True)
-    return Response(serializer.data)
+# @api_view(['GET'])
+# def getTouches(request):
+#     touches = Touch.objects.all()
+#     serializer = TouchSerializer(touches, many = True)
+#     return Response(serializer.data)
 
 # create new touch
 @api_view(['POST'])
@@ -185,8 +185,32 @@ def createTouch(request):
     serializer = TouchSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+# get touches by player and match
+@api_view(['GET'])
+def getTouchesByPlayerMatch(request, player_id, match_id):
+    touches = Touch.objects.filter(player_id=player_id, match_id=match_id)
+    serializer = TouchSerializer(touches, many=True)
+    return Response(serializer.data)
+    
+# get touches by player and match and set
+@api_view(['GET'])
+def getTouchesByPlayerMatchSet(request, player_id, match_id, set_id):
+    touches = Touch.objects.filter(player_id=player_id, match_id=match_id, set_id=set_id)
+    serializer = TouchSerializer(touches, many=True)
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def deleteTouch(request, pk):
+    try:
+        touch = Touch.objects.get(id=pk)
+        touch.delete()
+        return Response({"message": "Touch deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+    except Touch.DoesNotExist:
+        return Response({"error": "Touch not found"}, status=status.HTTP_404_NOT_FOUND)
+
 
 
 # Details

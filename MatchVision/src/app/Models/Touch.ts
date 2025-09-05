@@ -1,28 +1,25 @@
-
-
 export enum FundamentalType {
-  Serve = 'Serve',
-  Serve_Receive = 'Serve_Receive',
-  Set = 'Set',
-  Attack = 'Attack',
-  Block = 'Block',
-  Defense = 'Defense'
+    SERVE = 'Serve',
+    SERVE_RECEIVE = 'Serve_Receive',
+    SET = 'Set',
+    SPIKE = 'Spike',
+    BLOCK = 'Block',
+    DEFENSE = 'Defense'
 }
 
 export enum TouchResult {
-  Positiva = 'Positiva',
-  Buona = 'Buona',
-  Neutra = 'Neutra',
-  Negativa = 'Negativa',
-  Errore = 'Errore',
+    POSITIVA = 'Positiva',
+    BUONA = 'Buona',
+    NEUTRA = 'Neutra',
+    NEGATIVA = 'Negativa',
+    ERRORE = 'Errore',
 }
 
 export class Touch {
-  constructor(
-    public set_number: number,
-    public fundamental: FundamentalType,
-    public outcome: TouchResult,
-    public match_id: number,
-    public player_id: number
-  ) {}
+    constructor(
+        public set: number,
+        public fundamental: FundamentalType | string,
+        public outcome: TouchResult | string,
+        public player: number
+    ) {}
 }

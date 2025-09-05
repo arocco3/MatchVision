@@ -60,11 +60,11 @@
         <!-- Players icons -->
             @for (player of players; track $index){
                 <button class="player-icon btn btn-primary position-absolute" [style.left.%]="pos[$index][0]" [style.top.%]="pos[$index][1]"
-                    (click)="openNewTouchModal(player); this.selectedPlayer = player">{{ player.number }}</button>
+                    (click)="this.selectedPlayer = player; openNewTouchModal()">{{ player.number }}</button>
             }           
             <!-- Positioning libero -->
             <button class="player-icon btn btn-primary position-absolute" 
-                [style.left.%]="libero_pos[0]" [style.top.%]="libero_pos[1]" (click)="this.selectedPlayer = libero; openNewTouchModal(libero)">{{ libero.number }}</button>
+                [style.left.%]="libero_pos[0]" [style.top.%]="libero_pos[1]" (click)="this.selectedPlayer = libero; openNewTouchModal()">{{ libero.number }}</button>
         </div>
 
 
@@ -83,10 +83,8 @@
 
         <!-- Modal for a new touch -->
         <app-new-touch-modal
-            [touchType]="selectedFundamental"
-            [touchQuality]="selectedOutcome"
             [player]="selectedPlayer"
-            (newTouchCreated)="registerNewTouch()">
+            (newTouchCreated)="registerNewTouch($event)">
         </app-new-touch-modal>
 
         <!-- Modal for a new event -->

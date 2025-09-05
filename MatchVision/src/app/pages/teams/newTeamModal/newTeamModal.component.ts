@@ -52,18 +52,17 @@ export class NewTeamModalComponent implements OnInit{
 
     // To save the team
     public saveTeam(form: any, modal: any) {
-        console.log("i player della nuova squadra di nome", this.newTeam.name, "sono", this.newTeam.playersList)
         if (form.valid) {
             this.teamsService.createTeam(this.newTeam).subscribe({
             next: (res) => {
-                this.teamCreated.emit();
-                console.log('Squadra salvata:', res);
-                modal.close('Save click');
+                this.teamCreated.emit()
+                console.log('Squadra salvata:', res)
+                modal.close('Save click')
             },
             error: (err) => console.error('Errore salvataggio nuovo team', err)
             });
             // Reset form
-            this.newTeam = { id: 0, name: '', playersList: [] };
+            this.newTeam = { id: 0, name: '', playersList: [] }
         }
     }
 
