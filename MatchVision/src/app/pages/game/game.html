@@ -46,7 +46,7 @@
                     @if(touches.length > 0){
                         <div class="col-10">Ultimo tocco: {{ this.last_touch_fundamental }}</div>
                         <div class="col-2"><img class="del-touch-img" src="/icons/del-last-action-icon.png" alt="Annulla l'ultimo tocco"
-                            (click)="cancelLastAction()"></div>
+                            (click)="cancelLastTouch(last_touch_id)"></div>
                     }
                 </div>
 

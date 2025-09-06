@@ -120,7 +120,8 @@ export class GameComponent{
         this.libero = this.bench_libero
         this.bench_libero = temp
     }
-
+    
+    
     registerNewEvent(): void {
         switch(this.eventOccurred.event_type) {
             case EventType.TECHNICAL_TIMEOUT:
@@ -128,22 +129,32 @@ export class GameComponent{
                     this.leftTimeOuts--
                 break
             case EventType.YELLOW_CARD:
-                 this.y_card_counter++
+                this.y_card_counter++
                 break
             case EventType.RED_CARD:
-                 this.r_card_counter++
+                this.r_card_counter++
                 break
             case EventType.DOUBLE_FAULT:
-                // cancelLastAction() 
+                this.cancelLastAction()
                 break
         }
         this.eventOccurred = {event_type: ''}
     }
     
+    cancelLastAction(): void {
+        for (let i = this.touches.length - 1; i >= 0; i--) {
+            if (this.touches[i].fundamental === 'Battuta'){
+                this.cancelLastTouch(this.touches[i].id)
+                break
+            }
+            this.cancelLastTouch(this.touches[i].id)
+        }
+    }
+
     // Delete last touch
-    cancelLastAction(){
+    cancelLastTouch(id: number | undefined): void {
         console.log(this.touches.at(-1))
-        this.touchesService.deleteTouch(this.last_touch_id).subscribe({
+        this.touchesService.deleteTouch(id).subscribe({
             next: () => {
                 console.log('Ultimo tocco eliminato')
                 if(this.touches.length > 0){
@@ -193,4 +204,3 @@ export class GameComponent{
 
     }
 }
-
