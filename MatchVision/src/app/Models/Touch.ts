@@ -17,6 +17,7 @@ export enum TouchResult {
 
 export class Touch {
     constructor(
+        public id: number,
         public set: number,
         public fundamental: FundamentalType | string,
         public outcome: TouchResult | string,

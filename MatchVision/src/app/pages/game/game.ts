@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core'
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersModal.component"
 import { NewTouchModalComponent } from "./newTouchModal/newTouchModal.component"
@@ -24,7 +24,7 @@ import { TouchesService } from '../../services/touchesService'
 
 export class GameComponent{
 
-    constructor(private touchesService: TouchesService, public globalService: GlobalService) {}
+    constructor(private touchesService: TouchesService, private cdr: ChangeDetectorRef, public globalService: GlobalService) {}
 
      @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent
      @ViewChild(NewTouchModalComponent) newTouchModal!: NewTouchModalComponent
@@ -47,12 +47,15 @@ export class GameComponent{
     // To insert a touch
     selectedPlayer!: Player
     newTouch: Touch = {
+        id: -1,
         set: -1, 
         player: -1,
         fundamental: "",
         outcome: "" 
     }
-    last_touch: string = ''
+    touches: Touch[] = []
+    last_touch_fundamental: string | undefined = ''
+    last_touch_id: number | undefined = -1
 
     // players di prova sarebbero i titolari
     players: Player[] = [
@@ -138,24 +141,42 @@ export class GameComponent{
     }
     
     // Delete last touch
-    cancelLastAction(){}
+    cancelLastAction(){
+        console.log(this.touches.at(-1))
+        this.touchesService.deleteTouch(this.last_touch_id).subscribe({
+            next: () => {
+                console.log('Ultimo tocco eliminato')
+                if(this.touches.length > 0){
+                    this.touches.pop()
+                    this.last_touch_fundamental = this.touches.at(-1)?.fundamental
+                    this.last_touch_id = this.touches.at(-1)?.id
+                }
+                this.cdr.detectChanges()
+            },
+            error: (err) => console.error('Errore eliminazione ultimo tocco', err)
+        })
+    }
 
     // Create new touch
     registerNewTouch(event: {fundamental: string; outcome: string}): void {
         // this.newTouch.set = this.globalService.currentSet().id
         this.newTouch.set = 10
-        this.newTouch.fundamental = event.fundamental
         this.newTouch.player = this.selectedPlayer.id
+        this.newTouch.fundamental = event.fundamental
         this.newTouch.outcome = event.outcome
         // if form is valid
         if((this.newTouch.fundamental != "") && (this.newTouch.outcome != "")) {
             this.touchesService.createTouch(this.newTouch).subscribe({
                 next: (res) => {
                     console.log(res)
+                    this.last_touch_fundamental = res.fundamental
+                    this.last_touch_id = res.id
+                    this.touches.push(res)
+                    this.cdr.detectChanges()
                 },
                 error: (err) => console.error('Errore salvataggio nuovo tocco', err)
             });
-            this.newTouch = {set: -1, player: -1, fundamental: '', outcome: ''}
+            this.newTouch = {id: -1, set: -1, player: -1, fundamental: '', outcome: ''}
         }
     }
 
@@ -168,7 +189,8 @@ export class GameComponent{
     }
 
     endSet() {
-        // da implementare
+        this.touches = []
+
     }
 }
 

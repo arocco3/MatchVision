@@ -25,7 +25,7 @@ export class TouchesService {
         return this.http.get<Touch[]>(`${this.apiUrl}/touches/player/${playerId}/match/${matchId}/set/${setId}/`);
     }
 
-    deleteTouch(id: number): Observable<any> {
+    deleteTouch(id: number | undefined): Observable<any> {
         return this.http.delete(`${this.apiUrl}/touches/delete/${id}/`);
     }
 }

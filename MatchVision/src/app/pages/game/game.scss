@@ -33,6 +33,8 @@
 }
 
 .top-bar{
+    // background-color: green;
+    margin-bottom: 1%;
     font-size: x-large;
     text-align: center;
 }
@@ -70,4 +72,15 @@
 
 .last-touch {
     background-color: brown;
+}
+
+.del-touch-img {
+    width: 100%;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    border-radius: 7px;
+}
+.del-touch-img:hover {
+    cursor: pointer;    
 }
