@@ -52,6 +52,7 @@ export class GameComponent{
         fundamental: "",
         outcome: "" 
     }
+    last_touch: string = ''
 
     // players di prova sarebbero i titolari
     players: Player[] = [
@@ -130,29 +131,32 @@ export class GameComponent{
                  this.r_card_counter++
                 break
             case EventType.DOUBLE_FAULT:
-                //cancelLastAction() annulla le ultime azioni 
+                // cancelLastAction() 
                 break
         }
         this.eventOccurred = {event_type: ''}
     }
     
+    // Delete last touch
     cancelLastAction(){}
 
+    // Create new touch
     registerNewTouch(event: {fundamental: string; outcome: string}): void {
         // this.newTouch.set = this.globalService.currentSet().id
         this.newTouch.set = 10
         this.newTouch.fundamental = event.fundamental
+        this.newTouch.player = this.selectedPlayer.id
+        this.newTouch.outcome = event.outcome
         // if form is valid
-        // if((this.newTouch.fundamental != "") && (this.newTouch.outcome != "")) {
-            this.newTouch.player = this.selectedPlayer.id
-            this.newTouch.outcome = event.outcome
-            console.log(this.newTouch)
+        if((this.newTouch.fundamental != "") && (this.newTouch.outcome != "")) {
             this.touchesService.createTouch(this.newTouch).subscribe({
-                next: (res) => {console.log(res)},
+                next: (res) => {
+                    console.log(res)
+                },
                 error: (err) => console.error('Errore salvataggio nuovo tocco', err)
             });
             this.newTouch = {set: -1, player: -1, fundamental: '', outcome: ''}
-        // }
+        }
     }
 
     // Rotation of players

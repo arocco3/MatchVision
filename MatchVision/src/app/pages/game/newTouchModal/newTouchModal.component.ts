@@ -33,5 +33,7 @@ export class NewTouchModalComponent{
             fundamental: this.fundamental,
             outcome: this.outcome
         })
+        this.fundamental = ''
+        this.outcome = ''
     }
 }

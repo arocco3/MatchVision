@@ -29,7 +29,7 @@
             <div class="row col">
 
                 <!-- red/yellow cards -->
-                <div class="row col cards-counters d-flex justify-content-center align-items-center">
+                <div class="row col-3 cards-counters d-flex justify-content-center align-items-center">
                     @if (this.y_card_counter > 0){
                         <div class="col yellow-card-counter d-flex justify-content-center align-items-center">
                             <div>{{ this.y_card_counter }}</div>
@@ -42,7 +42,13 @@
                     }
                 </div>
 
-                <div class="manage-guests-score d-flex justify-content-center align-items-center col-3 offset-3">Ospiti
+                <div class="last-touch d-flex justify-content-center align-items-center col-5">
+                    @if(last_touch){
+                        Ultimo tocco: {{ this.last_touch }}
+                    }
+                    </div>
+
+                <div class="manage-guests-score d-flex justify-content-center align-items-center col">Ospiti
                     <button class="btn btn-secondary mx-1" (click)="decreaseScore('guests')">—</button>
                     <button class="btn btn-secondary mx-1" (click)="increaseScore('guests')">+</button> 
                 </div>
@@ -84,7 +90,7 @@
         <!-- Modal for a new touch -->
         <app-new-touch-modal
             [player]="selectedPlayer"
-            (newTouchCreated)="registerNewTouch($event)">
+            (newTouchCreated)="registerNewTouch($event); last_touch = $event.fundamental">
         </app-new-touch-modal>
 
         <!-- Modal for a new event -->
