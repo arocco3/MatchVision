@@ -237,6 +237,13 @@ def getMatchTeams(request, pk):
     teams = match.teams.all()
     return Response(TeamSerializer(teams, many=True).data)
 
+# sets of the match
+@api_view(['GET'])
+def getMatchSets(request, pk):
+    match = Match.objects.get(pk=pk)
+    sets = Set.objects.filter(match=match).order_by("number")
+    return Response(SetSerializer(sets, many=True).data)
+
 # players of the team
 @api_view(['GET'])
 def getTeamPlayers(request, pk):

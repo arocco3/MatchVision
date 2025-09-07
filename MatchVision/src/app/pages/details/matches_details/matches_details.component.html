@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="match-details container my-5">
+  <!-- Info Match -->
+    <div class="match-header card shadow p-4 mb-4">
+        <h1 class="text-2xl font-bold text-center">Dettagli Partita</h1>
+        <div class="text-center mt-2">
+            <h2 class="text-xl">{{ match?.name }}</h2>
+            <p class="text-gray-600">Data: {{ match?.date }}</p>
+            <p class="text-gray-600">Risultato: {{ match?.result }}</p>
+        </div>
+    </div>
+
+    <!-- Squadra -->
+    @if(match?.team_id){
+        <div class="team-info card shadow p-4 mb-4">
+            <h2 class="text-xl font-semibold mb-2">Squadra</h2>
+            <p>{{ team.name }}</p>
+        </div>
+    }
+
+    <!-- Sets -->
+    <div class="sets-section card shadow p-4">
+        <h2 class="text-xl font-semibold mb-3">Set disputati</h2>
+
+        @if(sets.length > 0){
+        <div class="sets-list grid gap-4">
+            @for(set of sets; track set.id){
+                <div class="set-item border rounded-lg p-4 bg-gray-50">
+                    <h3 class="font-bold text-lg mb-1">Set {{ set.number }}</h3>
+                    <p class="mb-2">Punteggio: 
+                        <span class="text-green-600 font-semibold">{{ set.home_score }}</span> - 
+                        <span class="text-red-600 font-semibold">{{ set.guest_score }}</span>
+                    </p>
+
+                    <!-- Giocatori del set -->
+                    @if(set.players.length > 0){
+                        <div class="players-list mt-2">
+                            <h4 class="font-semibold text-gray-700 mb-1">Giocatori in campo:</h4>
+                            <ul class="grid grid-cols-2 gap-2 text-sm">
+                            @for(player of set.players; track player.id){
+                                <li class="bg-white border rounded p-2 shadow-sm hover:shadow-md transition" [routerLink]="['/player_details', player.id]" routerLinkActive="router-link-active">
+                                    <span class="font-bold">#{{ player.number }}</span> - 
+                                    {{ player.name }} {{ player.surname }}
+                                    <span class="text-gray-500 text-xs">({{ player.role }})</span>
+                                </li>
+                            }
+                            </ul>
+                        </div>
+                    }@else{
+                    <p class="text-gray-400 text-sm">Nessun giocatore registrato per questo set.</p>
+                    }
+                </div>
+            }
+        </div>
+        }@else{
+        <p class="text-gray-500">Nessun set registrato per questa partita.</p>
+        }
+    </div>
+
+
+
+
+<!-- 📊 Statistiche -->
+  <div class="stats-section card shadow p-4">
+    <h2 class="text-xl font-semibold mb-4">Statistiche</h2>
+
+    <!-- Tabs -->
+    <div class="tabs flex border-b mb-4">
+      <button class="tab-btn" 
+              [class.active]="activeTab === 'match'" 
+              (click)="activeTab = 'match'">Partita</button>
+      <button class="tab-btn" 
+              [class.active]="activeTab === 'players'" 
+              (click)="activeTab = 'players'">Giocatori</button>
+    </div>
+
+    <!-- Contenuto Tab -->
+    <div class="tab-content">
+      @if(activeTab === 'match'){
+        <div class="match-stats grid gap-2 text-sm">
+          <p><strong>Totale punti squadra:</strong>sf f</p>
+          <p><strong>Set vinti:</strong>bg g</p>
+          <p><strong>Ace totali:</strong> bthbt</p>
+          <p><strong>Muri vincenti:</strong> thn</p>
+        </div>
+      }
+
+      @if(activeTab === 'players'){
+        <div class="players-stats grid gap-4">
+            @for(set of sets; track set.id){
+          @for(player of set.players; track player.id){
+            <div class="border rounded-lg p-3 bg-gray-50 shadow-sm">
+              <h3 class="font-semibold">{{ player.name }} {{ player.surname }}</h3>
+              <p class="text-xs text-gray-500 mb-2">Ruolo: {{ player.role }}</p>
+              <ul class="text-sm">
+                <li><strong>Punti:</strong> {{ 55 }}</li>
+                <li><strong>Ace:</strong> {{ 546 }}</li>
+                <li><strong>Muri:</strong> {{ 645 }}</li>
+                <li><strong>Errori:</strong> {{ 545 }}</li>
+              </ul>
+            </div>
+          }}
+        </div>
+      }
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+</body>
+</html>

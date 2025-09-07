@@ -29,6 +29,7 @@ export class PlayersDetailsComponent implements OnInit{
         this.teams = []
 
         let id = Number(this.route.snapshot.paramMap.get('id'))
+        
         if (id) {            
             this.loadPlayer(id)
             this.loadMatches(id)

@@ -1,0 +1,29 @@
+.player-details {
+    max-width: 900px;
+    margin: 0 auto;
+
+    h1 {
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .card {
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+            transform: translateY(-3px);
+        }
+    }
+
+    .list-group-item {
+        font-size: 1.1rem;
+    }
+}
+
+.fw-bold:hover {
+    cursor: pointer;
+}
+
+.single-match:hover {
+    cursor: pointer;
+}

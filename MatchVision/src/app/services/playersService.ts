@@ -22,6 +22,14 @@ export class PlayersService {
     getPlayer(id: number): Observable<Player> {
         return this.http.get<Player>(`${this.apiUrl}/players/${id}/`);
     }
+    
+    getPlayerTeams(id: number): Observable<Team[]> {
+        return this.http.get<Team[]>(`${this.apiUrl}/player_details/${id}/teams/`);
+    }
+
+    getPlayerMatches(id: number): Observable<Match[]> {
+        return this.http.get<Match[]>(`${this.apiUrl}/player_details/${id}/matches/`);
+    }
 
     createPlayer(player: Player): Observable<Player> {
         return this.http.post<Player>(`${this.apiUrl}/players/create/`, player);
@@ -33,13 +41,5 @@ export class PlayersService {
 
     deletePlayer(id: number): Observable<any> {
         return this.http.delete(`${this.apiUrl}/players/delete/${id}/`);
-    }
-  
-    getPlayerTeams(id: number): Observable<Team[]> {
-        return this.http.get<Team[]>(`${this.apiUrl}/player_details/${id}/teams/`);
-    }
-
-    getPlayerMatches(id: number): Observable<Match[]> {
-        return this.http.get<Match[]>(`${this.apiUrl}/player_details/${id}/matches/`);
     }
 }

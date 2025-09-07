@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Team } from '../Models/Team';
+import { Player } from '../Models/Player';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { Team } from '../Models/Team';
 
 export class TeamsService {
 
-  private apiUrl = 'http://localhost:8000';
+    private apiUrl = 'http://localhost:8000';
   
     constructor(private http: HttpClient) {}
   
@@ -22,15 +23,23 @@ export class TeamsService {
         return this.http.get<Team[]>(`${this.apiUrl}/teams/`);
     }
 
+    getTeam(id: number): Observable<Team> {
+        return this.http.get<Team>(`${this.apiUrl}/teams/${id}/`);
+    }
+
+    getTeamPlayers(id: number): Observable<Player[]> {
+        return this.http.get<Player[]>(`${this.apiUrl}/teams/${id}/players`);
+    }
+
     createTeam(team: Team): Observable<Team> {
-      return this.http.post<Team>(`${this.apiUrl}/teams/create/`, team);
+        return this.http.post<Team>(`${this.apiUrl}/teams/create/`, team);
     }
   
     updateTeam(id: number, team: Team): Observable<Team> {
-      return this.http.put<Team>(`${this.apiUrl}/teams/update/${id}/`, team);
+        return this.http.put<Team>(`${this.apiUrl}/teams/update/${id}/`, team);
     }
   
     deleteTeam(id: number): Observable<any> {
-      return this.http.delete(`${this.apiUrl}/teams/delete/${id}/`);
+        return this.http.delete(`${this.apiUrl}/teams/delete/${id}/`);
     }
 }

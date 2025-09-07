@@ -7,39 +7,64 @@
 </head>
 <body>
 
-    <div class="player-details">
-        <!-- Info base -->
-        <h1>Info giocatore:</h1>
-        <div class="player-info">
-            <h2>{{ player?.name }} {{ player?.surname }}</h2>
-            <p>Ruolo: {{player?.role}}</p>
-        </div>
+    <div class="container my-5 player-details">
 
-        <!-- Matches -->
-        @if(player != null){
-            @if(matches.length > 0){
-                <h2>Partite disputate:</h2>
-                @for (match of matches; track match.id){
-                <div class="player-matches">
-                    <h2>{{ match.name }}</h2>
-                    <p>Risultati: {{match.result}}</p>
-                </div>
-            }}@else{
-                <h2>{{ player.name }} non ha ancora disputato nessuna partita.</h2>
+    <!-- Info Giocatore -->
+    <div class="card shadow-lg border-0 rounded-3 mb-4">
+        <div class="card-body text-center">
+            <h1 class="card-title mb-3">{{ player?.name }} {{ player?.surname }}</h1>
+            <p class="text-muted fs-5 mb-0">Ruolo: <strong>{{ player?.role }}</strong></p>
+        </div>
+    </div>
+
+    <!-- Matches -->
+        <div class="card shadow-sm border-0 rounded-3 mb-4">
+            <div class="card-body">
+                <h2 class="h4 mb-3 text-primary">📅 Partite disputate</h2>
+
+            @if(player != null){
+                @if(matches.length > 0){
+                    <div class="row g-3">
+                        @for (match of matches; track match.id){
+                            <div class="col-md-6 single-match" [routerLink]="['/match_details/', match.id]" routerLinkActive="router-link-active">
+                                <div class="border rounded-3 p-3 bg-light h-100">
+                                    <h5 class="mb-1">{{ match.name }}</h5>
+                                    <p class="text-muted mb-0">Risultati: <strong>{{ match.result }}</strong></p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }@else{
+                    <p class="text-muted">{{ player.name }} non ha ancora disputato nessuna partita.</p>
+                }
             }
-        
-            <!-- Teams -->
+        </div>
+    </div>
+
+    <!-- Teams -->
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body">
+        <h2 class="h4 mb-3 text-success">⚽ Squadre</h2>
+
+        @if(player != null){
             @if(teams.length > 0){
-                <h2>Squadre:</h2>
+            <ul class="list-group list-group-flush">
                 @for (team of teams; track team.id){
-                <div class="player-teams">
-                    <h2>{{team.name}}</h2>
-                </div>
-            }}@else{
-                <h2>{{ player.name }} non fa ancora parte di nessuna squadra.</h2>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="fw-bold" [routerLink]="['/team_details/', team.id]" routerLinkActive="router-link-active">{{ team.name }}</span>
+                    <span class="badge bg-success rounded-pill">Team</span>
+                </li>
+                }
+            </ul>
+            }@else{
+            <p class="text-muted">{{ player.name }} non fa ancora parte di nessuna squadra.</p>
             }
         }
+        </div>
     </div>
+
+</div>
+
 
 </body>
 </html>

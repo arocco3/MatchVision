@@ -1,16 +1,60 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { Match } from '../../../Models/Match';
+import { Team } from '../../../Models/Team';
+import { Set } from '../../../Models/Set';
+import { MatchesService } from '../../../services/matchesService';
 
 @Component({
-  selector: 'app-matches_details',
-  standalone: true,
-  imports: [
-    RouterModule,
-  ],
-  templateUrl: './matches_details.component.html',
-  styleUrls: ['./matches_details.component.scss']
+    selector: 'app-matches_details',
+    standalone: true,
+    imports: [
+        RouterModule,
+    ],
+    templateUrl: './matches_details.component.html',
+    styleUrls: ['./matches_details.component.scss']
 })
 
 export class MatchesDetailsComponent {
-  title = 'MatchesDetails';
+    title = 'MatchesDetails';
+    match: Match | null =  null
+    team!: Team
+    sets!: Set[]
+  
+    activeTab: 'match' | 'players' = 'match';
+
+
+    constructor(private route: ActivatedRoute, private matchesService: MatchesService, private cdr: ChangeDetectorRef){}
+  
+    ngOnInit(): void {
+        this.sets = []
+
+        let id = Number(this.route.snapshot.paramMap.get('id'))
+        
+        if (id) {            
+            this.loadMatch(id)
+            this.loadSets(id)
+        }
+    }
+      
+    loadMatch(id: number): void {
+        this.matchesService.getMatch(id).subscribe({
+            next: (res) => {
+                this.match = res
+                this.cdr.detectChanges()
+            },
+            error: (err) => console.error('Errore caricamento dettagli match', err)
+        });
+    }
+  
+    loadSets(id: number): void {
+        this.matchesService.getMatchSets(id).subscribe({
+            next: (res) => {
+            this.sets = res;
+            this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Errore caricamento set', err)
+        })
+    }
+
 }
