@@ -17,30 +17,52 @@ import { Player } from '../../../Models/Player';
 })
 
 export class PlayersDetailsComponent implements OnInit{
-    title = 'PlayersDetails';
-    player!: Player;
-    matches: Match[] = [];
-    teams: Team[] = [];
+    title = 'PlayersDetails'
+    player: Player | null =  null
+    matches!: Match[]
+    teams!: Team[]
 
     constructor(private route: ActivatedRoute, private playersService: PlayersService, private cdr: ChangeDetectorRef){}
 
     ngOnInit(): void {
-        const id = Number(this.route.snapshot.paramMap.get('id'))
-        if (id) {
-            // Player info
-            this.playersService.getPlayer(id).subscribe({
-                next: (res) => {
-                    this.player = res;
-                    this.cdr.detectChanges();
-                },
-                error: (err) => console.error('Errore caricamento dettagli player', err)
-            });
+        this.matches = []
+        this.teams = []
 
-            // Matches related to player
-            this.playersService.getPlayerMatches(id).subscribe(m => this.matches = m);
-
-            // Teams related to player
-            this.playersService.getPlayerTeams(id).subscribe(t => this.teams = t);
+        let id = Number(this.route.snapshot.paramMap.get('id'))
+        if (id) {            
+            this.loadPlayer(id)
+            this.loadMatches(id)
+            this.loadTeams(id)
         }
+    }
+    
+    loadPlayer(id: number): void {
+        this.playersService.getPlayer(id).subscribe({
+            next: (res) => {
+                this.player = res
+                this.cdr.detectChanges()
+            },
+            error: (err) => console.error('Errore caricamento dettagli player', err)
+        });
+    }
+
+    loadMatches(id: number): void {
+        this.playersService.getPlayerMatches(id).subscribe({
+            next: (res) => {
+            this.matches = res;
+            this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Errore caricamento partite', err)
+        })
+    }
+    
+    loadTeams(id: number): void {
+        this.playersService.getPlayerTeams(id).subscribe({
+            next: (res) => {
+            this.teams = res;
+            this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Errore caricamento squadre', err)
+        })
     }
 }
