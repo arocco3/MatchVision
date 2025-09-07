@@ -36,10 +36,10 @@ export class PlayersService {
     }
   
     getPlayerTeams(id: number): Observable<Team[]> {
-        return this.http.get<Team[]>(`${this.apiUrl}/player_details/${id}/`);
+        return this.http.get<Team[]>(`${this.apiUrl}/player_details/${id}/teams/`);
     }
 
     getPlayerMatches(id: number): Observable<Match[]> {
-        return this.http.get<Match[]>(`${this.apiUrl}/player_details/${id}/`);
+        return this.http.get<Match[]>(`${this.apiUrl}/player_details/${id}/matches/`);
     }
 }

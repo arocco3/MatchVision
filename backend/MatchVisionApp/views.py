@@ -217,8 +217,10 @@ def deleteTouch(request, pk):
 # teams with player
 @api_view(['GET'])
 def getPlayersTeams(request, pk):
-    player = Player.objects.get(pk=pk)
-    teams = Team.objects.filter(matches__sets__players=player).distinct()
+    player = Player.objects.get(pk = pk)
+    teams_direct = Team.objects.filter(playersList=player)
+    teams_non_direct = Team.objects.filter(matches__sets__players=player)
+    teams = (teams_direct | teams_non_direct).distinct()
     return Response(TeamSerializer(teams, many=True).data)
 
 # matches with player

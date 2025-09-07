@@ -9,27 +9,33 @@
 
     <div class="player-details">
         <!-- Info base -->
-         <h1>Info giocatore:</h1>
+        <h1>Info giocatore:</h1>
         <div class="player-info">
-            <h2>{{ player?.name }} {{ player?.surname }}</h2>
-            <p>Ruolo: {{player?.role}}</p>
+            <h2>{{ player.name }} {{ player.surname }}</h2>
+            <p>Ruolo: {{player.role}}</p>
         </div>
 
         <!-- Matches -->
-        <h2>Partite disputate:</h2>
-@for (match of matches; track match.id){
-        <div class="player-matches">
-            <h2>{{ match.name }} {{ match.team1 }} - {{ match.team2 }}</h2>
-            <p>Risultati: {{match.result}}</p>
-        </div>
-}
+        @if(matches.length > 0){
+            <h2>Partite disputate:</h2>
+            @for (match of matches; track match.id){
+            <div class="player-matches">
+                <h2>{{ match.name }}</h2>
+                <p>Risultati: {{match.result}}</p>
+            </div>
+        }}@else{
+            <h2>{{ player.name }} non ha ancora disputato nessuna partita.</h2>
+        }
         <!-- Teams -->
-         <h2>Squadre:</h2>
-@for (team of teams; track team.id){
-        <div class="player-teams">
-            <h2>Nomi teams: {{team.name}}</h2>
-        </div>
-}
+        @if(teams.length > 0){
+            <h2>Squadre:</h2>
+            @for (team of teams; track team.id){
+            <div class="player-teams">
+                <h2>{{team.name}}</h2>
+            </div>
+        }}@else{
+            <h2>{{ player.name }} non fa ancora parte di nessuna squadra.</h2>
+        }
     </div>
 
 </body>

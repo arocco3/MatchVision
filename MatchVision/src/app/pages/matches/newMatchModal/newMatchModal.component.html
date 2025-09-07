@@ -24,7 +24,7 @@
 
         <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('Cancel click')">Annulla</button>
-            <button type="submit" class="btn btn-primary" [disabled]="matchForm.invalid">Salva</button>
+            <button type="submit" class="btn btn-primary" [disabled]="newMatch.team_id === 0 || newMatch.name === '' ">Salva</button>
         </div>
 
         </form>

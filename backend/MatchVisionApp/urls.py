@@ -37,8 +37,8 @@ urlpatterns = [
     path('touches/delete/<int:pk>/', views.deleteTouch),
 
     # Details
-    path('player_details/<int:pk>/', views.getPlayersMatches),
-    path('player_details/<int:pk>/', views.getPlayersTeams),
+    path('player_details/<int:pk>/matches/', views.getPlayersMatches),
+    path('player_details/<int:pk>/teams/', views.getPlayersTeams),
     path('team_details/<int:pk>/', views.getTeamMatches),
     path('team_details/<int:pk>/', views.getTeamPlayers),
     path('match_details/<int:pk>/', views.getMatchTeams),

@@ -18,14 +18,14 @@ import { Player } from '../../../Models/Player';
 
 export class PlayersDetailsComponent implements OnInit{
     title = 'PlayersDetails';
-    player?: Player;
+    player!: Player;
     matches: Match[] = [];
     teams: Team[] = [];
 
     constructor(private route: ActivatedRoute, private playersService: PlayersService, private cdr: ChangeDetectorRef){}
 
     ngOnInit(): void {
-        const id = Number(this.route.snapshot.paramMap.get('id'));
+        const id = Number(this.route.snapshot.paramMap.get('id'))
         if (id) {
             // Player info
             this.playersService.getPlayer(id).subscribe({
