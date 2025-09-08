@@ -68,49 +68,72 @@
 
 
 
-<!-- 📊 Statistiche -->
-  <div class="stats-section card shadow p-4">
-    <h2 class="text-xl font-semibold mb-4">Statistiche</h2>
+    <!-- Statistiche -->
+    <div class="stats-section card shadow p-4">
+        <h2 class="text-xl font-semibold mb-4">Statistiche</h2>
 
-    <!-- Tabs -->
-    <div class="tabs flex border-b mb-4">
-      <button class="tab-btn" 
-              [class.active]="activeTab === 'match'" 
-              (click)="activeTab = 'match'">Partita</button>
-      <button class="tab-btn" 
-              [class.active]="activeTab === 'players'" 
-              (click)="activeTab = 'players'">Giocatori</button>
-    </div>
+        <!-- Tabs -->
+        <div class="tabs flex border-b mb-4">
+            <button class="tab-btn" 
+                [class.active]="activeTab === 'match'" (click)="activeTab = 'match'">Partita</button>
+            <button class="tab-btn" 
+                [class.active]="activeTab === 'players'" (click)="activeTab = 'players'">Giocatori</button>
+        </div>
 
     <!-- Contenuto Tab -->
     <div class="tab-content">
-      @if(activeTab === 'match'){
-        <div class="match-stats grid gap-2 text-sm">
-          <p><strong>Totale punti squadra:</strong>sf f</p>
-          <p><strong>Set vinti:</strong>bg g</p>
-          <p><strong>Ace totali:</strong> bthbt</p>
-          <p><strong>Muri vincenti:</strong> thn</p>
-        </div>
-      }
-
-      @if(activeTab === 'players'){
-        <div class="players-stats grid gap-4">
-            @for(set of sets; track set.id){
-          @for(player of set.players; track player.id){
-            <div class="border rounded-lg p-3 bg-gray-50 shadow-sm">
-              <h3 class="font-semibold">{{ player.name }} {{ player.surname }}</h3>
-              <p class="text-xs text-gray-500 mb-2">Ruolo: {{ player.role }}</p>
-              <ul class="text-sm">
-                <li><strong>Punti:</strong> {{ 55 }}</li>
-                <li><strong>Ace:</strong> {{ 546 }}</li>
-                <li><strong>Muri:</strong> {{ 645 }}</li>
-                <li><strong>Errori:</strong> {{ 545 }}</li>
-              </ul>
+        @if(activeTab === 'match'){
+            <!-- general stats of the match -->
+            <div class="card shadow p-4 mb-4">
+                <h4><strong>Partita</strong></h4>
+                <div class="match-stats grid gap-2 text-sm">
+                    <p><strong>Totale punti squadra:</strong>sf f</p>
+                    <p><strong>Set vinti:</strong>bg g</p>
+                    <p><strong>Ace totali:</strong> bthbt</p>
+                    <p><strong>Muri vincenti:</strong> thn</p>
+                </div>
             </div>
-          }}
+
+            <!-- stats devided by set -->
+            <div class="card shadow p-2 mb-2">
+                @for(set of sets; track set.id){
+                    <div class="card shadow p-4 mb-2 mt-2">
+                        <h4><strong>Set {{ set.number }}</strong></h4>
+                        <!-- inserimento tabelle stats -->
+                        <div class="match-stats grid gap-2 text-sm">
+                            <p><strong>Totale punti squadra:</strong>sf f</p>
+                            <p><strong>Set vinti:</strong>bg g</p>
+                            <p><strong>Ace totali:</strong> bthbt</p>
+                            <p><strong>Muri vincenti:</strong> thn</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        @if(activeTab === 'players'){
+            <div class="players-stats grid gap-4">
+                @for(player of players; track player.id){
+                    <div class="border rounded-lg p-3 bg-gray-50 shadow-sm">
+                        <h3 class="font-semibold">{{ player.name }} {{ player.surname }}</h3>
+                        <p class="text-xs text-gray-500 mb-2">Ruolo: {{ player.role }}</p>
+                        @for(set of sets; track set.id){
+
+                            <!-- inserimento tabelle stats -->
+                            <div><strong>Set {{ set.number }}</strong></div>
+                            <ul class="text-sm">
+                                <li><strong>Punti:</strong> {{ 55 }}</li>
+                                <li><strong>Ace:</strong> {{ 546 }}</li>
+                                <li><strong>Muri:</strong> {{ 645 }}</li>
+                                <li><strong>Errori:</strong> {{ 545 }}</li>
+                            </ul>
+
+                        }
+                    </div>
+                }
+            </div>
+        }
         </div>
-      }
-    </div>
   </div>
 
 

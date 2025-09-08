@@ -4,6 +4,7 @@ import { Match } from '../../../Models/Match';
 import { Team } from '../../../Models/Team';
 import { Set } from '../../../Models/Set';
 import { MatchesService } from '../../../services/matchesService';
+import { Player } from '../../../Models/Player';
 
 @Component({
     selector: 'app-matches_details',
@@ -20,6 +21,7 @@ export class MatchesDetailsComponent {
     match: Match | null =  null
     team!: Team
     sets!: Set[]
+    players!: Player[]
   
     activeTab: 'match' | 'players' = 'match';
 
@@ -28,6 +30,7 @@ export class MatchesDetailsComponent {
   
     ngOnInit(): void {
         this.sets = []
+        this.players = []
 
         let id = Number(this.route.snapshot.paramMap.get('id'))
         
@@ -50,11 +53,23 @@ export class MatchesDetailsComponent {
     loadSets(id: number): void {
         this.matchesService.getMatchSets(id).subscribe({
             next: (res) => {
-            this.sets = res;
-            this.cdr.detectChanges();
+                this.sets = res;
+                this.loadMatchPlayers()
+                this.cdr.detectChanges();
         },
         error: (err) => console.error('Errore caricamento set', err)
         })
     }
+
+    loadMatchPlayers(): void {
+        this.sets.forEach((set, index) => {
+            set.players.forEach((player, index) => {
+                if(!this.players.includes(player)){
+                    this.players.push(player)
+                }
+            })
+        })
+    }
+    
 
 }
