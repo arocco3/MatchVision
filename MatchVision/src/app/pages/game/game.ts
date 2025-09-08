@@ -31,7 +31,7 @@ export class GameComponent{
      @ViewChild(NewEventModalComponent) newEventModal!: NewEventModalComponent
 
     // Coordinates [x%, y%]
-    pos: [number, number][] = [
+    left_pos: [number, number][] = [
         [15, 80], // pos 1
         [42, 80], // pos 2
         [42, 50], // pos 3
@@ -39,8 +39,20 @@ export class GameComponent{
         [15, 20], // pos 5
         [15, 50], // pos 6
     ];
+    right_pos: [number, number][] = [
+        [85, 20], // pos 1
+        [58, 20], // pos 2
+        [58, 50], // pos 3
+        [58, 80], // pos 4
+        [85, 80], // pos 5
+        [85, 50], // pos 6
+    ];
+    index: number = 0
+    pos: [number, number][][] = [this.left_pos, this.right_pos]
 
-    libero_pos: [number, number] = [0, 99] // Libero
+    libero_pos_left: [number, number] = [0, 99] // Libero
+    libero_pos_right: [number, number] = [99, 99] // Libero
+    libero_pos: [number, number][] = [this.libero_pos_left, this.libero_pos_right]
 
     score = {home: 0, guests: 0}
 
@@ -121,6 +133,11 @@ export class GameComponent{
         this.bench_libero = temp
     }
     
+    togglePos(): void {
+        this.index = this.index === 0 ? 1 : 0
+        this.cdr.detectChanges()
+    }
+
     
     registerNewEvent(): void {
         switch(this.eventOccurred.event_type) {
@@ -159,10 +176,13 @@ export class GameComponent{
                 console.log('Ultimo tocco eliminato')
                 if(this.touches.length > 0){
                     this.touches.pop()
-                    this.last_touch_fundamental = this.touches.at(-1)?.fundamental
-                    this.last_touch_id = this.touches.at(-1)?.id
+                    this.cdr.detectChanges()
+                    if(this.touches.length > 0){
+                        this.last_touch_fundamental = this.touches.at(-1)?.fundamental
+                        this.last_touch_id = this.touches.at(-1)?.id
+                        this.cdr.detectChanges()
+                    }
                 }
-                this.cdr.detectChanges()
             },
             error: (err) => console.error('Errore eliminazione ultimo tocco', err)
         })
@@ -193,9 +213,9 @@ export class GameComponent{
 
     // Rotation of players
     do_rotation(): void {
-        const last = this.pos.pop();
+        const last = this.pos[this.index].pop();
         if (last) {
-            this.pos.unshift(last);
+            this.pos[this.index].unshift(last);
         }
     }
 

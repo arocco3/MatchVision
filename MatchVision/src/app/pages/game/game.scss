@@ -33,10 +33,30 @@
 }
 
 .top-bar{
-    // background-color: green;
-    margin-bottom: 1%;
+    padding: 0 0 0 0;
     font-size: x-large;
     text-align: center;
+}
+
+.counters-row {
+    margin-top: 1rem;
+
+    .counter-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem;
+        min-width: 90px;
+
+        .label {
+            font-size: 0.95rem;
+        }
+
+        .value {
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+    }
 }
 
 .manage-guests-score {
@@ -53,7 +73,7 @@
     border-radius: 50%;
     text-align: center;
     padding: 0;
-    font-size: 1.2rem;
+    font-size: 1.7rem;
     transform: translate(-50%, -50%);
     transition: left 0.5s ease, top 0.5s ease;
 }
@@ -66,21 +86,50 @@
 }
 .yellow-card-counter, .red-card-counter {
     border-radius: 7px;
-    max-width: 22%;
-    height: 100%;
-}
-
-.last-touch {
-    background-color: brown;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 30%;
+    height: 60%;
 }
 
 .del-touch-img {
-    width: 100%;
+    width: 80%;
     border-style: solid;
     border-color: black;
     border-width: 1px;
     border-radius: 7px;
 }
 .del-touch-img:hover {
-    cursor: pointer;    
+    cursor: pointer;
+}
+
+.del-last-touch-text {
+    font-size: 0.8em;
+}
+
+.scoreboard {             
+    color: rgb(0, 72, 255);                      
+    font-family: 'Courier New', monospace;
+    font-size: 3rem;
+    font-weight: bold;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    min-width: 180px;
+    text-align: center;
+    text-shadow: 0 0 7px rgb(0, 72, 255), 0 0 20px rgb(0, 72, 255);
+
+    .team-score {
+        min-width: 50px;
+        text-align: center;
+    }
+
+    .separator {
+        color: black;
+        text-shadow: 0 0 5px black;
+    }
 }
