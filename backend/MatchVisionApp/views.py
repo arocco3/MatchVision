@@ -232,10 +232,9 @@ def getPlayersMatches(request, pk):
 
 # team of the match
 @api_view(['GET'])
-def getMatchTeams(request, pk):
+def getMatchTeam(request, pk):
     match = Match.objects.get(pk=pk)
-    teams = match.teams.all()
-    return Response(TeamSerializer(teams, many=True).data)
+    return Response(TeamSerializer(match.team).data)
 
 # sets of the match
 @api_view(['GET'])
@@ -248,12 +247,12 @@ def getMatchSets(request, pk):
 @api_view(['GET'])
 def getTeamPlayers(request, pk):
     team = Team.objects.get(pk=pk)
-    players = Player.objects.filter(sets__match__teams=team).distinct()
+    players = team.playersList.all()
     return Response(PlayerSerializer(players, many=True).data)
 
 # matches of a team
 @api_view(['GET'])
 def getTeamMatches(request, pk):
     team = Team.objects.get(pk=pk)
-    matches = Match.objects.filter(sets__players__sets__match__teams=team).distinct()    
+    matches = Match.objects.filter(team=team).distinct()    
     return Response(MatchSerializer(matches, many=True).data)

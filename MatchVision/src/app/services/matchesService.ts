@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Match } from '../Models/Match';
-import { Team } from '../Models/Team';
 import { Set } from '../Models/Set';
+import { Team } from '../Models/Team';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,10 @@ private apiUrl = 'http://localhost:8000';
 
     getMatchSets(id: number): Observable<Set[]> {
         return this.http.get<Set[]>(`${this.apiUrl}/match_details/${id}/sets/`);
+    }
+
+    getMatchTeam(id: number): Observable<Team> {
+        return this.http.get<Team>(`${this.apiUrl}/match_details/${id}/team/`);
     }
 
     createMatch(match: Match): Observable<Match> {

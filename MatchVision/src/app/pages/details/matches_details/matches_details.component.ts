@@ -36,6 +36,7 @@ export class MatchesDetailsComponent {
         
         if (id) {            
             this.loadMatch(id)
+            this.loadTeam(id)
             this.loadSets(id)
         }
     }
@@ -50,12 +51,21 @@ export class MatchesDetailsComponent {
         });
     }
   
+    loadTeam(id: number): void {
+        this.matchesService.getMatchTeam(id).subscribe({
+            next: (res) => {
+                this.team = res
+                this.cdr.detectChanges()
+        },
+        error: (err) => console.error('Errore caricamento team', err)
+        })
+    }
     loadSets(id: number): void {
         this.matchesService.getMatchSets(id).subscribe({
             next: (res) => {
                 this.sets = res;
                 this.loadMatchPlayers()
-                this.cdr.detectChanges();
+                this.cdr.detectChanges()
         },
         error: (err) => console.error('Errore caricamento set', err)
         })
@@ -70,6 +80,6 @@ export class MatchesDetailsComponent {
             })
         })
     }
-    
+
 
 }

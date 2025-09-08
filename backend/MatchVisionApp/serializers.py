@@ -24,6 +24,7 @@ class TeamSerializer(serializers.ModelSerializer):
 
 # --- MATCH ---
 class MatchSerializer(serializers.ModelSerializer):
+    team = TeamSerializer(read_only=True)
     team_id = serializers.PrimaryKeyRelatedField(
         queryset=Team.objects.all(),
         source='team',
@@ -32,7 +33,7 @@ class MatchSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Match
-        fields = ['id', 'name', 'timestamp', 'team_id', 'results']
+        fields = ['id', 'name', 'timestamp', 'team', 'team_id', 'results']
 
 
 # --- SET ---

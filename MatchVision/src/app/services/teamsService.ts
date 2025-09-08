@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Team } from '../Models/Team';
 import { Player } from '../Models/Player';
+import { Match } from '../Models/Match';
 
 
 @Injectable({
@@ -28,7 +29,11 @@ export class TeamsService {
     }
 
     getTeamPlayers(id: number): Observable<Player[]> {
-        return this.http.get<Player[]>(`${this.apiUrl}/teams/${id}/players`);
+        return this.http.get<Player[]>(`${this.apiUrl}/team_details/${id}/players`);
+    }
+
+    getTeamMatches(id: number): Observable<Match[]> {
+        return this.http.get<Match[]>(`${this.apiUrl}/team_details/${id}/matches`);
     }
 
     createTeam(team: Team): Observable<Team> {

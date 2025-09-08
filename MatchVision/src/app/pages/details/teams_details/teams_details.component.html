@@ -7,52 +7,52 @@
 </head>
 <body>
     
-    <div class="container py-5 mb-4">
-
-        <h1 class="mb-4 text-center">Dettagli "nomesquadra"</h1>
-        
-        <!-- <span class="placeholder col-12 placeholder-xs" style="background-color: #10375c;"></span> -->
-        
-        <!-- Players section -->
-        <h2 class="mb-4 " style="margin-top: 1vw; margin-left: 1vw;">Giocatori</h2>
-
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
-            <!-- Players list -->
-            <div class="col">    
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">Alessandro Rocco     |       #12     |   <small>schiacciatore</small></h5>
-                        <!-- <h5 class="card-title">{{player.name}} {{player.surname}}   |   #{{player.number}}     |   {{player.role}}</h5> -->
-                        <p class="card-text">BottaVolley 1div</p>
-                        <a class="btn btn-primary"  [routerLink]="['/player_details']" routerLinkActive="router-link-active">Dettagli</a>
-                    </div>
-                </div>    
-            </div>
-
-        </div>
-
-        <span class="placeholder col-12 placeholder-xs" style="background-color: #10375c;"></span>
-
-        <!-- Matches section -->
-        <h2 class="mb-4 " style="margin-top: 1vw; margin-left: 1vw;">Partite</h2>
-
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-             
-            <div class="col">
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5 class="card-title">Team A vs Team B</h5>
-                        <p class="card-text">Punteggio: 3 - 2</p>
-                        <p class="card-text"><small class="text-muted">Data: 01/08/2025</small></p>
-                        <a [routerLink]="['/match_details']" routerLinkActive="router-link-active" class="btn btn-primary">Dettagli</a>
-                    </div>
-                </div>
-            </div>
-             
-        </div>
-
+    <div class="team-details container my-5">
+    <!-- Info Squadra -->
+    <div class="team-header card shadow p-4 mb-4 text-center">
+        <h1 class="text-2xl font-bold">Dettagli Squadra</h1>
+        <h2 class="text-xl mt-2">{{ team?.name }}</h2>
     </div>
-    
+
+  <!-- Giocatori -->
+    <div class="players-section card shadow p-4 mb-4">
+        <h2 class="text-xl font-semibold mb-3">Giocatori</h2>
+        @if(players.length > 0){
+        <ul class="grid grid-cols-2 gap-3">
+            @for(player of players; track player.id){
+            <li class="bg-gray-50 border rounded p-3 shadow-sm"
+                    [routerLink]="['/player_details', player.id]" routerLinkActive="router-link-active">
+                <p class="font-bold">{{ player.name }} {{ player.surname }}</p>
+                <p class="text-sm text-gray-500">Ruolo: {{ player.role }}</p>
+                <p class="text-sm text-gray-500">#{{ player.number }}</p>
+            </li>
+            }
+        </ul>
+        }@else{
+        <p class="text-gray-500">Nessun giocatore registrato.</p>
+        }
+    </div>
+
+    <!-- Partite -->
+    <div class="matches-section card shadow p-4">
+        <h2 class="text-xl font-semibold mb-3">Partite giocate</h2>
+        @if(matches.length > 0){
+        <ul class="grid gap-3">
+            @for(match of matches; track match.id){
+            <li
+                class="border rounded p-3 shadow-sm m-2"
+                    [routerLink]="['/match_details', match.id]" routerLinkActive="router-link-active">
+                <h3 class="font-semibold text-lg">{{ match.name }}</h3>
+                <p class="text-sm text-gray-500">Data: {{ match.date }}</p>
+                <p class="text-sm text-gray-600">Risultato: {{ match.result }}</p>
+            </li>
+            }
+        </ul>
+        }@else{
+        <p class="text-gray-500">Nessuna partita trovata.</p>
+        }
+    </div>
+    </div>
+
 </body>
 </html>
