@@ -1,29 +1,9 @@
-<mat-toolbar color="primary" class="mat-elevation-z4 d-flex justify-content-between px-3">
-  <div class="d-flex align-items-center gap-3">
-    <button mat-icon-button (click)="toggleSidenav.emit()">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <span class="fw-bold">MatchVision</span>
-  </div>
+<header class="app-header d-flex justify-content-between align-items-center">
 
-  <!-- <div class="d-none d-md-flex gap-3">
-    <a mat-button routerLink="/dashboard">Dashboard</a>
-    <a mat-button routerLink="/matches">Matches</a>
-    <a mat-button routerLink="/players">Players</a>
-    <a mat-button routerLink="/teams">Teams</a>
-  </div> -->
+    <h1 class="app-title">MatchVision</h1>
 
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/profile">
-      <mat-icon>person</mat-icon>
-      <span>Profilo</span>
+    <button class="logout-btn">
+        <img src="/icons/logout-icon.png" alt="Logout">
     </button>
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      <span>Logout</span>
-    </button>
-  </mat-menu>
-</mat-toolbar>
+
+</header>

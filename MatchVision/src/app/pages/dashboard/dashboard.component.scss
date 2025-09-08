@@ -1,82 +1,67 @@
-
 body {
-    display: flex;
-    min-height: 100vh;
-    overflow-x: hidden; /* Prevent horizontal scroll when sidebar is open */
-    background-color: #f4f6ff
+    background-color: #f3f4f6;
+    font-family: 'Segoe UI', sans-serif;
 }
+
 #sidebar {
-    width: 250px;
-    min-width: 250px;
-    background: #343a40; /* Dark background for sidebar */
-    color: #fff;
-    transition: all 0.3s;
-    transform: translateX(0%);
-    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-    position: fixed; /* Keep sidebar fixed */
-    height: 100vh;
-    z-index: 1000; /* Ensure sidebar is above other content */
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 220px;
+    background-color: #253f60;
+    color: white;
+    padding-top: 2rem;
+    z-index: 1000;
 }
-#sidebar.collapsed {
-    transform: translateX(-100%);
-}
-#content {
-    flex-grow: 1;
-    padding: 20px;
-    transition: margin-left 0.3s;
-    margin-left: 250px; /* Adjust content margin when sidebar is open */
-}
-#content.shifted {
-    margin-left: 0; /* Adjust content margin when sidebar is collapsed */
-}
+
 #sidebar .list-group-item {
+    font-size: x-large;
     background: none;
-    color: #adb5bd;
+    color: #d1d5db;
     border: none;
-    padding: 15px 20px;
-    transition: background 0.2s, color 0.2s;
-}
-#sidebar .list-group-item:hover {
-    background: #495057;
-    color: #fff;
-}
-#sidebar .list-group-item.active {
-    background: #007bff;
-    color: #fff;
-}
-.toggle-btn {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1.5rem;
-    padding: 10px;
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 1001; /* Ensure button is above sidebar content */
-}
-.main-buttons {
+    padding: 0.75rem 1.25rem;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#sidebar .list-group-item img {
+    width: 20%;
+}
+
+#sidebar .list-group-item:hover, #sidebar .list-group-item.router-link-active {
+    background-color: #374151;
+    color: #fff;
+}
+
+.container-dashboard {
+    margin-left: 220px;
+    margin-top: 60px;
+    padding: 2rem 1rem;
+}
+
+.card-dashboard {
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card-dashboard:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-dashboard img {
+    max-height: 80px;
+}
+
+.action-buttons button {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    display: flex;
     align-items: center;
     justify-content: center;
-    min-height: calc(100vh - 40px); /* Adjust based on padding */
-}
-.main-buttons .btn {
-    margin-bottom: 20px;
-    width: 200px;
-    font-size: 1.2rem;
-}
-
-.card:hover{
-    cursor: pointer;
-}
-
-p {
-    font-size: x-large;
-}
-
-.card-title {
-    font-size: xx-large;
+    gap: 10px;
 }
