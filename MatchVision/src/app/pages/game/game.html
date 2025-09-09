@@ -21,20 +21,20 @@
                 <div class="col d-flex justify-content-center align-items-center counters">Cambi: {{ this.changeCounter }}</div>
                 <div class="col d-flex justify-content-center align-items-center counters">Doppi cambi: {{ this.doubleChangeCounter }}</div> -->
 
-<div class="row col text-center counters-row">
-                <div class="col counter-box">
-                    <span class="label">Time out</span>
-                    <span class="value">{{ leftTimeOuts }}</span>
+                <div class="row col text-center counters-row">
+                    <div class="col counter-box">
+                        <span class="label">Time out</span>
+                        <span class="value">{{ leftTimeOuts }}</span>
+                    </div>
+                    <div class="col counter-box">
+                        <span class="label">Cambi</span>
+                        <span class="value">{{ changeCounter }}</span>
+                    </div>
+                    <div class="col counter-box">
+                        <span class="label">Doppi cambi</span>
+                        <span class="value">{{ doubleChangeCounter }}</span>
+                    </div>
                 </div>
-                <div class="col counter-box">
-                    <span class="label">Cambi</span>
-                    <span class="value">{{ changeCounter }}</span>
-                </div>
-                <div class="col counter-box">
-                    <span class="label">Doppi cambi</span>
-                    <span class="value">{{ doubleChangeCounter }}</span>
-                </div>
-</div>
 
             </div>
 
@@ -128,6 +128,7 @@
             <button (click)="do_rotation()">Rotazione</button>
             <button (click)="togglePos()">Cambio campo</button>
             <button (click)="endSet()">Fine set</button>
+            <button (click)="endMatch()">Fine Match</button>
         </div>
 
 

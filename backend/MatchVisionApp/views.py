@@ -2,8 +2,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Player, Team, Match, Set, Touch, Event
-from .serializers import PlayerSerializer, TeamSerializer, MatchSerializer, SetSerializer, TouchSerializer, EventSerializer, UserSerializer
+from .models import Player, Team, Match, Set, Touch
+from .serializers import SetUpdateSerializer, MatchUpdateSerializer, PlayerSerializer, TeamSerializer, MatchSerializer, SetSerializer, TouchSerializer, EventSerializer, UserSerializer
 
 # USER
 # create user
@@ -116,6 +116,16 @@ def createMatch(request):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
+
+# update match
+@api_view(['PUT'])
+def updateMatch(request, pk):
+    match = Match.objects.get(pk = pk)
+    serializer = MatchUpdateSerializer(match, data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # delete specific match
 @api_view(['DELETE'])
@@ -144,6 +154,16 @@ def createSet(request):
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data)
+
+# update set
+@api_view(['PUT'])
+def updateSet(request, pk):
+    set = Set.objects.get(pk = pk)
+    serializer = SetUpdateSerializer(set, data = request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 # delete specific set
 @api_view(['DELETE'])

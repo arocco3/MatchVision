@@ -26,24 +26,26 @@ export class GlobalService {
     allTeams = signal<Team[]>([])
     allMatches = signal<Match[]>([])
 
-    currentSet = signal<Set>({
+    playersOfTeam: Player[] = []
+    currentSet = signal<Set | null>({
         id: 0,
-        match_id: 0,
+        match: 0,
         number: 0,
         home_score: 0,
         guest_score: 0,
-        touches: [],
-        events: [],
-        players: []
-})
-    currentMatch = signal<Match>({
+        players: [],
+        player_ids: []
+    })
+    currentMatch = signal<Match | null>(
+        {
         id: 0,
         name: '',
         team_id: 0,
         date: '',
         result: ''
-})
-    currentUserId = signal<number>(0)
+    }
+    )
+    currentUserId = signal<number | null>(null)
 
     private apiUrl = 'http://localhost:8000'
 
@@ -71,36 +73,24 @@ export class GlobalService {
         this.currentSet.set(set)
     }
 
+    resetAll() {
+        this.currentMatch.set(null)
+        this.currentSet.set(null)
+    }
+
     setCurrentUser(userId: number) {
         this.currentUserId.set(userId)
     }
+    
+    getPlayersByTeamId(id: number): Player[]{
+        this.teamsService.getTeamPlayers(id).subscribe({
+                next: (res) => {
+                    this.playersOfTeam = res
+                },
+                error: (err) => console.error('Errore caricamento players dal team', err)
+            });
+            return this.playersOfTeam
+    }
 
-    // To reset them
-    resetCurrentMatch(){
-        this.currentMatch.set({
-            id: 0,
-            name: '',
-            team_id: 0,
-            date: '',
-            result: ''
-        })
-    }
-    
-    resetCurrentSet(){
-        this.currentSet.set({
-            id: 0,
-            match_id: 0,
-            number: 0,
-            home_score: 0,
-            guest_score: 0,
-            touches: [],
-            events: [],
-            players: []
-        })
-    }
-    
-    resetCurrentUser(){
-        this.currentUserId.set(0)
-    }
 }
 

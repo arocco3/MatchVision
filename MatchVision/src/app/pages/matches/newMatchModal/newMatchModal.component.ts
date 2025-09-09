@@ -37,6 +37,8 @@ export class NewMatchModalComponent {
         result: null
     }
 
+    matchInfoSaved: boolean = false
+
     ngOnInit(): void {
         this.globalService.loadTeams();
     }
@@ -56,19 +58,20 @@ export class NewMatchModalComponent {
     // To save the match
     public saveMatch(form: any, modal: any) {
         if (form.valid) {
-            console.log(this.newMatch.name, this.newMatch.team_id, this.newMatch.date)
             this.matchesService.createMatch(this.newMatch).subscribe({
             next: (res) => {
+                this.globalService.currentMatch.set(res) //set general current match
+                console.log("Dati partita salvata", this.globalService.currentMatch()) //
                 this.matchCreated.emit();
-                this.globalService.setCurrentMatch(this.newMatch) //set general current match
                 this.cdr.detectChanges()
-                modal.close('Save click');
+                // modal.close('Save click');
             },
             error: (err) => console.error('Errore salvataggio nuovo match', err)
-            });
-            // Reset form
-            this.newMatch = { id: 0, name: '', team_id: 0, date: Date(), result: null };
+        });
+        // Reset form
+        this.newMatch = { id: 0, name: '', team_id: 0, date: Date(), result: null };
         }
     }    
-        
+ 
+    
 }

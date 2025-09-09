@@ -36,6 +36,12 @@ class MatchSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'timestamp', 'team', 'team_id', 'results']
 
 
+class MatchUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Match
+        fields = ['result']
+
+
 # --- SET ---
 class SetSerializer(serializers.ModelSerializer):
     players = PlayerSerializer(many=True, read_only=True)
@@ -43,12 +49,19 @@ class SetSerializer(serializers.ModelSerializer):
         many=True,
         queryset=Player.objects.all(),
         source='players',
-        write_only=True
+        write_only=True,
+        required=False
     )
 
     class Meta:
         model = Set
         fields = ['id', 'match', 'number', 'players', 'player_ids', 'home_score', 'guest_score']
+
+
+class SetUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Set
+        fields = ['home_score', 'guest_score']
 
 
 # --- TOUCH ---

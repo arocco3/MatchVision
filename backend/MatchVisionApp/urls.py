@@ -19,11 +19,13 @@ urlpatterns = [
     path('matches/', views.getMatches),
     path('matches/<int:pk>/', views.getMatch),
     path('matches/create/', views.createMatch),
+    path('matches/update/<int:pk>/', views.updateMatch),
     path('matches/delete/<int:pk>/', views.deleteMatch),
 
     # Sets
     path('sets/', views.getSets),
     path('sets/create/', views.createSet),
+    path('sets/update/<int:pk>/', views.updateSet),
     path('sets/delete/<int:pk>/', views.deleteSet),
 
     # Events

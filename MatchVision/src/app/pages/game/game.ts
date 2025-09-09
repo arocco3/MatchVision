@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core'
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersModal.component"
 import { NewTouchModalComponent } from "./newTouchModal/newTouchModal.component"
@@ -8,6 +8,8 @@ import { Event, EventType } from '../../Models/Event'
 import { Touch } from '../../Models/Touch'
 import { GlobalService } from '../../services/globalService'
 import { TouchesService } from '../../services/touchesService'
+import { Set } from '../../Models/Set'
+import { SetsService } from '../../services/setsService'
 
 @Component({
     selector: 'app-game',
@@ -22,13 +24,20 @@ import { TouchesService } from '../../services/touchesService'
     styleUrls: ['./game.scss']
 })
 
-export class GameComponent{
+export class GameComponent implements OnInit{
 
-    constructor(private touchesService: TouchesService, private cdr: ChangeDetectorRef, public globalService: GlobalService) {}
+    constructor(private touchesService: TouchesService,
+        private setsService: SetsService,
+                private cdr: ChangeDetectorRef, 
+                public globalService: GlobalService) {}
 
-     @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent
-     @ViewChild(NewTouchModalComponent) newTouchModal!: NewTouchModalComponent
-     @ViewChild(NewEventModalComponent) newEventModal!: NewEventModalComponent
+    ngOnInit(): void {
+        this.createSet()
+    }
+
+    @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent
+    @ViewChild(NewTouchModalComponent) newTouchModal!: NewTouchModalComponent
+    @ViewChild(NewEventModalComponent) newEventModal!: NewEventModalComponent
 
     // Coordinates [x%, y%]
     left_pos: [number, number][] = [
@@ -103,6 +112,18 @@ export class GameComponent{
     r_card_counter: number = 0
 
     eventOccurred: Event = {event_type: ''}
+
+    // To save sets
+    newSet: Set = {
+        id: 0,
+        match: 0,
+        number: 0,
+        home_score: 0,
+        guest_score: 0,
+        players: [],
+        player_ids: []
+    }
+    setNumber: number = 1
     
     increaseScore(team: 'home' | 'guests') {
         this.score[team]++;
@@ -190,8 +211,13 @@ export class GameComponent{
 
     // Create new touch
     registerNewTouch(event: {fundamental: string; outcome: string}): void {
-        // this.newTouch.set = this.globalService.currentSet().id
-        this.newTouch.set = 10
+        const currentSet = this.globalService.currentSet()
+        if(!currentSet) {
+            console.log("Nessun set iniziato")
+            return
+        } 
+        if (currentSet.id){
+            this.newTouch.set = currentSet.id}
         this.newTouch.player = this.selectedPlayer.id
         this.newTouch.fundamental = event.fundamental
         this.newTouch.outcome = event.outcome
@@ -219,8 +245,72 @@ export class GameComponent{
         }
     }
 
-    endSet() {
-        this.touches = []
+    createSet(){
+        const currentMatch = this.globalService.currentMatch();
+        console.log(currentMatch)
+        if (currentMatch) {
+            this.newSet.match = currentMatch.id;
+        }
+        this.newSet.number = this.setNumber
 
+        this.players.forEach((p => 
+            this.newSet.player_ids.push(p.id)
+        ))
+        
+        this.setsService.createSet(this.newSet).subscribe({
+            next: (res) => {
+                console.log("pree")
+                this.globalService.currentSet.set(res);
+                this.cdr.detectChanges()
+                console.log(res)
+            },
+            error: (err) => console.error('Errore salvataggio nuovo set', err)
+        }); 
+        
+        this.resetVariables()
+    }
+
+    resetVariables() {
+        this.touches = []
+        this.score.guests = 0
+        this.score.home = 0
+
+        this.changeCounter = 6
+        this.doubleChangeCounter = 2
+        this.leftTimeOuts = 3
+        this.y_card_counter = 0
+        this.r_card_counter = 0
+    }
+
+    endSet() {
+
+        if (this.setNumber != 5) {
+            this.setNumber = this.setNumber + 1
+        } else {this.endMatch()}
+
+        // Update set
+        const currentSet = this.globalService.currentSet()
+        if(!currentSet || !currentSet.id){
+            console.log("Errore assegnazione set, update")
+            return
+        }
+        const updatedScores = {
+            home_score: this.score.home,
+            guest_score: this.score.guests
+        }
+        this.cdr.detectChanges()
+
+        this.setsService.updateSet(currentSet.id, updatedScores).subscribe({
+            next: (res) => {
+                this.globalService.setCurrentSet(res)
+                console.log("Set aggiornato con i punteggi:", res)
+            },
+            error: (err) => console.error("Errore aggiornamento set", err)
+            });
+
+    }
+
+    endMatch() {
+        this.globalService.resetAll()
     }
 }

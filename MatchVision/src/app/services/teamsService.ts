@@ -41,7 +41,7 @@ export class TeamsService {
     }
   
     updateTeam(id: number, team: Team): Observable<Team> {
-        return this.http.put<Team>(`${this.apiUrl}/teams/update/${id}/`, team);
+        return this.http.put<Team>(`${this.apiUrl}/teams/${id}/update/`, team);
     }
   
     deleteTeam(id: number): Observable<any> {

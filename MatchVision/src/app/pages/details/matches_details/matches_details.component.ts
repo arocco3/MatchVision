@@ -73,6 +73,7 @@ export class MatchesDetailsComponent {
 
     loadMatchPlayers(): void {
         this.sets.forEach((set, index) => {
+            if(set.players)
             set.players.forEach((player, index) => {
                 if(!this.players.includes(player)){
                     this.players.push(player)
