@@ -1,21 +1,25 @@
-import { Component, EventEmitter, inject, Output, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Output, signal, TemplateRef, ViewChild, WritableSignal } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms'
 import { MatchesService } from '../../../services/matchesService';
 import { Match } from '../../../Models/Match';
 import { GlobalService } from '../../../services/globalService';
+import { RouterModule } from '@angular/router';
 
 @Component({
 	selector: 'app-new-match-modal',
     standalone: true,
-    imports: [FormsModule],
+    imports: [
+        FormsModule,
+        RouterModule
+    ],
 	templateUrl: './newMatchModal.component.html',
     styleUrls: ['./newMatchModal.component.scss']
 })
 
 export class NewMatchModalComponent {
 
-    constructor(public globalService: GlobalService) {}
+    constructor(public globalService: GlobalService, private cdr: ChangeDetectorRef) {}
   
     @Output() matchCreated = new EventEmitter<void>();
 
@@ -56,7 +60,8 @@ export class NewMatchModalComponent {
             this.matchesService.createMatch(this.newMatch).subscribe({
             next: (res) => {
                 this.matchCreated.emit();
-                console.log('Partita salvata:', res);
+                this.globalService.setCurrentMatch(this.newMatch) //set general current match
+                this.cdr.detectChanges()
                 modal.close('Save click');
             },
             error: (err) => console.error('Errore salvataggio nuovo match', err)

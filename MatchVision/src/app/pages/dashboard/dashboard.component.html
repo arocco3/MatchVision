@@ -49,7 +49,7 @@
 
         <!-- Card 3: Partite -->
             <div class="col-md-4">
-                <div class="card card-dashboard h-100 p-3 d-flex align-items-center" [routerLink]="['/macthes']" routerLinkActive="router-link-active">
+                <div class="card card-dashboard h-100 p-3 d-flex align-items-center" [routerLink]="['/matches']" routerLinkActive="router-link-active">
                     <img src="/icons/match-icon-large.png" alt="Partite" class="mb-3">
                     <div class="text-center">
                         <h4>Le tue partite</h4>
@@ -63,7 +63,7 @@
     <!-- Action Buttons -->
         <div class="row mt-5">
             <div class="col-md-6 mx-auto action-buttons">
-                <button class="btn btn-primary btn-lg w-100" [routerLink]="['/game']">
+                <button class="btn btn-primary btn-lg w-100" (click)="openNewMatchModal()">
                     <img src="/icons/add-icon.png"> Nuova partita
                 </button>
                 <button class="btn btn-success btn-lg w-100">
@@ -75,6 +75,8 @@
             </div>
         </div>
     </div>
+
+    <app-new-match-modal></app-new-match-modal>
 
 </body>
 </html>

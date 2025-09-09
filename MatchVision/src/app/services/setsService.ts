@@ -3,12 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Set } from '../Models/Set';
 
-
-
 @Injectable({
     providedIn: 'root'
 })
-export class setService {
+export class SetsService {
 
     private apiUrl = 'http://localhost:8000';
     
