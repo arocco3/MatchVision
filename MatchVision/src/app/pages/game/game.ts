@@ -28,18 +28,14 @@ export class GameComponent implements OnInit{
 
     constructor(private touchesService: TouchesService,
         private setsService: SetsService,
-                private cdr: ChangeDetectorRef, 
-                public globalService: GlobalService) {}
-
-    ngOnInit(): void {
-        this.createSet()
-    }
+        private cdr: ChangeDetectorRef, 
+        public globalService: GlobalService) {}
 
     @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent
     @ViewChild(NewTouchModalComponent) newTouchModal!: NewTouchModalComponent
     @ViewChild(NewEventModalComponent) newEventModal!: NewEventModalComponent
-
-    // Coordinates [x%, y%]
+                
+        // Coordinates [x%, y%]
     left_pos: [number, number][] = [
         [15, 80], // pos 1
         [42, 80], // pos 2
@@ -101,7 +97,7 @@ export class GameComponent implements OnInit{
     ]
 
     bench_libero: Player = { id: 14, name: "Simoneee", surname: "Galliiii",  number: 14, role: Role.LIBERO}
-
+    
     // Counters
     // To change players
     changeCounter: number = 6
@@ -110,21 +106,26 @@ export class GameComponent implements OnInit{
     leftTimeOuts: number = 3
     y_card_counter: number = 0
     r_card_counter: number = 0
-
+    
     eventOccurred: Event = {event_type: ''}
-
+    
     // To save sets
-    newSet: Set = {
-        id: 0,
-        match: 0,
-        number: 0,
-        home_score: 0,
-        guest_score: 0,
-        players: [],
-        player_ids: []
-    }
+    newSet!: Set
+    //  = {
+    //     id: null,
+    //     match: 0,
+    //     number: 0,
+    //     home_score: 0,
+    //     guest_score: 0,
+    //     players: [],
+    //     player_ids: []
+    // }
     setNumber: number = 1
     
+    ngOnInit(): void {
+        this.createSet()
+    }
+
     increaseScore(team: 'home' | 'guests') {
         this.score[team]++;
     }
@@ -247,19 +248,23 @@ export class GameComponent implements OnInit{
 
     createSet(){
         const currentMatch = this.globalService.currentMatch();
-        console.log(currentMatch)
-        if (currentMatch) {
-            this.newSet.match = currentMatch.id;
+        if (!currentMatch) {
+            console.log("Errore: nessun match trovato con questo id")
+            return
         }
-        this.newSet.number = this.setNumber
 
-        this.players.forEach((p => 
-            this.newSet.player_ids.push(p.id)
-        ))
+        this.newSet = {
+            id: null,
+            match: currentMatch.id,
+            number: this.setNumber,
+            home_score: 0,
+            guest_score: 0,
+            players: [],
+            player_ids: this.players.map(p => p.id)
+        }
         
         this.setsService.createSet(this.newSet).subscribe({
             next: (res) => {
-                console.log("pree")
                 this.globalService.currentSet.set(res);
                 this.cdr.detectChanges()
                 console.log(res)
@@ -280,37 +285,44 @@ export class GameComponent implements OnInit{
         this.leftTimeOuts = 3
         this.y_card_counter = 0
         this.r_card_counter = 0
+
+        this.cdr.detectChanges()
+    }
+
+    handleNextSet() {
+        if (this.setNumber < 5) {
+            this.setNumber = this.setNumber + 1
+            this.createSet()
+        } else {this.endMatch()}
     }
 
     endSet() {
-
-        if (this.setNumber != 5) {
-            this.setNumber = this.setNumber + 1
-        } else {this.endMatch()}
-
         // Update set
         const currentSet = this.globalService.currentSet()
         if(!currentSet || !currentSet.id){
             console.log("Errore assegnazione set, update")
             return
         }
+
         const updatedScores = {
             home_score: this.score.home,
             guest_score: this.score.guests
         }
+
         this.cdr.detectChanges()
 
         this.setsService.updateSet(currentSet.id, updatedScores).subscribe({
             next: (res) => {
-                this.globalService.setCurrentSet(res)
                 console.log("Set aggiornato con i punteggi:", res)
+                this.handleNextSet()
             },
             error: (err) => console.error("Errore aggiornamento set", err)
-            });
+        });
 
     }
 
     endMatch() {
+        //chiedi punteggi
         this.globalService.resetAll()
     }
 }
