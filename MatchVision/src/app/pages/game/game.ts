@@ -1,15 +1,16 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core'
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { ChangePlayersModalComponent } from "./changePlayersModal/changePlayersModal.component"
 import { NewTouchModalComponent } from "./newTouchModal/newTouchModal.component"
 import { NewEventModalComponent } from './newEventModal/newEventModal.component'
-import { Player, Role } from '../../Models/Player'
+import { Player } from '../../Models/Player'
 import { Event, EventType } from '../../Models/Event'
 import { Touch } from '../../Models/Touch'
 import { GlobalService } from '../../services/globalService'
 import { TouchesService } from '../../services/touchesService'
 import { Set } from '../../Models/Set'
 import { SetsService } from '../../services/setsService'
+import { PlayersDeploymentModal } from './playersDeploymentModal/playersDeploymentModal.component'
 
 @Component({
     selector: 'app-game',
@@ -18,7 +19,8 @@ import { SetsService } from '../../services/setsService'
     RouterModule,
     ChangePlayersModalComponent,
     NewTouchModalComponent,
-    NewEventModalComponent
+    NewEventModalComponent,
+    PlayersDeploymentModal
 ],
     templateUrl: './game.html',
     styleUrls: ['./game.scss']
@@ -34,6 +36,7 @@ export class GameComponent implements OnInit{
     @ViewChild(ChangePlayersModalComponent) changePlayersModal!: ChangePlayersModalComponent
     @ViewChild(NewTouchModalComponent) newTouchModal!: NewTouchModalComponent
     @ViewChild(NewEventModalComponent) newEventModal!: NewEventModalComponent
+    @ViewChild(PlayersDeploymentModal) playersDeploymentModal!: PlayersDeploymentModal
                 
         // Coordinates [x%, y%]
     left_pos: [number, number][] = [
@@ -62,7 +65,7 @@ export class GameComponent implements OnInit{
     score = {home: 0, guests: 0}
 
     // To insert a touch
-    selectedPlayer!: Player
+    selectedPlayer!: Player | null
     newTouch: Touch = {
         id: -1,
         set: -1, 
@@ -74,29 +77,17 @@ export class GameComponent implements OnInit{
     last_touch_fundamental: string | undefined = ''
     last_touch_id: number | undefined = -1
 
-    // players di prova sarebbero i titolari
-    players: Player[] = [
-        { id: 1, name: "Luca",   surname: "Rossi",   number: 1, role: Role.SETTER },
-        { id: 2, name: "Marco",  surname: "Bianchi", number: 2, role: Role.OPPOSITE_HITTER },
-        { id: 3, name: "Gianni", surname: "Verdi",   number: 3, role: Role.MIDDLE_BLOCKER },
-        { id: 4, name: "Paolo",  surname: "Neri",    number: 4, role: Role.OUTSIDE_HITTER },
-        { id: 5, name: "Andrea", surname: "Russo",   number: 5, role: Role.MIDDLE_BLOCKER },
-        { id: 6, name: "Matteo", surname: "Ferrari", number: 6, role: Role.OUTSIDE_HITTER }
-    ]
+    // all players
+    players: Player[] = []
 
-    libero: Player = { id: 7, name: "Simone", surname: "Galli",  number: 7, role: Role.LIBERO};
+    starting_players: Player[] = []
 
-    // panchinari
-    players_in_panchina: Player[] = [
-        { id: 8, name: "1luca1",   surname: "Rossi",   number: 8, role: Role.SETTER },
-        { id: 9, name: "Marco2",  surname: "Bianchi", number: 9, role: Role.OPPOSITE_HITTER },
-        { id: 10, name: "Gianni3r4", surname: "Verdi",   number: 10, role: Role.MIDDLE_BLOCKER },
-        { id: 11, name: "Paolo34",  surname: "Neri",  number: 11, role: Role.OUTSIDE_HITTER },
-        { id: 12, name: "Andrea34t3", surname: "Russo",   number: 12, role: Role.MIDDLE_BLOCKER },
-        { id: 13, name: "Matteo3t3", surname: "Ferrari", number: 13, role: Role.OUTSIDE_HITTER }
-    ]
+    libero: Player | null = null
 
-    bench_libero: Player = { id: 14, name: "Simoneee", surname: "Galliiii",  number: 14, role: Role.LIBERO}
+    // in panchina
+    bench_players: Player[] = []
+
+    bench_libero: Player | null = null
     
     // Counters
     // To change players
@@ -111,18 +102,10 @@ export class GameComponent implements OnInit{
     
     // To save sets
     newSet!: Set
-    //  = {
-    //     id: null,
-    //     match: 0,
-    //     number: 0,
-    //     home_score: 0,
-    //     guest_score: 0,
-    //     players: [],
-    //     player_ids: []
-    // }
     setNumber: number = 1
     
     ngOnInit(): void {
+        this.players = this.globalService.currentPlayers()
         this.createSet()
     }
 
@@ -147,6 +130,10 @@ export class GameComponent implements OnInit{
 
     openNewEventModal(): void {
         this.newEventModal.open();
+    }
+
+    openPlayersDeploymentModal() {
+        this.playersDeploymentModal.open()
     }
 
     swapLiberos(): void {
@@ -192,12 +179,11 @@ export class GameComponent implements OnInit{
 
     // Delete last touch
     cancelLastTouch(id: number | undefined): void {
-        console.log(this.touches.at(-1))
         this.touchesService.deleteTouch(id).subscribe({
             next: () => {
-                console.log('Ultimo tocco eliminato')
                 if(this.touches.length > 0){
                     this.touches.pop()
+                    console.log('Ultimo tocco eliminato')
                     this.cdr.detectChanges()
                     if(this.touches.length > 0){
                         this.last_touch_fundamental = this.touches.at(-1)?.fundamental
@@ -217,9 +203,10 @@ export class GameComponent implements OnInit{
             console.log("Nessun set iniziato")
             return
         } 
-        if (currentSet.id){
-            this.newTouch.set = currentSet.id}
-        this.newTouch.player = this.selectedPlayer.id
+        if (currentSet.id)
+            this.newTouch.set = currentSet.id
+        if(this.selectedPlayer)
+            this.newTouch.player = this.selectedPlayer.id
         this.newTouch.fundamental = event.fundamental
         this.newTouch.outcome = event.outcome
         // if form is valid
@@ -239,11 +226,18 @@ export class GameComponent implements OnInit{
     }
 
     // Rotation of players
-    do_rotation(): void {
+    doRotation(): void {
         const last = this.pos[this.index].pop();
         if (last) {
             this.pos[this.index].unshift(last);
         }
+    }
+
+    assignPlayers(event: any) {
+        this.starting_players = event.startingPlayers
+        this.libero = event.libero
+        this.bench_players = event.benchPlayers
+        this.bench_libero = event.benchLibero
     }
 
     createSet(){
@@ -253,6 +247,15 @@ export class GameComponent implements OnInit{
             return
         }
 
+        const teamPlayers: number[] = []
+        this.players.forEach((p, index) => teamPlayers.push(p.id))
+        this.bench_players.forEach((p, index) => teamPlayers.push(p.id))
+        if (this.libero) {
+            teamPlayers.push(this.libero.id)
+            if(this.bench_libero){
+                teamPlayers.push(this.bench_libero.id)
+        }}
+
         this.newSet = {
             id: null,
             match: currentMatch.id,
@@ -260,7 +263,7 @@ export class GameComponent implements OnInit{
             home_score: 0,
             guest_score: 0,
             players: [],
-            player_ids: this.players.map(p => p.id)
+            player_ids: teamPlayers
         }
         
         this.setsService.createSet(this.newSet).subscribe({
@@ -276,6 +279,12 @@ export class GameComponent implements OnInit{
     }
 
     resetVariables() {
+
+        this.starting_players = []
+        this.libero = null
+        this.bench_libero = null
+        this.bench_players  = []
+
         this.touches = []
         this.score.guests = 0
         this.score.home = 0

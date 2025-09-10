@@ -16,22 +16,19 @@
                     <button class="btn btn-secondary mx-1" (click)="decreaseScore('home')">—</button>
                     <button class="btn btn-secondary mx-1" (click)="increaseScore('home')">+</button>
                 </div>
-                
-                <!-- <div class="col d-flex justify-content-center align-items-center counters">Time out: {{ this.leftTimeOuts }}</div>
-                <div class="col d-flex justify-content-center align-items-center counters">Cambi: {{ this.changeCounter }}</div>
-                <div class="col d-flex justify-content-center align-items-center counters">Doppi cambi: {{ this.doubleChangeCounter }}</div> -->
+
 
                 <div class="row col text-center counters-row">
                     <div class="col counter-box">
-                        <span class="label">Time out</span>
+                        <span class="label">TIME OUT</span>
                         <span class="value">{{ leftTimeOuts }}</span>
                     </div>
                     <div class="col counter-box">
-                        <span class="label">Cambi</span>
+                        <span class="label">CAMBI</span>
                         <span class="value">{{ changeCounter }}</span>
                     </div>
                     <div class="col counter-box">
-                        <span class="label">Doppi cambi</span>
+                        <span class="label">DOPPI CAMBI</span>
                         <span class="value">{{ doubleChangeCounter }}</span>
                     </div>
                 </div>
@@ -39,7 +36,7 @@
             </div>
 
             <!-- Score -->
-            <div class="scoreboard mx-2 p-3 col-2">
+            <div class="scoreboard p-3 col-2">
                 <span class="team-score">{{ score.home }}</span>
                 <span class="separator">—</span>
                 <span class="team-score">{{ score.guests }}</span>
@@ -50,12 +47,12 @@
                 <!-- red/yellow cards -->
                 <div class="row col-2 cards-counters d-flex justify-content-center align-items-center">
                     @if (this.y_card_counter > 0){
-                        <div class="col yellow-card-counter d-flex justify-content-center align-items-center">
+                        <div class="col yellow-card-counter card-counter d-flex justify-content-center align-items-center">
                             <div>{{ this.y_card_counter }}</div>
                         </div>
                     }
                     @if (r_card_counter > 0){
-                        <div class="col red-card-counter d-flex justify-content-center align-items-center offset-1">
+                        <div class="col red-card-counter card-counter d-flex justify-content-center align-items-center offset-1">
                                 <div>{{ this.r_card_counter }}</div>   
                         </div>
                     }
@@ -85,24 +82,24 @@
             <div class="line attack-line-home"></div>
 
         <!-- Players icons -->
-            @for (player of players; track $index){
+            @for (player of starting_players; track $index){
                 <button class="player-icon btn btn-primary position-absolute" [style.left.%]="pos[this.index][$index][0]" [style.top.%]="pos[this.index][$index][1]"
                     (click)="this.selectedPlayer = player; openNewTouchModal()">{{ player.number }}</button>
-            }           
+            }        
             <!-- Positioning libero -->
-            <button class="player-icon btn btn-primary position-absolute" 
-                [style.left.%]="libero_pos[index][0]" [style.top.%]="libero_pos[index][1]" (click)="this.selectedPlayer = libero; openNewTouchModal()">{{ libero.number }}</button>
+            @if (libero){
+                <button class="player-icon btn btn-primary position-absolute" 
+                    [style.left.%]="libero_pos[index][0]" [style.top.%]="libero_pos[index][1]" 
+                        (click)="this.selectedPlayer = libero; openNewTouchModal()">{{ libero.number }}</button>}
         </div>
 
 
         <!-- Modal for players changes -->
         <app-change-players-modal 
-            [starting_players]="players"
-            [bench_players]="players_in_panchina"
+            [starting_players]="starting_players"
+            [bench_players]="bench_players"
             [libero]="libero"
             [bench_libero]="bench_libero"
-            [changeCounter]="changeCounter"
-            [doubleChangeCounter]="doubleChangeCounter"
             (swapLiberosClicked)="swapLiberos()"
             (changeOccurred)="changeCounter > 0 ? changeCounter = changeCounter - 1 : changeCounter"
             (doubleChangeOccurred)="doubleChangeCounter > 0 ? doubleChangeCounter = doubleChangeCounter - 1 : doubleChangeCounter">
@@ -120,17 +117,23 @@
             (newEventCreated)="registerNewEvent()">
         </app-new-event-modal>
 
+        <!-- Modal for players deployment -->
+        <app-players-deployment-modal
+            (startingPlayersChosen)="assignPlayers($event)">
+        </app-players-deployment-modal>
+
 
         <!-- bottom bar -->
-        <div class="d-flex justify-content-between align-items-center bottom-bar" style="background-color: red; margin-top: 2%;">
-            <button (click)="openNewEventModal()">Registra evento</button>
-            <button (click)="openChangePlayersModal()">Cambio</button>
-            <button (click)="do_rotation()">Rotazione</button>
-            <button (click)="togglePos()">Cambio campo</button>
-            <button (click)="endSet()">Fine set</button>
-            <button (click)="endMatch()">Fine Match</button>
-        </div>
 
+        <div class="d-flex justify-content-between align-items-center bottom-bar rounded-3 shadow-lg">
+            <button (click)="openPlayersDeploymentModal()" class="btn btn-outline-light btn-lg">Schiera giocatori</button>
+            <button (click)="openNewEventModal()" class="btn btn-outline-light btn-lg">Registra evento</button>
+            <button (click)="openChangePlayersModal()" class="btn btn-outline-light btn-lg">Cambio</button>
+            <button (click)="doRotation()" class="btn btn-outline-light btn-lg">Rotazione</button>
+            <button (click)="togglePos()" class="btn btn-outline-light btn-lg">Cambio campo</button>
+            <button (click)="endSet()" class="btn btn-outline-light btn-lg">Fine set</button>
+            <button (click)="endMatch()" class="btn btn-outline-light btn-lg">Fine Match</button>
+        </div>
 
 </body>
 </html>

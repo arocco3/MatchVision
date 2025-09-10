@@ -27,8 +27,7 @@ class MatchSerializer(serializers.ModelSerializer):
     team = TeamSerializer(read_only=True)
     team_id = serializers.PrimaryKeyRelatedField(
         queryset=Team.objects.all(),
-        source='team',
-        write_only=True
+        source='team'
     )
 
     class Meta:

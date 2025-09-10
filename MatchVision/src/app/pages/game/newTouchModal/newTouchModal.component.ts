@@ -19,7 +19,7 @@ export class NewTouchModalComponent{
     @ViewChild('content', { static: true }) content!: TemplateRef<any>
     
     @Output() newTouchCreated = new EventEmitter<{fundamental: string; outcome: string}>()
-    @Input() player!: Player
+    @Input() player!: Player | null
 
     fundamental = ''
     outcome = ''

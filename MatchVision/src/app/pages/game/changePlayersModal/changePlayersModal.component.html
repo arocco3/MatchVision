@@ -1,6 +1,7 @@
 <ng-template #content let-modal>
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-change-players">Cambio giocatori</h4>
+		<div><h4 class="modal-title" id="modal-change-players">Cambio giocatori</h4></div>
+        <h5>Seleziona 1 o 2 giocatori per parte per cambiare la formazione o effetturare un cambio</h5>
 		<button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
 	</div>
 	<div class="modal-body row">
@@ -31,11 +32,11 @@
         <h3>Liberi</h3>
         <div class="row liberos">
             <div class="libero col-5 list">
-                <button class="change-btn btn btn-outline-secondary">{{ libero.number }} | {{ libero.name }} {{ libero.surname }}</button>
+                <button class="change-btn btn btn-outline-secondary">{{ libero?.number }} | {{ libero?.name }} {{ libero?.surname }}</button>
             </div>
             <!-- swap image --><div class="col-2 list"><button class="btn"><img src="/icons/swap-icon.png" alt="Scambia liberi" (click)="changeLiberos()"></button></div>
             <div class="bench-libero col-5 list">
-                <button class="change-btn btn btn-outline-secondary">{{ bench_libero.number }} | {{ bench_libero.name }} {{ bench_libero.surname }}</button>
+                <button class="change-btn btn btn-outline-secondary">{{ bench_libero?.number }} | {{ bench_libero?.name }} {{ bench_libero?.surname }}</button>
             </div>
         </div>
 

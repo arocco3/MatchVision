@@ -59,15 +59,23 @@ export class NewMatchModalComponent {
     public saveMatch(form: any, modal: any) {
         if (form.valid) {
             this.matchesService.createMatch(this.newMatch).subscribe({
-            next: (res) => {
-                this.globalService.currentMatch.set(res) //set general current match
-                console.log("Dati partita salvata", this.globalService.currentMatch()) //
-                this.matchCreated.emit();
-                this.cdr.detectChanges()
-                // modal.close('Save click');
-            },
-            error: (err) => console.error('Errore salvataggio nuovo match', err)
-        });
+                next: (res) => {
+                    this.globalService.currentMatch.set(res) //set general current match
+                    console.log("Dati partita salvata", this.globalService.currentMatch()) //
+                    console.log("info", res)
+                    this.globalService.getPlayersByTeamId(res.team_id).subscribe({
+                        next: (playersRes) => {
+                            this.globalService.currentPlayers.set(playersRes)
+                            console.log("Player appena creat", this.globalService.currentPlayers())
+                            this.matchCreated.emit()
+                            this.cdr.detectChanges()
+                        },
+                        error: (playersErr) => console.error('Errore caricamento giocatori', playersErr)
+                    })
+                    // modal.close('Save click');
+                },
+                error: (err) => console.error('Errore salvataggio nuovo match', err)
+            });
         // Reset form
         this.newMatch = { id: 0, name: '', team_id: 0, date: Date(), result: null };
         }

@@ -16,10 +16,10 @@ export class ChangePlayersModalComponent implements OnInit {
 
     @Input() starting_players!: Player[]
     @Input() bench_players!: Player[]
-    @Input() libero!: Player
-    @Input() bench_libero!: Player
-    @Input() changeCounter!: number
-    @Input() doubleChangeCounter!: number
+    @Input() libero!: Player | null
+    @Input() bench_libero!: Player | null
+    // @Input() changeCounter!: number
+    // @Input() doubleChangeCounter!: number
     
     @Output() changeOccurred = new EventEmitter<void>()
     @Output() doubleChangeOccurred = new EventEmitter<void>()

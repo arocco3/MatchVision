@@ -10,6 +10,7 @@ import { User } from "../Models/User"
 import { PlayersService } from "./playersService"
 import { TeamsService } from "./teamsService"
 import { MatchesService } from "./matchesService"
+import { Observable } from "rxjs"
 
 @Injectable({
     providedIn: 'root' 
@@ -26,7 +27,7 @@ export class GlobalService {
     allTeams = signal<Team[]>([])
     allMatches = signal<Match[]>([])
 
-    playersOfTeam: Player[] = []
+    // playersOfTeam: Player[] = []
     currentSet = signal<Set | null>({
         id: 0,
         match: 0,
@@ -45,6 +46,7 @@ export class GlobalService {
         result: ''
     }
     )
+    currentPlayers = signal<Player[]>([])
     currentUserId = signal<number | null>(null)
 
     private apiUrl = 'http://localhost:8000'
@@ -76,20 +78,15 @@ export class GlobalService {
     resetAll() {
         this.currentMatch.set(null)
         this.currentSet.set(null)
+        this.currentPlayers.set([])
     }
 
     setCurrentUser(userId: number) {
         this.currentUserId.set(userId)
     }
     
-    getPlayersByTeamId(id: number): Player[]{
-        this.teamsService.getTeamPlayers(id).subscribe({
-                next: (res) => {
-                    this.playersOfTeam = res
-                },
-                error: (err) => console.error('Errore caricamento players dal team', err)
-            });
-            return this.playersOfTeam
+    getPlayersByTeamId(id: number): Observable<Player[]>{
+        return this.teamsService.getTeamPlayers(id)
     }
 
 }

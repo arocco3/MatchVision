@@ -10,7 +10,7 @@
     position: sticky;
     top: 0;
     left: 0;
-    right: 0;
+    width: 100%;
     z-index: 1000;
 
     .logout-btn {
@@ -38,5 +38,7 @@
         font-weight: bold;
         text-align: center;
         flex-grow: 1;
+    } &:hover{
+        cursor: pointer;
     }
 }
