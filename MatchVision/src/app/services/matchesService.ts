@@ -34,8 +34,8 @@ private apiUrl = 'http://localhost:8000';
         return this.http.post<Match>(`${this.apiUrl}/matches/create/`, match);
     }
 
-    updateMatch(id: number, match: Match): Observable<Match> {
-        return this.http.put<Match>(`${this.apiUrl}/matches/update/${id}/`, match);
+    updateMatch(id: number, payload: { results: any[] }): Observable<Match> {
+        return this.http.put<Match>(`${this.apiUrl}/matches/update/${id}/`, payload);
     }
 
     deleteMatch(id: number): Observable<any> {

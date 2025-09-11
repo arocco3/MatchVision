@@ -43,17 +43,20 @@ body {
     right: 33.33%;
 }
 
-.top-bar, .bottom-bar {
+.top-bar {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    border-radius: 70px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.215);
-}
-
-.top-bar {
+    max-height: 8rem;
+    border-radius: 0 0 80px 80px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.471);
+    margin: 0;
     margin-bottom: 1rem;
     padding: 0.3rem;
+}
+
+.manage-score {
+    font-size: 1.3rem;
 }
 
 .bottom-bar {
@@ -89,7 +92,7 @@ body {
 .scoreboard {
     color: rgb(0, 72, 255);
     font-family: 'Courier New', monospace;
-    font-size: 2.5rem;
+    font-size: 2.7rem;
     font-weight: bold;
     padding: 0.7rem 1.3rem;
     display: flex;
@@ -100,14 +103,22 @@ body {
     text-shadow: 0 0 7px rgb(0, 72, 255), 0 0 20px rgb(0, 72, 255);
 }
 
+.setNumber {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 0;
+    color: #666;
+}
+
 .scoreboard .team-score {
+    font-size: 3rem;
     min-width: 50px;
     text-align: center;
 }
 
 .scoreboard .separator {
     color: black;
-    text-shadow: none;
+    text-shadow: 2px black;
 }
 
 .player-icon {
@@ -156,7 +167,7 @@ body {
 
 .bottom-bar .btn {
     font-size: 1rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.5rem;
 }
 
 /* --- (mobile) --- */

@@ -10,7 +10,7 @@ import { Player } from '../../../Models/Player'
     styleUrl: './changePlayersModal.component.scss',
 })
 
-export class ChangePlayersModalComponent implements OnInit {
+export class ChangePlayersModalComponent {
     private modalService = inject(NgbModal)
     @ViewChild('content', { static: true }) content!: TemplateRef<any>
 
@@ -28,11 +28,6 @@ export class ChangePlayersModalComponent implements OnInit {
     enteringPlayers: Player[] = []
     exitingPlayers: Player[] = []
     changePlayersOccurring: boolean = false
-    
-
-    ngOnInit(): void {
-        console.log('i giocatori sono', this.starting_players) 
-    }
 
     // Dopo la conferma del cambio
     changePlayers(): void {

@@ -38,7 +38,7 @@ class MatchSerializer(serializers.ModelSerializer):
 class MatchUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
-        fields = ['result']
+        fields = ['results']
 
 
 # --- SET ---

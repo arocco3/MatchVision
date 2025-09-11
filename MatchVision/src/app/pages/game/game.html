@@ -12,7 +12,7 @@
         
             <div class="row col">  
             
-                <div class="manage-home-score d-flex justify-content-center align-items-center col">Casa
+                <div class="manage-score d-flex justify-content-center align-items-center col">CASA
                     <button class="btn btn-secondary mx-1" (click)="decreaseScore('home')">—</button>
                     <button class="btn btn-secondary mx-1" (click)="increaseScore('home')">+</button>
                 </div>
@@ -35,11 +35,13 @@
 
             </div>
 
-            <!-- Score -->
-            <div class="scoreboard p-3 col-2">
-                <span class="team-score">{{ score.home }}</span>
-                <span class="separator">—</span>
-                <span class="team-score">{{ score.guests }}</span>
+            <div class="scoreboard p-1 col-2 d-flex flex-column align-items-center">
+                <span class="setNumber">SET {{ setNumber }}</span>
+                <div class="d-flex align-items-center">
+                    <span class="team-score">{{ score.home }}</span>
+                    <span class="separator mx-1">—</span>
+                    <span class="team-score">{{ score.guests }}</span>
+                </div>
             </div>
 
             <div class="row col">
@@ -66,7 +68,7 @@
                     }
                 </div>
 
-                <div class="manage-guests-score d-flex justify-content-center align-items-center col">Ospiti
+                <div class="manage-score d-flex justify-content-center align-items-center col">OSPITI
                     <button class="btn btn-secondary mx-1" (click)="decreaseScore('guests')">—</button>
                     <button class="btn btn-secondary mx-1" (click)="increaseScore('guests')">+</button> 
                 </div>
@@ -92,7 +94,6 @@
                     [style.left.%]="libero_pos[index][0]" [style.top.%]="libero_pos[index][1]" 
                         (click)="this.selectedPlayer = libero; openNewTouchModal()">{{ libero.number }}</button>}
         </div>
-
 
         <!-- Modal for players changes -->
         <app-change-players-modal 
@@ -126,14 +127,17 @@
         <!-- bottom bar -->
 
         <div class="d-flex justify-content-between align-items-center bottom-bar rounded-3 shadow-lg">
-            <button (click)="openPlayersDeploymentModal()" class="btn btn-outline-light btn-lg">Schiera giocatori</button>
-            <button (click)="openNewEventModal()" class="btn btn-outline-light btn-lg">Registra evento</button>
-            <button (click)="openChangePlayersModal()" class="btn btn-outline-light btn-lg">Cambio</button>
-            <button (click)="doRotation()" class="btn btn-outline-light btn-lg">Rotazione</button>
-            <button (click)="togglePos()" class="btn btn-outline-light btn-lg">Cambio campo</button>
-            <button (click)="endSet()" class="btn btn-outline-light btn-lg">Fine set</button>
-            <button (click)="endMatch()" class="btn btn-outline-light btn-lg">Fine Match</button>
+            <button (click)="openPlayersDeploymentModal()" class="btn btn-outline-light btn-lg">SCHIERA GIOCATORI</button>
+            <button (click)="openNewEventModal()" class="btn btn-outline-light btn-lg">REGISTRA EVENTO</button>
+            <button (click)="openChangePlayersModal()" class="btn btn-outline-light btn-lg">EFFETTUA UN CAMBIO</button>
+            <button (click)="doRotation()" class="btn btn-outline-light btn-lg">ROTAZIONE</button>
+        
+            <button (click)="togglePos()" class="btn btn-outline-light btn-lg">CAMBIO CAMPO</button>
+            <button (click)="endSet(); endSetClicked = !endSetClicked" [disabled]="endSetClicked" class="btn btn-outline-light btn-lg">FINE SET</button>
+            <button (click)="startNewSet()" class="btn btn-outline-light btn-lg" [disabled]="!endSetClicked">NUOVO SET</button>
+            <button (click)="endMatch()" [routerLink]="['/']" class="btn btn-outline-light btn-lg">FINE MATCH</button>
         </div>
+
 
 </body>
 </html>
