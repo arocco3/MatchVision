@@ -320,14 +320,14 @@ export class GameComponent implements OnInit{
             console.log("Errore assegnazione set, update")
             return
         }
-
+    
         const updatedScores = {
             home_score: this.score.home,
             guest_score: this.score.guests
         }
-
-        this.results = [...this.results, updatedScores]
-
+        if (!this.isEndOfMatch){
+            this.results = [...this.results, updatedScores]
+        }
         this.cdr.detectChanges()
 
         this.setsService.updateSet(currentSet.id, updatedScores).subscribe({
@@ -357,7 +357,7 @@ export class GameComponent implements OnInit{
     }
 
     endMatch() {
-        this.isEndOfMatch = ! this.isEndOfMatch
+        this.isEndOfMatch = !this.isEndOfMatch
         this.endSet()
         this.updateMatchResults(this.results)
     }
