@@ -5,6 +5,7 @@ import { Team } from '../../../Models/Team';
 import { Set } from '../../../Models/Set';
 import { MatchesService } from '../../../services/matchesService';
 import { Player } from '../../../Models/Player';
+import { GlobalService } from '../../../services/globalService';
 
 @Component({
     selector: 'app-matches_details',
@@ -26,7 +27,11 @@ export class MatchesDetailsComponent {
     activeTab: 'match' | 'players' = 'match';
 
 
-    constructor(private route: ActivatedRoute, private matchesService: MatchesService, private cdr: ChangeDetectorRef){}
+    constructor(private route: ActivatedRoute,
+        private matchesService: MatchesService,
+        public globalService: GlobalService,
+        private cdr: ChangeDetectorRef
+    ){}
   
     ngOnInit(): void {
         this.sets = []
@@ -36,8 +41,6 @@ export class MatchesDetailsComponent {
         
         if (id) {            
             this.loadMatch(id)
-            this.loadTeam(id)
-            this.loadSets(id)
         }
     }
       
@@ -45,6 +48,10 @@ export class MatchesDetailsComponent {
         this.matchesService.getMatch(id).subscribe({
             next: (res) => {
                 this.match = res
+
+                this.loadSets(res.id)
+                this.loadTeam(res.id)
+                
                 this.cdr.detectChanges()
             },
             error: (err) => console.error('Errore caricamento dettagli match', err)
@@ -60,6 +67,7 @@ export class MatchesDetailsComponent {
         error: (err) => console.error('Errore caricamento team', err)
         })
     }
+    
     loadSets(id: number): void {
         this.matchesService.getMatchSets(id).subscribe({
             next: (res) => {
@@ -82,5 +90,12 @@ export class MatchesDetailsComponent {
         })
     }
 
+    buildMatchResults() {
+        let results: string = ''
+        this.sets.forEach((s, index) =>
+            results = results.concat('[', String(s.home_score), '-', String(s.guest_score), '] ')
+        )
+        return results
+    }
 
 }

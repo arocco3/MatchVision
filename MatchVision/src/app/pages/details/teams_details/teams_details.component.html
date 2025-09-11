@@ -43,8 +43,8 @@
                 class="border rounded p-3 shadow-sm m-2"
                     [routerLink]="['/match_details', match.id]" routerLinkActive="router-link-active">
                 <h3 class="font-semibold text-lg">{{ match.name }}</h3>
-                <p class="text-sm text-gray-500">Data: {{ match.date }}</p>
-                <p class="text-sm text-gray-600">Risultato: {{ match.result }}</p>
+                <p class="text-sm text-gray-500">Data: {{ globalService.transformDateFormat(match.timestamp) }}</p>
+                <!-- <p class="text-sm text-gray-600">Risultato: {{ match.result }}</p> -->
             </li>
             }
         </ul>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dettagli partita</title>
 </head>
 <body>
 
@@ -13,8 +13,8 @@
         <h1 class="text-2xl font-bold text-center">Dettagli Partita</h1>
         <div class="text-center mt-2">
             <h2 class="text-xl">{{ match?.name }}</h2>
-            <p class="text-gray-600">Data: {{ match?.date }}</p>
-            <p class="text-gray-600">Risultato: {{ match?.result }}</p>
+            <p class="text-gray-600">Data: {{ globalService.transformDateFormat(match?.timestamp) }}</p>
+            <p class="text-gray-600">Parziali: {{ buildMatchResults() }}</p>
         </div>
     </div>
 
@@ -22,7 +22,9 @@
     @if(match?.team_id){
         <div class="team-info card shadow p-4 mb-4">
             <h2 class="text-xl font-semibold mb-2">Squadra</h2>
-            <p>{{ team.name }}</p>
+            @if(team){
+                <p>{{ team.name }}</p>
+            }
         </div>
     }
 

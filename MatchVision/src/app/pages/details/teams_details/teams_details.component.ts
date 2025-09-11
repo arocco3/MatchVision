@@ -4,6 +4,7 @@ import { Team } from '../../../Models/Team';
 import { Match } from '../../../Models/Match';
 import { TeamsService } from '../../../services/teamsService';
 import { Player } from '../../../Models/Player';
+import { GlobalService } from '../../../services/globalService';
 
 @Component({
     selector: 'app-teams_details',
@@ -17,7 +18,11 @@ import { Player } from '../../../Models/Player';
 
 export class TeamsDetailsComponent implements OnInit{
 
-    constructor(private route: ActivatedRoute, private teamsService: TeamsService, private cdr: ChangeDetectorRef) {}
+    constructor(private route: ActivatedRoute,
+        private teamsService: TeamsService,
+        public globalService: GlobalService,
+        private cdr: ChangeDetectorRef
+    ) {}
     
     title = 'TeamsDetails';
     

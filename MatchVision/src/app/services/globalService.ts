@@ -42,7 +42,7 @@ export class GlobalService {
         id: 0,
         name: '',
         team_id: 0,
-        date: '',
+        timestamp: new Date(),
         result: ''
     }
     )
@@ -87,6 +87,12 @@ export class GlobalService {
     
     getPlayersByTeamId(id: number): Observable<Player[]>{
         return this.teamsService.getTeamPlayers(id)
+    }
+
+    transformDateFormat(date: Date | undefined | string) {
+        if(date)
+            return (new Date(date)).toLocaleDateString()
+        return 'Data non recuperata'
     }
 
 }

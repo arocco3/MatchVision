@@ -33,7 +33,7 @@ export class NewMatchModalComponent {
         id: 0,
         name: '',
         team_id: 0,
-        date: Date(),
+        timestamp: new Date(),
         result: null
     }
 
@@ -77,7 +77,7 @@ export class NewMatchModalComponent {
                 error: (err) => console.error('Errore salvataggio nuovo match', err)
             });
         // Reset form
-        this.newMatch = { id: 0, name: '', team_id: 0, date: Date(), result: null };
+        this.newMatch = { id: 0, name: '', team_id: 0, timestamp: new Date(), result: null };
         }
     }    
  
