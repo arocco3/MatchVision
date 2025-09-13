@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Match } from '../../../Models/Match';
 import { Team } from '../../../Models/Team';
@@ -6,6 +6,7 @@ import { Set } from '../../../Models/Set';
 import { MatchesService } from '../../../services/matchesService';
 import { Player } from '../../../Models/Player';
 import { GlobalService } from '../../../services/globalService';
+import { StatsService } from '../../../services/statsService';
 
 @Component({
     selector: 'app-matches_details',
@@ -17,18 +18,24 @@ import { GlobalService } from '../../../services/globalService';
     styleUrls: ['./matches_details.component.scss']
 })
 
-export class MatchesDetailsComponent {
-    title = 'MatchesDetails';
+export class MatchesDetailsComponent implements OnInit{
+
+    title = 'MatchesDetails'
     match: Match | null =  null
     team!: Team
     sets!: Set[]
     players!: Player[]
+    id!: number
+    df_match: any
+    df_sets: any[] = []
+    
   
     activeTab: 'match' | 'players' = 'match';
 
 
     constructor(private route: ActivatedRoute,
-        private matchesService: MatchesService,
+        private matchesService: MatchesService, 
+        private statsService: StatsService,
         public globalService: GlobalService,
         private cdr: ChangeDetectorRef
     ){}
@@ -37,20 +44,26 @@ export class MatchesDetailsComponent {
         this.sets = []
         this.players = []
 
-        let id = Number(this.route.snapshot.paramMap.get('id'))
+        this.id = Number(this.route.snapshot.paramMap.get('id'))
         
-        if (id) {            
-            this.loadMatch(id)
+        if (this.id) {            
+            this.loadMatch(this.id)
         }
     }
-      
+
     loadMatch(id: number): void {
         this.matchesService.getMatch(id).subscribe({
             next: (res) => {
                 this.match = res
-
                 this.loadSets(res.id)
                 this.loadTeam(res.id)
+                this.statsService.getMatchStats(res.id).subscribe({
+                    next: (res) => {
+                        this.df_match = res
+                        console.log("Match stats caricate correttamente")
+                    }, 
+                    error: (err) => console.error("Errore caricamento statistiche match", err)
+                })
                 
                 this.cdr.detectChanges()
             },
@@ -71,11 +84,25 @@ export class MatchesDetailsComponent {
     loadSets(id: number): void {
         this.matchesService.getMatchSets(id).subscribe({
             next: (res) => {
-                this.sets = res;
+                this.sets = res
                 this.loadMatchPlayers()
+                this.createDfSets()
                 this.cdr.detectChanges()
         },
         error: (err) => console.error('Errore caricamento set', err)
+        })
+    }
+
+    createDfSets() {
+        this.sets.forEach((set, index) => {
+            this.statsService.getSetsStats(set.id).subscribe({
+                    next: (res) => {
+                        this.df_sets[index] = res
+                        this.cdr.detectChanges()
+                        console.log("Set stats caricate correttamente")
+                    },
+                    error: (err) => console.error("Errore caricamento statistiche set ${set.id}", err)
+                })
         })
     }
 
@@ -97,5 +124,10 @@ export class MatchesDetailsComponent {
         )
         return results
     }
+
+    getColumns(data: any[]): string[] {
+        return data && data.length > 0 ? Object.keys(data[0]) : [];
+    }
+
 
 }

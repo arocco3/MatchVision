@@ -12,7 +12,7 @@ import { Match } from '../Models/Match';
 
 export class TeamsService {
 
-    private apiUrl = 'http://localhost:8000';
+    private apiUrl = 'http://localhost:8000'
   
     constructor(private http: HttpClient) {}
   

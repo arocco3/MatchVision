@@ -63,7 +63,8 @@ export class MatchesComponent implements OnInit{
         if (!this.searchText) 
             return this.globalService.allMatches()
         return this.globalService.allMatches().filter(m =>
-        m.name.toLowerCase().includes(this.searchText.toLowerCase())
+        m.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        this.globalService.transformDateFormat(m.timestamp).includes(this.searchText.toLowerCase())
         );
     }
 

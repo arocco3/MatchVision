@@ -89,16 +89,55 @@
             <div class="card shadow p-4 mb-4">
                 <h4><strong>Partita</strong></h4>
                 <div class="match-stats grid gap-2 text-sm">
-                    <p><strong>Totale punti squadra:</strong>sf f</p>
-                    <p><strong>Set vinti:</strong>bg g</p>
-                    <p><strong>Ace totali:</strong> bthbt</p>
-                    <p><strong>Muri vincenti:</strong> thn</p>
+                    <p><strong>Totale punti squadra:</strong></p>
+                    <p><strong>Set vinti:</strong></p>
+                    <p><strong>Ace totali:</strong></p>
+                    <p><strong>Muri vincenti:</strong></p>
                 </div>
-            </div>
+
+                            <!-- table -->
+                            <div class="card shadow p-3 mb-3">
+                                <h5 class="mb-3">Statistiche Partita</h5>
+
+                                <div class="table-responsive" style="max-height: 400px; overflow: auto;">
+                                    @if (df_match?.length > 0) {
+                                        <table class="table table-sm table-bordered align-middle text-center stats-table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="sticky-col sticky-header bg-light">Fundamental</th>
+                                                    <th class="sticky-col sticky-header bg-light">Outcome</th>
+                                                    @for (col of getColumns(df_match).slice(2); track col) {
+                                                        <th class="sticky-header bg-light">{{ col }}</th>
+                                                    }
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @for (row of df_match; track row) {
+                                                <tr>
+                                                <td class="sticky-col bg-white">{{ row.fundamental }}</td>
+                                                <td class="sticky-col bg-white">{{ row.outcome }}</td>
+                                                @for (col of getColumns(df_match).slice(2); track col) {
+                                                    <td>{{ row[col] === "nan" || row[col] === null || row[col] === "" ? "-" : row[col] }}</td>
+                                                }
+                                                </tr>
+                                            }
+                                            </tbody>
+                                        </table>
+                                    } @else {
+                                        <div class="alert alert-warning mb-0">
+                                            Nessun dato disponibile
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+
+
+        </div>
 
             <!-- stats devided by set -->
             <div class="card shadow p-2 mb-2">
-                @for(set of sets; track set.id){
+                @for(set of sets; track $index){
                     <div class="card shadow p-4 mb-2 mt-2">
                         <h4><strong>Set {{ set.number }}</strong></h4>
                         <!-- inserimento tabelle stats -->
@@ -108,10 +147,51 @@
                             <p><strong>Ace totali:</strong> bthbt</p>
                             <p><strong>Muri vincenti:</strong> thn</p>
                         </div>
+
+                            <!-- table -->
+                            <div class="card shadow p-3 mb-3">
+                                <h5 class="mb-3">Statistiche Set</h5>
+
+                                <div class="table-responsive" style="max-height: 400px; overflow: auto;">
+                                    @if (df_sets.length > 0) {
+                                    <table class="table table-sm table-bordered align-middle text-center stats-table">
+                                        <thead>
+                                        <tr>
+                                            <th class="sticky-col sticky-header bg-light">Fundamental</th>
+                                            <th class="sticky-col sticky-header bg-light">Outcome</th>
+                                            @for (col of getColumns(df_sets[$index]).slice(2); track col) {
+                                                <th class="sticky-header bg-light">{{ col }}</th>
+                                            }
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @for (row of df_sets[$index]; track row) {
+                                            <tr>
+                                                <td class="sticky-col bg-white">{{ row.fundamental }}</td>
+                                                <td class="sticky-col bg-white">{{ row.outcome }}</td>
+                                                @for (col of getColumns(df_sets[$index]).slice(2); track col) {
+                                                    <td>{{ row[col] === "nan" || row[col] === null || row[col] === "" ? "-" : row[col] }}</td>
+                                                }
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                    } @else {
+                                        <div class="alert alert-warning mb-0">
+                                            Nessun dato disponibile
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+
                     </div>
                 }
             </div>
         }
+
+
+
 
         @if(activeTab === 'players'){
             <div class="players-stats grid gap-4">

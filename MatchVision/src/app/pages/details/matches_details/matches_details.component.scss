@@ -53,3 +53,31 @@
 .tab-content {
     padding: 10px 0;
 }
+
+// for the table
+.stats-table {
+  border-collapse: separate;
+  border-spacing: 0;
+
+  th, td {
+    white-space: nowrap;
+    padding: 4px 8px;
+  }
+
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .sticky-col {
+    position: sticky;
+    left: 0;
+    z-index: 9;
+  }
+
+  .sticky-col:nth-child(2) {
+    left: 100px;
+    z-index: 9;
+  }
+}

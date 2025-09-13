@@ -1,9 +1,13 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.http import JsonResponse
 
 from .models import Player, Team, Match, Set, Touch
 from .serializers import SetUpdateSerializer, MatchUpdateSerializer, PlayerSerializer, TeamSerializer, MatchSerializer, SetSerializer, TouchSerializer, EventSerializer, UserSerializer
+
+import pandas as pd
+from .utils import create_table_match_stats, create_table_set_stats
 
 # USER
 # create user
@@ -277,3 +281,16 @@ def getTeamMatches(request, pk):
     team = Team.objects.get(pk=pk)
     matches = Match.objects.filter(team=team).distinct()    
     return Response(MatchSerializer(matches, many=True).data)
+
+
+@api_view(['GET'])
+def getMatchStats(request, pk):
+    df_final = create_table_match_stats(pk)
+    data = df_final.reset_index().to_dict(orient='records')
+    return JsonResponse(data, safe=False)
+
+@api_view(['GET'])
+def getSetsStats(request, pk):
+    df_final = create_table_set_stats(pk)
+    data = df_final.reset_index().to_dict(orient='records')
+    return JsonResponse(data, safe=False)
