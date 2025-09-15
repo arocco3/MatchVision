@@ -1,10 +1,8 @@
-import { Player } from "./Player";
-import { Event } from "./Event";
-import { Touch } from "./Touch";
+import { Player } from "./Player"
 
 export class Set {
     constructor(
-        public id: number | null,
+        public id: number,
         public match: number,
         public number: number,
         public home_score: number,

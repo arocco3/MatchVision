@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { GlobalService } from '../../services/globalService';
-import { NewMatchModalComponent } from '../matches/newMatchModal/newMatchModal.component';
-import { NewTeamModalComponent } from '../teams/newTeamModal/newTeamModal.component';
-import { NewPlayerModalComponent } from '../players/newPlayerModal/newPlayerModal.component';
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { RouterModule } from '@angular/router'
+import { GlobalService } from '../../services/globalService'
+import { NewMatchModalComponent } from '../matches/newMatchModal/newMatchModal.component'
+import { NewTeamModalComponent } from '../teams/newTeamModal/newTeamModal.component'
+import { NewPlayerModalComponent } from '../players/newPlayerModal/newPlayerModal.component'
 
 @Component({
     selector: 'app-dashboard',

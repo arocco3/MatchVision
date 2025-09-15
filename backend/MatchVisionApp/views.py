@@ -7,7 +7,7 @@ from .models import Player, Team, Match, Set, Touch
 from .serializers import SetUpdateSerializer, MatchUpdateSerializer, PlayerSerializer, TeamSerializer, MatchSerializer, SetSerializer, TouchSerializer, EventSerializer, UserSerializer
 
 import pandas as pd
-from .utils import create_table_match_stats, create_table_set_stats
+from .utils import create_table_match_stats, create_table_set_stats, create_table_set_player
 
 # USER
 # create user
@@ -293,4 +293,12 @@ def getMatchStats(request, pk):
 def getSetsStats(request, pk):
     df_final = create_table_set_stats(pk)
     data = df_final.reset_index().to_dict(orient='records')
+    return JsonResponse(data, safe=False)
+
+@api_view(['GET'])
+def getSetPlayerStats(request, set_id, player_id):
+    df_final = create_table_set_player(set_id, player_id)
+    if df_final.empty:
+        return JsonResponse([], safe=False)
+    data = df_final.to_dict(orient='records')
     return JsonResponse(data, safe=False)

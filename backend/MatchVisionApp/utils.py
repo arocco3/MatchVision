@@ -104,3 +104,38 @@ def create_table_set_stats(set_id):
     df_final = df_final.rename(columns=lambda x: x.split("_", 1)[1] if "_" in x else x)
 
     return df_final
+
+
+def create_table_set_player(set_id, player_id):
+    query = """
+        SELECT t.fundamental, t.outcome, COUNT(*) AS num_touches
+        FROM "MatchVisionApp_touch" t
+        JOIN "MatchVisionApp_set" s ON s.id = t.set_id
+        JOIN "MatchVisionApp_player" p ON p.id = t.player_id
+        WHERE s.id = %s AND p.id = %s
+        GROUP BY t.fundamental, t.outcome
+        ORDER BY t.fundamental, t.outcome
+    """
+    
+    df = pd.read_sql_query(query, conn, params=(set_id, player_id,))
+    
+    if df.empty:
+        return pd.DataFrame()
+    
+    df_pivot = pd.pivot_table(
+        df,
+        index="outcome",
+        columns="fundamental",
+        values="num_touches",
+        aggfunc="sum",
+        fill_value=0
+    )
+    
+    totals = df_pivot.sum(axis=0).to_frame().T
+    totals.index = ["tot"]
+    
+    df_final = pd.concat([df_pivot, totals])
+    
+    df_final = df_final.reset_index()
+    
+    return df_final

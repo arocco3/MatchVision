@@ -244,6 +244,7 @@ export class GameComponent implements OnInit{
             return
         }
 
+        // Creation and population of teamPlayers
         const teamPlayers: number[] = []
         this.players.forEach((p, index) => teamPlayers.push(p.id))
         this.bench_players.forEach((p, index) => teamPlayers.push(p.id))
@@ -254,7 +255,7 @@ export class GameComponent implements OnInit{
         }}
 
         this.newSet = {
-            id: null,
+            id: 0,
             match: currentMatch.id,
             number: this.setNumber,
             home_score: 0,
