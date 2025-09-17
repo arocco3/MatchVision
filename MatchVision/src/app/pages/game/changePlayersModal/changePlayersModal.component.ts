@@ -18,8 +18,6 @@ export class ChangePlayersModalComponent {
     @Input() bench_players!: Player[]
     @Input() libero!: Player | null
     @Input() bench_libero!: Player | null
-    // @Input() changeCounter!: number
-    // @Input() doubleChangeCounter!: number
     
     @Output() changeOccurred = new EventEmitter<void>()
     @Output() doubleChangeOccurred = new EventEmitter<void>()
@@ -55,6 +53,14 @@ export class ChangePlayersModalComponent {
 
     changeLiberos(): void {
         this.swapLiberosClicked.emit()
+    }
+
+    isEnteringPlayerSelected(player: Player): boolean {
+        return this.enteringPlayers.some(p => p.id === player.id)
+    }
+
+    isExitingPlayerSelected(player: Player): boolean {
+        return this.exitingPlayers.some(p => p.id === player.id)
     }
 
     open() {

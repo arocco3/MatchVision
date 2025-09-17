@@ -46,8 +46,7 @@ export class PlayersDeploymentModal implements OnInit {
 
     get availablePlayersForBench(): Player[] {
         return this.allPlayers.filter(p => 
-            !this.isStartingPlayerSelected(p) &&
-            !this.isLiberoSelected(p)
+            !this.isStartingPlayerSelected(p) && !this.isLiberoSelected(p)
         )
     }
 

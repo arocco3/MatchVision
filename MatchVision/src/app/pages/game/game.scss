@@ -5,6 +5,7 @@
 body {
     font-family: 'Inter', sans-serif;
     background-color: #f7f7f7;
+    overflow: hidden;
 }
 
 .court-container {
@@ -61,8 +62,8 @@ body {
 
 .bottom-bar {
     gap: 0.5rem;
-    margin-top: 1.3rem;
-    padding: 0.5rem;
+    margin-top: 1.1rem;
+    padding: 1rem;
     background-color: #343a40;
 }
 
@@ -136,7 +137,7 @@ body {
 .card-counter {
     border-radius: 7px;
     border: 1px solid black;
-    width: 30%;
+    max-width: 2rem;
     height: 100%;
     display: flex;
     justify-content: center;

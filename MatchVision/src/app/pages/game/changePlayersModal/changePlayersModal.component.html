@@ -10,7 +10,10 @@
             <h3>In campo</h3>
             <div class="exiting-players">
                 @for (player of starting_players; track $index){
-                    <div class="list"><button class="change-btn btn btn-outline-secondary" (click)="(this.exitingPlayers.push(player))">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
+                    <div class="list"><button class="change-btn btn btn-outline-secondary"
+                        [class.btn-dark]="isExitingPlayerSelected(player)"
+                        [class.btn-outline-primary]="!isExitingPlayerSelected(player)"
+                        (click)="(this.exitingPlayers.push(player))">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
                 }
             </div>
         </div>
@@ -19,7 +22,10 @@
             <h3>In panchina</h3>
             <div class="entering-players">
                 @for (player of bench_players; track $index){
-                    <div class="list"><button class="change-btn btn btn-outline-secondary" (click)="this.enteringPlayers.push(player); this.changePlayersOccurring = true">
+                    <div class="list"><button class="change-btn btn btn-outline-secondary" 
+                        [class.btn-dark]="isEnteringPlayerSelected(player)"
+                        [class.btn-outline-primary]="!isEnteringPlayerSelected(player)"
+                        (click)="this.enteringPlayers.push(player); this.changePlayersOccurring = true">
                         {{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
                 }
             </div>
