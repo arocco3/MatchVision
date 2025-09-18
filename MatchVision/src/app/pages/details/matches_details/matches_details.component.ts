@@ -7,7 +7,6 @@ import { MatchesService } from '../../../services/matchesService'
 import { Player } from '../../../Models/Player'
 import { GlobalService } from '../../../services/globalService'
 import { StatsService } from '../../../services/statsService'
-import { delay } from 'rxjs/operators'
 
 @Component({
     selector: 'app-matches_details',
@@ -32,7 +31,7 @@ export class MatchesDetailsComponent implements OnInit{
     df_set_players: any[][] = [] // df list per the chosen player
     
   
-    activeTab: 'match' | 'players' = 'match';
+    activeTab: 'match' | 'players' = 'match'
 
 
     constructor(private route: ActivatedRoute,
@@ -98,12 +97,10 @@ export class MatchesDetailsComponent implements OnInit{
                     })
                 })
 
-
-                
                 this.createDfSets()
                 this.cdr.detectChanges()
-        },
-        error: (err) => console.error('Errore caricamento set', err)
+            },
+            error: (err) => console.error('Errore caricamento set', err)
         })
     }
 
@@ -121,8 +118,8 @@ export class MatchesDetailsComponent implements OnInit{
     }
 
     createDfSetPlayers(setId: number, player: Player) {
-        const pIndex = this.players.indexOf(player)
-        const sIndex = this.sets.findIndex(s => s.id === setId)
+        let pIndex = this.players.indexOf(player)
+        let sIndex = this.sets.findIndex(s => s.id === setId)
 
         this.statsService.getSetPlayerStats(setId, player).subscribe({
             next: (res) => {
