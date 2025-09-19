@@ -87,14 +87,10 @@ def create_table_set_stats(set_id):
 
     df_tot = df.groupby(['fundamental', 'id', 'player'])['num_touches'].sum().unstack(['id','player'])
     df_tot['outcome'] = 'tot'
-    df_tot = df_tot.set_index('outcome', append=True)
-
-    df_tot = df_tot.astype(str)
+    df_tot = df_tot.set_index('outcome', append=True).astype(str)
 
     df_final = pd.concat([df_pivot, df_tot])
-
     df_final = df_final.sort_index(level=[0,1], key=lambda x: x.map(lambda y: (y=='tot', y)))
-
     df_final = df_final.fillna('-')
 
     if isinstance(df_final.columns, pd.MultiIndex):

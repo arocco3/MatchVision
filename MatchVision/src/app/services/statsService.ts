@@ -17,7 +17,7 @@ export class StatsService {
         return this.http.get<any[]>(`${this.apiUrl}/match_details/${matchId}/stats/`)
     }
 
-    getSetsStats(setId: number | null): Observable<any[]> {
+    getSetsStats(setId: number): Observable<any[]> {
         return this.http.get<any[]>(`${this.apiUrl}/match_details/sets/${setId}/stats/`)
     }
 

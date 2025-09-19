@@ -26,7 +26,16 @@ export class MatchesDetailsComponent implements OnInit{
     sets!: Set[]
     players!: Player[]
     id!: number
+
     df_match: any
+    df_sets_csv: any[] = []
+    df_set_players_csv: any[][] = []
+
+    df_match_text: string = ''
+    df_sets_text: string[] = []
+    df_set_players_text: string[][] = []
+
+
     df_sets: any[] = []
     df_set_players: any[][] = [] // df list per the chosen player
     
@@ -47,20 +56,22 @@ export class MatchesDetailsComponent implements OnInit{
 
         this.id = Number(this.route.snapshot.paramMap.get('id'))
         
-        if (this.id) {            
-            this.loadMatch(this.id)
-        }
+        if (this.id) this.loadMatch(this.id)
     }
 
-    loadMatch(id: number): void {
+    loadMatch(id: number) {
         this.matchesService.getMatch(id).subscribe({
             next: (res) => {
                 this.match = res
                 this.loadSets(res.id)
                 this.loadTeam(res.id)
+
+                // for CSV
+                this.loadMatchStats(res.id)
+                // for the table
                 this.statsService.getMatchStats(res.id).subscribe({
-                    next: (res) => {
-                        this.df_match = res
+                    next: (df) => {
+                        this.df_match = df
                         console.log("Match stats caricate correttamente")
                     }, 
                     error: (err) => console.error("Errore caricamento statistiche match", err)
@@ -77,8 +88,8 @@ export class MatchesDetailsComponent implements OnInit{
             next: (res) => {
                 this.team = res
                 this.cdr.detectChanges()
-        },
-        error: (err) => console.error('Errore caricamento team', err)
+            },
+            error: (err) => console.error('Errore caricamento team', err)
         })
     }
     
@@ -86,53 +97,14 @@ export class MatchesDetailsComponent implements OnInit{
         this.matchesService.getMatchSets(id).subscribe({
             next: (res) => {
                 this.sets = res
+                this.loadSetStats()
                 this.loadMatchPlayers()
+                this.loadSetPlayerStats()
 
-
-                this.players.forEach((p, pIndex) => {
-                    this.df_set_players[pIndex] = []
-                    this.sets.forEach((s, sIndex) => {
-                        this.df_set_players[pIndex][sIndex] = null
-                        this.createDfSetPlayers(s.id, p)
-                    })
-                })
-
-                this.createDfSets()
                 this.cdr.detectChanges()
             },
             error: (err) => console.error('Errore caricamento set', err)
         })
-    }
-
-    createDfSets() {
-        this.sets.forEach((set, index) => {
-            this.statsService.getSetsStats(set.id).subscribe({
-                    next: (res) => {
-                        this.df_sets[index] = res
-                        this.cdr.detectChanges()
-                        console.log("Set stats caricate correttamente")
-                    },
-                    error: (err) => console.error(`Errore caricamento statistiche set ${set.id}`, err)
-                })
-        })
-    }
-
-    createDfSetPlayers(setId: number, player: Player) {
-        let pIndex = this.players.indexOf(player)
-        let sIndex = this.sets.findIndex(s => s.id === setId)
-
-        this.statsService.getSetPlayerStats(setId, player).subscribe({
-            next: (res) => {
-                this.df_set_players[pIndex][sIndex] = res
-                this.cdr.detectChanges()
-                console.log(`Stats create per player ${player.id} nel set ${setId}`)
-            },
-            error: (err) => {
-                console.error(`Errore caricamento statistiche player ${player.id} nel set ${setId}`, err)
-            }
-        })
-
-
     }
 
     
@@ -156,12 +128,67 @@ export class MatchesDetailsComponent implements OnInit{
     }
 
     getColumns(data: any[] | null | undefined): string[] {
-    if (!data || data.length === 0) {
-        return []
-    }
-    return Object.keys(data[0] ?? {})
+        if (!data || data.length === 0) {
+            return []
+        }
+        return Object.keys(data[0] ?? {})
     }
 
+
+
+
+
+
+
+
+    // Creating CSVs
+    loadMatchStats(matchId: number) {
+        this.statsService.getMatchStats(matchId).subscribe(data => {
+            this.df_match = data
+            this.df_match_text = this.generateCSV(data)
+        })
+    }
+    
+    loadSetStats() {
+        this.sets.forEach((s, index) => {
+            this.statsService.getSetsStats(s.id).subscribe({
+                next: (data) => {
+                    this.df_sets[index] = data
+                    this.df_sets_text[index] = this.generateCSV(data)
+                }
+            })
+            this.cdr.detectChanges()
+        })
+        console.log(this.df_sets_text)
+    }
+    
+    loadSetPlayerStats() {
+        this.players.forEach((p, pIndex) => {
+            this.df_set_players[pIndex] = []
+            this.sets.forEach((s, sIndex) => {
+                this.statsService.getSetPlayerStats(s.id, p).subscribe(df => {
+                    this.df_set_players[pIndex][sIndex] = df
+                })
+            })
+        })
+        this.cdr.detectChanges()
+    }
+    
+    
+    generateCSV(df: any) {
+
+        const cols = Object.keys(df[0])
+        const header = cols.join(';')
+        const rows = df.map((r: any) => cols.map(c => r[c] ?? '').join(';'))
+
+        return [header, ...rows].join('\n')
+    }
+
+
+    copyCSV(text: string) {
+        if (!text) return
+        navigator.clipboard.writeText(text)
+    }
 
 
 }

@@ -45,9 +45,10 @@ urlpatterns = [
     path('player_details/<int:pk>/teams/', views.getPlayersTeams),
     path('team_details/<int:pk>/players/', views.getTeamPlayers),
     path('match_details/<int:pk>/team/', views.getMatchTeam),
-
     path('match_details/<int:pk>/sets/', views.getMatchSets),
+
     path('match_details/<int:pk>/stats/', views.getMatchStats),
     path('match_details/sets/<int:pk>/stats/', views.getSetsStats),
     path('match_details/sets/<int:set_id>/player/<int:player_id>/stats/', views.getSetPlayerStats),
+
 ]

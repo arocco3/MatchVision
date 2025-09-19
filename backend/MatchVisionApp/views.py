@@ -302,3 +302,23 @@ def getSetPlayerStats(request, set_id, player_id):
         return JsonResponse([], safe=False)
     data = df_final.to_dict(orient='records')
     return JsonResponse(data, safe=False)
+
+
+
+# @api_view(['GET'])
+# def getMultipleSetsStats(request):
+#     """
+#     Returns an array of DataFrames, one for each set ID provided in the query parameters.
+#     Example URL: /api/sets/stats/?ids=1&ids=2&ids=3
+#     """
+#     set_ids_str = request.GET.getlist('ids')
+#     set_ids = [int(id) for id in set_ids_str]
+    
+#     # Get the list of DataFrames
+#     df_list = create_table_set_stats(set_ids)
+    
+#     # Convert each DataFrame to a dictionary
+#     data_list = [df.reset_index().to_dict(orient='records') for df in df_list]
+    
+#     # Return the list of dictionaries as a JSON response
+#     return JsonResponse(data_list, safe=False)
