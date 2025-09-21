@@ -88,99 +88,80 @@
             <!-- general stats of the match -->
             <div class="card shadow p-4 mb-4">
                 <h4><strong>Partita</strong></h4>
-                <div class="match-stats grid gap-2 text-sm">
-                    <p><strong>Totale punti squadra:</strong></p>
-                    <p><strong>Set vinti:</strong></p>
-                    <p><strong>Ace totali:</strong></p>
-                    <p><strong>Muri vincenti:</strong></p>
-                </div>
-
-
-
-    <button (click)="df_match_text = generateCSV(df_match)">Genera CSV</button>
-    <div class="form-floating">
-        <textarea #csv_match_text class="form-control" style="height: 200px" [value]="df_match_text ? df_match_text : '' " readonly></textarea>
-        <label for="csv_match_text">Copia il testo che apparirà qui</label>
-    </div>
-    <button (click)="copyCSV(df_match_text)" [disabled]="!df_match_text">Copia CSV</button>
-
-
-
-
-                            <!-- table -->
-                            <div class="p-3 mb-3">
-                                <h5 class="mb-3">Statistiche Partita</h5>
-
-                                <div class="table-responsive" style="max-height: 400px; overflow: auto;">
-                                    @if (df_match?.length > 0) {
-                                        <table class="table table-sm table-bordered align-middle text-center stats-table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="sticky-col sticky-header bg-light">Fondamentale</th>
-                                                    <th class="sticky-col sticky-header bg-light">Esito</th>
-                                                    @for (col of getColumns(df_match).slice(2); track col) {
-                                                        <th class="sticky-header bg-light">{{ col }}</th>
-                                                    }
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @for (row of df_match; track row) {
-                                                    <tr>
-                                                        <td class="sticky-col bg-white">{{ row.fundamental }}</td>
-                                                        <td class="sticky-col bg-white">{{ row.outcome }}</td>
-                                                        @for (col of getColumns(df_match).slice(2); track col) {
-                                                            <td>{{ row[col] === "nan" || row[col] === null || row[col] === "" ? "-" : row[col] }}</td>
-                                                        }
-                                                    </tr>
+                
+                
+                <div class="p-3 mb-3">
+                    <h5 class="mb-3">Statistiche generali</h5>
+                    
+                    <!-- CSV text -->
+                    <div class="mb-3">
+                        <button class="btn btn-success btn-sm mb-2" (click)="df_match_text = generateCSV(df_match)">Genera CSV</button>
+                        <button class="btn btn-outline-primary btn-sm mb-2" (click)="copyCSV(df_match_text)" [disabled]="!df_match_text">Copia CSV</button>
+                        <div class="form-floating">
+                            <textarea #csv_match_text class="form-control font-monospace" style="height: 200px; background-color: #f8f9fa;" [value]="df_match_text ? df_match_text : '' " readonly></textarea>
+                            <label for="csv_match_text">Copia il testo che apparirà qui</label>
+                        </div>
+                    </div>
+                    
+                        <!-- table -->
+                        <div class="table-responsive" style="max-height: 400px; overflow: auto;">
+                            @if (df_match?.length > 0) {
+                                <table class="table table-sm table-bordered align-middle text-center stats-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="sticky-col sticky-header bg-light">Fondamentale</th>
+                                            <th class="sticky-col sticky-header bg-light">Esito</th>
+                                            @for (col of getColumns(df_match).slice(2); track col) {
+                                                <th class="sticky-header bg-light">{{ col }}</th>
+                                            }
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (row of df_match; track row) {
+                                            <tr>
+                                                <td class="sticky-col bg-white">{{ row.fundamental }}</td>
+                                                <td class="sticky-col bg-white">{{ row.outcome }}</td>
+                                                @for (col of getColumns(df_match).slice(2); track col) {
+                                                    <td>{{ row[col] === "nan" || row[col] === null || row[col] === "" ? "-" : row[col] }}</td>
                                                 }
-                                            </tbody>
-                                        </table>
-                                    } @else {
-                                        <div class="alert alert-warning mb-0">
-                                            Nessun dato disponibile
-                                        </div>
-                                    }
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            } @else {
+                                <div class="alert alert-warning mb-0">
+                                    Nessun dato disponibile
                                 </div>
-                            </div>
-
-
-
-        </div>
+                            }
+                        </div>
+                </div>
+            </div>
 
         <!-- stats devided by set -->
         <div class="card shadow p-2 mb-2">
             @for(set of sets; track $index){
                 <div class="card shadow p-4 mb-2 mt-2">
                     <h4><strong>Set {{ set.number }}</strong></h4>
-                    <!-- inserimento tabelle stats -->
-                    <div class="match-stats grid gap-2 text-sm">
-                        <p><strong>Totale punti squadra:</strong></p>
-                        <p><strong>Set vinti:</strong></p>
-                        <p><strong>Ace totali:</strong></p>
-                        <p><strong>Muri vincenti:</strong></p>
-                    </div>
-
-
-
-                    <button (click)="df_sets_text[$index] = generateCSV(df_sets[$index])">Genera CSV</button>
-                    <div class="form-floating">
-                        @if(!df_sets_text[$index]){
-                            <textarea #csv_sets_text class="form-control" style="height: 200px" [value]=" '' " readonly></textarea>
-                        } @else if(df_sets_text[$index]) {
-                            <textarea #csv_sets_text class="form-control" style="height: 200px" [value]="df_sets_text[$index]" readonly></textarea>
-                        }
-                        <label for="csv_sets_text">Copia il testo che apparirà qui</label>
-                    </div>
-                    <button (click)="copyCSV(df_sets_text[$index])" [disabled]="!df_sets_text[$index]">Copia CSV</button>
-
-
-
-
-                            <!-- table -->
-                            <div class="p-3 mb-3">
-                                <h5 class="mb-3">Statistiche Set</h5>
-
-                                <div class="table-responsive" style="max-height: 400px; overflow: auto;">
+                    
+                    <div class="p-3 mb-3">
+                        <h5 class="mb-3">Statistiche Set</h5>
+                        
+                        <!-- CSV text -->
+                        <div class="mb-3">
+                            <button class="btn btn-success btn-sm mb-2" (click)="df_sets_text[$index] = generateCSV(df_sets[$index])">Genera CSV</button>
+                            <button class="btn btn-outline-primary btn-sm mb-2" (click)="copyCSV(df_sets_text[$index])" [disabled]="!df_sets_text[$index]">Copia CSV</button>
+                            <div class="form-floating">
+                                @if(!df_sets_text[$index]) {
+                                    <textarea #csv_sets_text class="form-control" style="height: 200px" [value]=" '' " readonly></textarea>
+                                } @else if(df_sets_text[$index]) {
+                                    <textarea #csv_sets_text class="form-control font-monospace" style="height: 200px; background-color: #f8f9fa;" [value]="df_sets_text[$index]" readonly></textarea>
+                                }
+                                <label for="csv_sets_text">Copia il testo che apparirà qui</label>
+                            </div>
+                        </div>
+                        
+                        <!-- table -->
+                                <!-- <div class="table-responsive" style="max-height: 400px; overflow: auto;">
                                     @if (df_sets && df_sets[$index]?.length > 0) {
                                         <table class="table table-sm table-bordered align-middle text-center stats-table">
                                             <thead>
@@ -209,7 +190,7 @@
                                             Caricamento statistiche set...
                                         </div>
                                     }
-                                </div>
+                                </div> -->
                             </div>
 
 
@@ -224,50 +205,61 @@
         @if(activeTab === 'players'){
             <div class="players-stats grid gap-4">
                 @if(players.length > 0){
-  @for(player of players; track $index){
-    <div class="border rounded-lg p-3 bg-gray-50 shadow-sm">
-      <h3 class="font-semibold">{{ player.name }} {{ player.surname }}</h3>
-      <p class="text-xs text-gray-500 mb-2">Ruolo: {{ player.role }}</p>
+                    @for(player of players; track player.id; let pIndex = $index){
+                        <div class="border rounded-lg p-3 bg-gray-50 shadow-sm">
+                        <h3 class="font-semibold">{{ player.name }} {{ player.surname }}</h3>
+                        <p class="text-xs text-gray-500 mb-2">Ruolo: {{ player.role }}</p>
 
-      @for(set of sets; track set.id; let sIndex = $index){
-        <div><strong>Set {{ set.number }}</strong></div>
-        <ul class="text-sm">
-          <li><strong>Punti:</strong></li>
-          <li><strong>Ace:</strong></li>
-          <li><strong>Muri:</strong></li>
-          <li><strong>Errori:</strong></li>
-        </ul>
+                        @for(set of sets; track set.id; let sIndex = $index){
 
-        <div class="table-responsive" style="max-height: 300px; overflow: auto;">
-          @if (df_set_players[$index] && df_set_players[$index][sIndex]?.length > 0) {
-      <table class="table table-sm table-bordered align-middle text-center stats-table">
-        <thead>
-          <tr>
-            <th class="sticky-col sticky-header bg-light">Esito</th>
-            @for (col of getColumns(df_set_players[$index][sIndex]).slice(1); track col) {
-              <th class="sticky-header bg-light">{{ col }}</th>
-            }
-          </tr>
-        </thead>
-        <tbody>
-          @for (row of df_set_players[$index][sIndex]; track row) {
-            <tr>
-              <td class="sticky-col bg-white">{{ row.outcome }}</td>
-              @for (col of getColumns(df_set_players[$index][sIndex]).slice(1); track col) {
-                <td>{{ row[col] === "nan" || row[col] === null || row[col] === "" ? "-" : row[col] }}</td>
-              }
-            </tr>
-          }
-        </tbody>
-      </table>
-    } @else {
-            <p class="text-gray-400 text-sm">Caricamento statistiche giocatore...</p>
-          }
-        </div>
-      }
-    </div>
-  }
-}
+                            <div><strong>Set {{ set.number }}</strong></div>
+                            
+
+                            <!-- CSV text -->
+                             <div class="mb-3">
+                                <button class="btn btn-success btn-sm mb-2" (click)="df_set_players_text[pIndex][sIndex] = generateCSV(df_set_players[pIndex][sIndex])">Genera CSV</button>
+                                <button class="btn btn-outline-primary btn-sm mb-2" (click)="copyCSV(df_set_players_text[pIndex][sIndex])" [disabled]="!df_set_players_text[pIndex][sIndex]">Copia CSV</button>
+                                <div class="form-floating">
+                                    @if(df_set_players_text[pIndex][sIndex] == null || df_set_players_text[pIndex][sIndex] == undefined) {
+                                        <textarea #csv_set_players_text class="form-control" style="height: 200px" [value]=" '' " readonly></textarea>
+                                    } @else if(df_set_players_text[pIndex][sIndex]) {
+                                        <textarea #csv_set_players_text class="form-control font-monospace" style="height: 200px; background-color: #f8f9fa;" [value]="df_set_players_text[pIndex][sIndex]" readonly></textarea>
+                                    }
+                                    <label for="csv_set_players_text">Copia il testo che apparirà qui</label>
+                                </div>
+                            </div>
+                            
+                            <!-- table -->
+                            <!-- <div class="table-responsive" style="max-height: 300px; overflow: auto;">
+                                @if (df_set_players[pIndex] != null  && df_set_players[pIndex][sIndex]?.length > 0) {
+                                    <table class="table table-sm table-bordered align-middle text-center stats-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="sticky-col sticky-header bg-light">Esito</th>
+                                                @for (col of getColumns(df_set_players[pIndex][sIndex]).slice(1); track col) {
+                                                <th class="sticky-header bg-light">{{ col }}</th>
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @for (row of df_set_players[pIndex][sIndex]; track row) {
+                                            <tr>
+                                                <td class="sticky-col bg-white">{{ row.outcome }}</td>
+                                                @for (col of getColumns(df_set_players[pIndex][sIndex]).slice(1); track col) {
+                                                    <td>{{ row[col] === "nan" || row[col] === null || row[col] === "" ? "-" : row[col] }}</td>
+                                                }
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                } @else {
+                                    <p class="text-gray-400 text-sm">Caricamento statistiche giocatore...</p>
+                                }
+                            </div> -->
+                        }
+                        </div>
+                    }
+                    }
 
             </div>
         }

@@ -28,16 +28,14 @@ export class MatchesDetailsComponent implements OnInit{
     id!: number
 
     df_match: any
-    df_sets_csv: any[] = []
-    df_set_players_csv: any[][] = []
+    df_sets: any[] = []
+    df_set_players: any[][] = [] // df list per the chosen player
 
     df_match_text: string = ''
     df_sets_text: string[] = []
     df_set_players_text: string[][] = []
 
 
-    df_sets: any[] = []
-    df_set_players: any[][] = [] // df list per the chosen player
     
   
     activeTab: 'match' | 'players' = 'match'
@@ -155,7 +153,8 @@ export class MatchesDetailsComponent implements OnInit{
                 next: (data) => {
                     this.df_sets[index] = data
                     this.df_sets_text[index] = this.generateCSV(data)
-                }
+                },
+                error: (err) => console.error('Errore caricamento setStats', err)
             })
             this.cdr.detectChanges()
         })
@@ -164,10 +163,18 @@ export class MatchesDetailsComponent implements OnInit{
     
     loadSetPlayerStats() {
         this.players.forEach((p, pIndex) => {
-            this.df_set_players[pIndex] = []
+            if(!this.df_set_players[pIndex])
+                this.df_set_players[pIndex] = []
+            if(!this.df_set_players_text[pIndex])
+                this.df_set_players_text[pIndex] = []
+
             this.sets.forEach((s, sIndex) => {
-                this.statsService.getSetPlayerStats(s.id, p).subscribe(df => {
-                    this.df_set_players[pIndex][sIndex] = df
+                this.statsService.getSetPlayerStats(s.id, p).subscribe({
+                    next: (df) => {
+                        this.df_set_players[pIndex][sIndex] = df
+                        this.df_set_players_text[pIndex][sIndex] = this.generateCSV(df)
+                    },
+                    error: (err) => console.error('Errore caricamento setPlayersStats', err)
                 })
             })
         })
@@ -176,12 +183,13 @@ export class MatchesDetailsComponent implements OnInit{
     
     
     generateCSV(df: any) {
-
-        const cols = Object.keys(df[0])
-        const header = cols.join(';')
-        const rows = df.map((r: any) => cols.map(c => r[c] ?? '').join(';'))
-
-        return [header, ...rows].join('\n')
+        if(df[0]){ 
+            const cols = Object.keys(df[0])
+            const header = cols.join(';')
+            const rows = df.map((r: any) => cols.map(c => r[c] ?? '').join(';'))
+            
+            return [header, ...rows].join('\n')
+        } else {return ''}
     }
 
 
