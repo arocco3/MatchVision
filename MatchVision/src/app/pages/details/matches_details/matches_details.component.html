@@ -43,7 +43,7 @@
                     </p>
 
                     <!-- Giocatori del set -->
-                    @if(set.players!.length > 0){
+                    <!-- @if(set.players!.length > 0){
                         <div class="players-list mt-2">
                             <h4 class="font-semibold text-gray-700 mb-1">Giocatori in campo:</h4>
                             <ul class="grid grid-cols-2 gap-2 text-sm">
@@ -58,7 +58,7 @@
                         </div>
                     }@else{
                     <p class="text-gray-400 text-sm">Nessun giocatore registrato per questo set.</p>
-                    }
+                    } -->
                 </div>
             }
         </div>
@@ -82,6 +82,9 @@
                 [class.active]="activeTab === 'players'" (click)="activeTab = 'players'">Giocatori</button>
         </div>
 
+
+        <!-- ------------------------------------------------------------------ -->
+
     <!-- Contenuto Tab -->
     <div class="tab-content">
         @if(activeTab === 'match'){
@@ -98,7 +101,7 @@
                         <button class="btn btn-success btn-sm mb-2" (click)="df_match_text = generateCSV(df_match)">Genera CSV</button>
                         <button class="btn btn-outline-primary btn-sm mb-2" (click)="copyCSV(df_match_text)" [disabled]="!df_match_text">Copia CSV</button>
                         <div class="form-floating">
-                            <textarea #csv_match_text class="form-control font-monospace" style="height: 200px; background-color: #f8f9fa;" [value]="df_match_text ? df_match_text : '' " readonly></textarea>
+                            <textarea id="csv_match_text" class="form-control font-monospace" style="height: 200px; background-color: #f8f9fa;" [value]="df_match_text ? df_match_text : '' " readonly></textarea>
                             <label for="csv_match_text">Copia il testo che apparirà qui</label>
                         </div>
                     </div>
@@ -137,6 +140,8 @@
                 </div>
             </div>
 
+        <!-- ------------------------------------------------------------------ -->
+
         <!-- stats devided by set -->
         <div class="card shadow p-2 mb-2">
             @for(set of sets; track $index){
@@ -152,11 +157,11 @@
                             <button class="btn btn-outline-primary btn-sm mb-2" (click)="copyCSV(df_sets_text[$index])" [disabled]="!df_sets_text[$index]">Copia CSV</button>
                             <div class="form-floating">
                                 @if(!df_sets_text[$index]) {
-                                    <textarea #csv_sets_text class="form-control" style="height: 200px" [value]=" '' " readonly></textarea>
+                                    <textarea [id]="'csv_sets_text_' + $index" class="form-control" style="height: 200px" [value]=" '' " readonly></textarea>
                                 } @else if(df_sets_text[$index]) {
-                                    <textarea #csv_sets_text class="form-control font-monospace" style="height: 200px; background-color: #f8f9fa;" [value]="df_sets_text[$index]" readonly></textarea>
+                                    <textarea [id]="'csv_sets_text_' + $index" class="form-control font-monospace" style="height: 200px; background-color: #f8f9fa;" [value]="df_sets_text[$index]" readonly></textarea>
                                 }
-                                <label for="csv_sets_text">Copia il testo che apparirà qui</label>
+                                <label [for]="'csv_sets_text_' + $index">Copia il testo che apparirà qui</label>
                             </div>
                         </div>
                         
@@ -199,8 +204,7 @@
             </div>
         }
 
-
-
+        <!-- ------------------------------------------------------------------ -->
 
         @if(activeTab === 'players'){
             <div class="players-stats grid gap-4">
@@ -221,11 +225,11 @@
                                 <button class="btn btn-outline-primary btn-sm mb-2" (click)="copyCSV(df_set_players_text[pIndex][sIndex])" [disabled]="!df_set_players_text[pIndex][sIndex]">Copia CSV</button>
                                 <div class="form-floating">
                                     @if(df_set_players_text[pIndex][sIndex] == null || df_set_players_text[pIndex][sIndex] == undefined) {
-                                        <textarea #csv_set_players_text class="form-control" style="height: 200px" [value]=" '' " readonly></textarea>
+                                        <textarea [id]="'csv_set_players_text_' + pIndex + '_' + sIndex" class="form-control" style="height: 200px" [value]=" '' " readonly></textarea>
                                     } @else if(df_set_players_text[pIndex][sIndex]) {
-                                        <textarea #csv_set_players_text class="form-control font-monospace" style="height: 200px; background-color: #f8f9fa;" [value]="df_set_players_text[pIndex][sIndex]" readonly></textarea>
+                                        <textarea [id]="'csv_set_players_text_' + pIndex + '_' + sIndex" class="form-control font-monospace" style="height: 200px; background-color: #f8f9fa;" [value]="df_set_players_text[pIndex][sIndex]" readonly></textarea>
                                     }
-                                    <label for="csv_set_players_text">Copia il testo che apparirà qui</label>
+                                    <label [for]="'csv_set_players_text_' + pIndex + '_' + sIndex">Copia il testo che apparirà qui</label>
                                 </div>
                             </div>
                             

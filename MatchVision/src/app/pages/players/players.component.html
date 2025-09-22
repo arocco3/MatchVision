@@ -23,25 +23,28 @@
 
         <!-- Players list -->
 
-        <table class="table table-striped align-middle fs-5" >
-            <thead>
+        <table class="table table-hover align-middle shadow-sm rounded-3 overflow-hidden" >
+            <thead class="table-dark">
                 <tr>
                     <th scope="col">Nome</th>
                     <th scope="col">Cognome</th>
                     <th scope="col">Ruolo</th>
+                    <th scope="col" class="text-center">Azioni</th>
                 </tr>
             </thead>        
-@for (player of filteredPlayers; track player.id){
             <tbody class="table-group-divider">
+@for (player of filteredPlayers; track player.id){
                 <tr>
-                    <td>{{player.name}}</td>
+                    <td class="fw-semibold">{{player.name}}</td>
                     <td>{{player.surname}}</td>
-                    <td>{{player.role}}</td>
-                    <td><a class="btn btn-primary" [routerLink]="['/player_details/', player.id]" routerLinkActive="router-link-active">Dettagli</a>  
-                        <button style="margin-left: 5%;" class="btn btn-secondary" (click)="deletePlayer(player.id)"><img src="/icons/delete-icon.png"></button></td>
+                    <td><span class="badge bg-secondary">{{player.role}}</span></td>
+                    <td class="text-center"><div class="d-flex justify-content-center gap-2"><a class="btn btn-sm btn-outline-primary" 
+                            [routerLink]="['/player_details/', player.id]" routerLinkActive="active">Dettagli</a>
+                            <button class="btn btn-sm btn-outline-danger" (click)="deletePlayer(player.id)" title="Elimina"><img src="/icons/delete-icon.png" alt="Elimina" width="18"></button></div>
+                    </td>
                 </tr>
-            </tbody>
-}
+            }
+        </tbody>
         </table>
 
         <!-- Button for modal -->
