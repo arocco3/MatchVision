@@ -40,6 +40,6 @@
 
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-outline-secondary confirm-btn" (click)="notifyNewTouch(); modal.close()">Conferma</button>
+		<button type="button" class="btn btn-outline-secondary confirm-btn" [disabled]="fundamental === '' || outcome === '' " (click)="notifyNewTouch(); modal.close()">Conferma</button>
 	</div>
 </ng-template>

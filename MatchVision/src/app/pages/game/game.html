@@ -54,14 +54,14 @@
             <div class="row col">
 
                 <!-- red/yellow cards -->
-                <div class="row col-2 cards-counters d-flex justify-content-center align-items-center">
+                <div class="col cards-counters d-flex justify-content-center align-items-center">
                     @if (this.y_card_counter > 0){
-                        <div class="col yellow-card-counter card-counter d-flex justify-content-center align-items-center">
+                        <div class="yellow-card-counter card-counter d-flex justify-content-center align-items-center">
                             <div>{{ this.y_card_counter }}</div>
                         </div>
                     }
                     @if (r_card_counter > 0){
-                        <div class="col red-card-counter card-counter d-flex justify-content-center align-items-center offset-1">
+                        <div class="red-card-counter card-counter d-flex justify-content-center align-items-center ">
                                 <div>{{ this.r_card_counter }}</div>   
                         </div>
                     }
@@ -142,7 +142,7 @@
             <button (click)="togglePos()" class="btn btn-outline-light btn-lg">CAMBIO CAMPO</button>
             <button (click)="endSet(); endSetClicked = !endSetClicked" [disabled]="endSetClicked" class="btn btn-outline-light btn-lg">FINE SET</button>
             <button (click)="startNewSet()" class="btn btn-outline-light btn-lg" [disabled]="!endSetClicked">NUOVO SET</button>
-            <button (click)="endMatch()" [routerLink]="['/']" class="btn btn-outline-light btn-lg">FINE MATCH</button>
+            <button [disabled]="!endSetClicked" (click)="endMatch()" [routerLink]="['/']" class="btn btn-outline-light btn-lg">FINE MATCH</button>
         </div>
 
 

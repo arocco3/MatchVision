@@ -181,12 +181,11 @@ export class GameComponent implements OnInit{
                 if(this.touches.length > 0){
                     this.touches.pop()
                     console.log('Ultimo tocco eliminato')
-                    this.cdr.detectChanges()
                     if(this.touches.length > 0){
                         this.last_touch_fundamental = this.touches.at(-1)?.fundamental
                         this.last_touch_id = this.touches.at(-1)?.id
-                        this.cdr.detectChanges()
                     }
+                    this.cdr.detectChanges()
                 }
             },
             error: (err) => console.error('Errore eliminazione ultimo tocco', err)

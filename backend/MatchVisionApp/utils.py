@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
 
 # DB PARAMS
-database="db_prova"
+database="MatchVisionDB"
 host="localhost"
 user="postgres"
 password="adminPostgres"
