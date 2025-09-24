@@ -132,6 +132,6 @@ def create_table_set_player(set_id, player_id):
     
     df_final = pd.concat([df_pivot, totals])
     
-    df_final = df_final.reset_index()
+    df_final = df_final.reset_index().rename(columns={"index": "Esito"})
     
     return df_final
