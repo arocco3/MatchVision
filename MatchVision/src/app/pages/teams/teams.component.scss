@@ -10,12 +10,15 @@ body{
 .card-h5, 
 .card-p,
 .card-a{
-    background-color: #f3c623;
+    // background-color: #0d6efd;
     color: #10375c;
+    // border-color: #10375c;
+    // border-width: 1px;
+    // border-style: solid;
 }
 
 .btn{
-    background-color: #eb8317;
+    background-color: #c2d302;
     border-color: #10375c;
     color: #10375c;
 }
@@ -30,19 +33,17 @@ body{
     bottom: 10%;
     right: 5rem;
     font-size: xx-large;
-    border-radius: 50%;
 }
 
 .btn-floating:hover{
     cursor: pointer;
-    background-color:#d76f00;
+    background-color:#eaff00;
 }
 
 .manage-teams {
     width: auto;
     right: 10rem;
     font-size: large;
-    border-radius: 50px;
 }
 
 .teams-list {

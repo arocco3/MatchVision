@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { PlayersService } from '../../services/playersService';
-import { NewPlayerModalComponent } from './newPlayerModal/newPlayerModal.component';
-import { FormsModule } from '@angular/forms';
-import { Player } from '../../Models/Player';
-import { GlobalService } from '../../services/globalService';
+import { Component, OnInit, ViewChild } from '@angular/core'
+import { RouterModule } from '@angular/router'
+import { PlayersService } from '../../services/playersService'
+import { NewPlayerModalComponent } from './newPlayerModal/newPlayerModal.component'
+import { FormsModule } from '@angular/forms'
+import { Player } from '../../Models/Player'
+import { GlobalService } from '../../services/globalService'
 
 @Component({
   selector: 'app-players',

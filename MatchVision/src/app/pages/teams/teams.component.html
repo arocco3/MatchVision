@@ -26,7 +26,7 @@
 
             @for (team of filteredTeams; track team.id){
                 <div class="col">    
-                    <div class="card mb-3">
+                    <div class="card shadow">
                         <button [ngClass]="this.showDeleteButtons ? 'btn-del-team': 'btn-del-team-hidden'" (click)="deleteTeam(team.id)">—</button>
                         <div class="card-body">
                             <h5 class="card-title">{{team.name}}</h5>

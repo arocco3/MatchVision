@@ -30,7 +30,6 @@
                     <button [ngClass]="this.showDeleteButtons ? 'btn-del-match': 'btn-del-match-hidden'" (click)="deleteMatch(match.id)">—</button>
                     <div class="card-body">
                         <h5 class="card-title">{{ match.name }}</h5>
-                        <p class="card-text">{{ match.result }}</p>
                         <p class="card-text"><small class="text-muted">{{ globalService.transformDateFormat(match.timestamp) }}</small></p>
                         <a [routerLink]="['/match_details/', match.id]" routerLinkActive="router-link-active" class="btn btn-primary">Dettagli</a>
                     </div>
