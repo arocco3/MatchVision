@@ -1,0 +1,44 @@
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 0 20px;
+    background-color: #253f60;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+
+    .logout-btn {
+        background: transparent;
+        border: none;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        img {
+            height: 24px;
+        }
+    }
+
+    .app-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        text-align: center;
+        flex-grow: 1;
+    } &:hover{
+        cursor: pointer;
+    }
+}

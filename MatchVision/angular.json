@@ -27,7 +27,9 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.scss",
+              "src/app/app.scss"
             ]
           },
           "configurations": {
@@ -81,11 +83,16 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/app/app.scss"
             ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "3d98f52e-8b5e-4249-9739-035a8dc6df0a"
   }
 }

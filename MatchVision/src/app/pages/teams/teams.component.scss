@@ -1,0 +1,68 @@
+body{
+    color: #10375c;
+}
+
+.container{
+    background-color: #f4f6ff
+}
+
+.card, 
+.card-h5, 
+.card-p,
+.card-a{
+    // background-color: #0d6efd;
+    color: #10375c;
+    // border-color: #10375c;
+    // border-width: 1px;
+    // border-style: solid;
+}
+
+.btn{
+    background-color: #c2d302;
+    border-color: #10375c;
+    color: #10375c;
+}
+
+// Add button
+.btn-floating{
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
+    bottom: 10%;
+    right: 5rem;
+    font-size: xx-large;
+}
+
+.btn-floating:hover{
+    cursor: pointer;
+    background-color:#eaff00;
+}
+
+.manage-teams {
+    width: auto;
+    right: 10rem;
+    font-size: large;
+}
+
+.teams-list {
+    margin-bottom: 8%;
+}
+
+.btn-del-team {
+    position: absolute;
+    border: none;
+    background-color: rgb(255, 0, 34);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    right: 0;
+    top: 0;
+    transform: translate(50%, -50%);
+}
+
+.btn-del-team-hidden {
+    display: none;
+}

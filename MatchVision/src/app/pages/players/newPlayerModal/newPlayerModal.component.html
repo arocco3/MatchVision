@@ -1,0 +1,69 @@
+    <!-- Modal -->
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Nuovo giocatore</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Dismiss click')"></button>
+  </div>
+
+  <div class="modal-body">
+    <form #playerForm="ngForm" (ngSubmit)="savePlayer(playerForm, modal)">
+      
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name" 
+          class="form-control" 
+          required
+          [(ngModel)]="newPlayer.name">
+      </div>
+
+      <div class="mb-3">
+        <label for="surname" class="form-label">Cognome</label>
+        <input 
+          type="text" 
+          id="surname" 
+          name="surname" 
+          class="form-control" 
+          required
+          [(ngModel)]="newPlayer.surname">
+      </div>
+
+      <div class="mb-3">
+        <label for="number" class="form-label">Numero</label>
+        <input 
+          type="number" 
+          id="number" 
+          name="number" 
+          class="form-control" 
+          min="1"
+          required
+          [(ngModel)]="newPlayer.number">
+      </div>
+
+      <div class="mb-3">
+        <label for="role" class="form-label">Ruolo</label>
+        <select 
+          id="role" 
+          name="role" 
+          class="form-select" 
+          required
+          [(ngModel)]="newPlayer.role">
+          <option value="" disabled>Seleziona ruolo</option>
+          <option value="Alzatore">Alzatore</option>
+          <option value="Lato">Lato</option>
+          <option value="Centrale">Centrale</option>
+          <option value="Libero">Libero</option>
+          <option value="Opposto">Opposto</option>
+        </select>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="modal.dismiss('Cancel click')">Annulla</button>
+        <button type="submit" class="btn btn-primary" [disabled]="playerForm.invalid">Salva</button>
+      </div>
+
+    </form>
+  </div>
+</ng-template>

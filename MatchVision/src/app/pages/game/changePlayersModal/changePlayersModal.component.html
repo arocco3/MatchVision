@@ -1,0 +1,54 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<div><h4 class="modal-title" id="modal-change-players">Cambio giocatori</h4></div>
+        <h5>Seleziona 1 o 2 giocatori per parte per cambiare la formazione o effetturare un cambio</h5>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+	</div>
+	<div class="modal-body row">
+		
+        <div class="starting-players col">
+            <h3>In campo</h3>
+            <div class="exiting-players">
+                @for (player of starting_players; track $index){
+                    <div class="list"><button class="change-btn btn btn-outline-secondary"
+                        [class.btn-dark]="isExitingPlayerSelected(player)"
+                        [class.btn-outline-primary]="!isExitingPlayerSelected(player)"
+                        (click)="(this.exitingPlayers.push(player))">{{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
+                }
+            </div>
+        </div>
+
+        <div class="bench-players col">
+            <h3>In panchina</h3>
+            <div class="entering-players">
+                @for (player of bench_players; track $index){
+                    <div class="list"><button class="change-btn btn btn-outline-secondary" 
+                        [class.btn-dark]="isEnteringPlayerSelected(player)"
+                        [class.btn-outline-primary]="!isEnteringPlayerSelected(player)"
+                        (click)="this.enteringPlayers.push(player); this.changePlayersOccurring = true">
+                        {{ player.number }} | {{ player.name }} {{ player.surname }}</button></div>
+                }
+            </div>
+        </div>
+
+        <div class="list" style="padding: 0;">
+            <span class="placeholder col-11 placeholder-xs" style="margin: 2%;"></span>
+        </div>
+
+        <h3>Liberi</h3>
+        <div class="row liberos">
+            <div class="libero col-5 list">
+                <button class="change-btn btn btn-outline-secondary">{{ libero?.number }} | {{ libero?.name }} {{ libero?.surname }}</button>
+            </div>
+            <!-- swap image --><div class="col-2 list"><button class="btn"><img src="/icons/swap-icon.png" alt="Scambia liberi" (click)="changeLiberos()"></button></div>
+            <div class="bench-libero col-5 list">
+                <button class="change-btn btn btn-outline-secondary">{{ bench_libero?.number }} | {{ bench_libero?.name }} {{ bench_libero?.surname }}</button>
+            </div>
+        </div>
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary btn-cancel" (click)="modal.close(); changePlayersOccurring = false">Annulla</button>
+		<button type="button" class="btn btn-outline-secondary btn-confirm" (click)="modal.close(); changePlayersOccurring ? changePlayers() : modal.close()">Conferma</button>
+	</div>
+</ng-template>

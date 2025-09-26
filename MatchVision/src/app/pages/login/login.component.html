@@ -1,0 +1,24 @@
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <form>
+        <!-- email -->
+        <div class="mb-3">
+          <label for="inputEmail" class="form-label">Email</label>
+          <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp">
+          <div id="emailHelp" class="form-text">Non la condivideremo con nessuno.</div>
+        </div>
+        <!-- password -->
+        <div class="mb-3">
+          <label for="inputPassword" class="form-label">Password</label>
+          <input type="password" class="form-control" id="inputPassword">
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <button type="submit" class="btn btn-primary">Login</button>
+          <a [routerLink]="['/register']" class="text-decoration-none pt-4">Non hai un account? Registrati</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

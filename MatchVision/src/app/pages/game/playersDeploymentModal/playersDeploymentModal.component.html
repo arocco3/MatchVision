@@ -1,0 +1,64 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-players-deployment">Schieramento giocatori</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+	</div>
+	<div class="modal-body row">
+		
+
+
+<div class="player-selection-section mb-4">
+        <h5>Seleziona i 6 giocatori titolari:</h5>
+        <div class="d-flex flex-wrap gap-2">
+            @for(player of allPlayers; track player.id){
+                <button class="btn player-btn"
+                    [class.btn-dark]="isStartingPlayerSelected(player)"
+                    [class.btn-outline-primary]="!isStartingPlayerSelected(player)"
+                    [disabled]="startingPlayers.length >= 6 && !isStartingPlayerSelected(player)"
+                    (click)="toggleStartingPlayer(player)">
+                    {{ player.number }} | {{ player.name }} {{ player.surname }}
+                </button>
+            }
+        </div>
+    </div>
+
+    <div class="player-selection-section mb-4" [class.disabled-section]="startingPlayers.length < 6">
+        <hr>
+        <h5>Seleziona il libero (opzionale):</h5>
+        <div class="d-flex flex-wrap gap-2">
+            
+            @for(player of availablePlayersForLibero; track player.id){
+                <button class="btn player-btn"
+                    [class.btn-dark]="isLiberoSelected(player)"
+                    [class.btn-outline-secondary]="!isLiberoSelected(player)"
+                    [disabled]="libero && !isLiberoSelected(player)"
+                    (click)="toggleLibero(player)">
+                    {{ player.number }} | {{ player.name }} {{ player.surname }}
+                </button>
+            }   
+        </div>
+    </div>
+
+    <div class="player-selection-section" [class.disabled-section]="startingPlayers.length < 6">
+        <hr>
+        <h5>Seleziona il libero di riserva (opzionale):</h5>
+        <div class="d-flex flex-wrap gap-2">
+            @for(player of availablePlayersForBench; track player.id){
+                <button class="btn player-btn"
+                    [class.btn-dark]="isBenchLiberoSelected(player)"
+                    [class.btn-outline-secondary]="!isBenchLiberoSelected(player)"
+                    [disabled]="benchLibero && !isBenchLiberoSelected(player)"
+                    (click)="toggleBenchLibero(player)">
+                    {{ player.number }} | {{ player.name }} {{ player.surname }}
+                </button>
+            }
+        </div>
+    </div>
+
+
+        
+    </div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary confirm-btn" (click)="confirm(); modal.close()">Conferma</button>
+	</div>
+</ng-template>

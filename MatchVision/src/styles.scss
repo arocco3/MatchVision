@@ -1,1 +1,22 @@
-/* You can add global styles to this file, and also import other style files */
+// Angular Material core
+@use '@angular/material' as mat;
+
+// Includi i core styles di Angular Material
+@include mat.core();
+
+@import 'bootstrap/scss/bootstrap';
+
+// Stili globali opzionali
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+// Esempio: utility globale per centratura contenuti
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

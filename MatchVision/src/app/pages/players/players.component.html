@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giocatori</title>
+</head>
+<body>
+
+    <div class="container py-5 mb-4">
+        <h1 class="mb-4 text-center">Giocatori</h1>
+
+        <div class="searchForPlayer mb-4">
+            <div class="row">
+                <div class="col-4 mx-auto">
+                    <div class="input-group mx-auto">
+                        <input type="text" class="form-control" placeholder="Cerca tra i giocatori..." aria-label="Cerca tra i giocatori" aria-describedby="button-addon2" [(ngModel)]="searchText">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Cerca</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Players list -->
+
+        <table class="table table-hover align-middle shadow-sm rounded-3 overflow-hidden" >
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Cognome</th>
+                    <th scope="col">Ruolo</th>
+                    <th scope="col" class="text-center">Azioni</th>
+                </tr>
+            </thead>        
+            <tbody class="table-group-divider">
+@for (player of filteredPlayers; track player.id){
+                <tr>
+                    <td class="fw-semibold">{{player.name}}</td>
+                    <td>{{player.surname}}</td>
+                    <td><span class="badge bg-secondary">{{player.role}}</span></td>
+                    <td class="text-center"><div class="d-flex justify-content-center gap-2"><a class="btn btn-sm btn-outline-primary" 
+                            [routerLink]="['/player_details/', player.id]" routerLinkActive="active">Dettagli</a>
+                            <button class="btn btn-sm btn-outline-danger" (click)="deletePlayer(player.id)" title="Elimina"><img src="/icons/delete-icon.png" alt="Elimina" width="18"></button></div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        </table>
+
+        <!-- Button for modal -->
+        <button type="button" class="btn btn-floating" (click)="openNewPlayerModal()" data-bs-toggle="modal" data-bs-target="#newPlayerModal">+</button>
+
+            <!-- Inserimento modale -->
+            <app-new-player-modal
+                #newPlayerModal 
+                (playerCreated)="this.globalService.loadPlayers()">
+            </app-new-player-modal>
+        
+    </div>
+
+</body>
+</html>

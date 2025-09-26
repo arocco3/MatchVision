@@ -1,0 +1,31 @@
+body {
+    background: #f9f9fb;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
+}
+.thankyou-container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+h1 {
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #2c3e50;
+}
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color: #495057;
+}
+p {
+    margin-bottom: 1rem;
+}
+.name {
+    font-weight: 600;
+    color: #00438a;
+}

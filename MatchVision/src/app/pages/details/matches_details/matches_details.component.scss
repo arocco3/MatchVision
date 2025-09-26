@@ -1,0 +1,83 @@
+.match-details {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.card {
+    border-radius: 12px;
+    background: #fff;
+}
+
+.set-item {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.set-item:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.players-list ul li {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.players-list ul li:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.tabs {
+    .tab-btn {
+        flex: 1;
+        padding: 10px;
+        text-align: center;
+        font-weight: 500;
+        cursor: pointer;
+        background: #f9fafb;
+        border: none;
+        border-bottom: 2px solid transparent;
+        transition: 0.2s;
+
+        &.active {
+        border-color: #3b82f6;
+        color: #3b82f6;
+        font-weight: 600;
+        }
+
+        &:hover {
+        background: #f3f4f6;
+        }
+    }
+}
+
+.tab-content {
+    padding: 10px 0;
+}
+
+// for the table
+.stats-table {
+  border-collapse: separate;
+  border-spacing: 0;
+
+  th, td {
+    white-space: nowrap;
+    padding: 4px 8px;
+  }
+
+  .sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .sticky-col {
+    position: sticky;
+    left: 0;
+    z-index: 9;
+  }
+
+  .sticky-col:nth-child(2) {
+    left: 100px;
+    z-index: 9;
+  }
+}

@@ -1,0 +1,43 @@
+body{
+    color: #10375c;
+}
+
+.container{
+    background-color: #f4f6ff
+}
+
+.btn{
+    background-color: #c2d302;
+    border-color: #10375c;
+    color: #10375c;
+}
+
+.btn-secondary{
+    background-color: rgb(228, 0, 0);
+}
+
+// Add button
+.btn-floating{
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    padding-top: 0;
+    padding-bottom: 0;
+    bottom: 5%;
+    right: 5rem;
+    font-size: xx-large;
+    border-radius: 50%;
+}
+
+.btn-floating:hover{
+    cursor: pointer;
+    background-color:#d9ed01;
+}
+
+.badge {
+    font-size: medium;
+}
+
+.btn-outline-danger {
+    background-color: #dc3545;
+}

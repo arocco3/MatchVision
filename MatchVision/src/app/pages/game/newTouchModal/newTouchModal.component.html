@@ -1,0 +1,45 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+        
+		<h4 class="modal-title" id="modal-new-touch">Fondamentale per {{ this.player?.name }} {{ this.player?.surname }}</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.close()"></button>
+	</div>
+	<div class="modal-body row">
+		
+        <div class="col touch-type">
+            <div class="btn-group-vertical btn-group-lg" role="group" aria-label="Touches list">
+                <input type="radio" class="btn-check" name="touches-radio" id="serve-btn" value="Battuta" [(ngModel)]="fundamental">
+                <label class="btn btn-outline-secondary" for="serve-btn">Battuta</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="receive-btn" value="Ricezione" [(ngModel)]="fundamental">
+                <label class="btn btn-outline-secondary" for="receive-btn">Ricezione</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="defense-btn" value="Difesa" [(ngModel)]="fundamental">
+                <label class="btn btn-outline-secondary" for="defense-btn">Difesa</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="set-btn" value="Alzata" [(ngModel)]="fundamental">
+                <label class="btn btn-outline-secondary" for="set-btn">Alzata</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="spike-btn" value="Attacco" [(ngModel)]="fundamental">
+                <label class="btn btn-outline-secondary" for="spike-btn">Attacco</label>
+                <input type="radio" class="btn-check" name="touches-radio" id="block-btn" value="Muro" [(ngModel)]="fundamental">
+                <label class="btn btn-outline-secondary" for="block-btn">Muro</label>
+            </div>
+        </div>
+
+        <div class="col touch-quality">
+            <div class="btn-group-vertical btn-group-lg" role="group" aria-label="Quality touches list">
+                <input type="radio" class="btn-check" name="quality-radio" id="++-btn" value="++" [(ngModel)]="outcome">
+                <label class="btn btn-outline-secondary" style="background-color: rgb(0, 191, 0);" for="++-btn">++</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="+-btn" value="+" [(ngModel)]="outcome">
+                <label class="btn btn-outline-secondary bg-primary" for="+-btn">+</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="!-btn" value="!" [(ngModel)]="outcome">
+                <label class="btn btn-outline-secondary" for="!-btn">!</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="—-btn" value="—" [(ngModel)]="outcome">
+                <label class="btn btn-outline-secondary bg-warning" for="—-btn">—</label>
+                <input type="radio" class="btn-check" name="quality-radio" id="— —-btn" value="— —" [(ngModel)]="outcome">
+                <label class="btn btn-outline-secondary bg-danger" for="— —-btn">— —</label>
+            </div>
+        </div>
+
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary confirm-btn" [disabled]="fundamental === '' || outcome === '' " (click)="notifyNewTouch(); modal.close()">Conferma</button>
+	</div>
+</ng-template>

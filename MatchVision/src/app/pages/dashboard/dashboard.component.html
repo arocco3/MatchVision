@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard App</title>
+</head>
+<body>
+
+  <!-- Sidebar -->
+    <div id="sidebar">
+        <div class="text-center mb-4">
+            <h4>Menu</h4>
+        </div>
+        <div class="list-group list-group-flush">
+            <a [routerLink]="['/login']" routerLinkActive="router-link-active" class="list-group-item"><img src="/icons/profile-icon.png"> Profilo</a>
+            <a [routerLink]="['/matches']" routerLinkActive="router-link-active" class="list-group-item"><img src="/icons/match-icon.png"> Partite</a>
+            <a [routerLink]="['/players']" routerLinkActive="router-link-active" class="list-group-item"><img src="/icons/player-icon.png"> Giocatori</a>
+            <a [routerLink]="['/teams']" routerLinkActive="router-link-active" class="list-group-item"><img src="/icons/team-icon.png"> Squadre</a>
+            <a [routerLink]="['/statistics']" routerLinkActive="router-link-active" class="list-group-item"><img src="/icons/stats-icon.png"> Stats</a>
+            <a [routerLink]="['/login']" routerLinkActive="router-link-active" class="list-group-item mt-4"><img src="/icons/logout-icon.png"> Logout</a>
+        </div>
+    </div>
+
+    <div class="container-dashboard">
+        <div class="row g-4">
+
+        <!-- Card 1: Squadre -->
+            <div class="col-md-4">
+                <div class="card card-dashboard h-100 p-3 d-flex align-items-center" [routerLink]="['/teams']" routerLinkActive="router-link-active">
+                    <img src="/icons/team-icon-large.png" alt="Squadre" class="mb-3">
+                    <div class="text-center">
+                        <h4>Le tue squadre</h4>
+                        <p class="fs-4">{{ globalService.allTeams().length }}</p>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Card 2: Giocatori -->
+        <div class="col-md-4">
+            <div class="card card-dashboard h-100 p-3 d-flex align-items-center" [routerLink]="['/players']" routerLinkActive="router-link-active">
+                <img src="/icons/player-icon-large.png" alt="Giocatori" class="mb-3">
+                <div class="text-center">
+                    <h4>I tuoi giocatori</h4>
+                    <p class="fs-4">{{ globalService.allPlayers().length }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Partite -->
+            <div class="col-md-4">
+                <div class="card card-dashboard h-100 p-3 d-flex align-items-center" [routerLink]="['/matches']" routerLinkActive="router-link-active">
+                    <img src="/icons/match-icon-large.png" alt="Partite" class="mb-3">
+                    <div class="text-center">
+                        <h4>Le tue partite</h4>
+                        <p class="fs-4">{{ globalService.allMatches().length }}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    <!-- Action Buttons -->
+        <div class="row mt-5">
+            <div class="col-md-6 mx-auto action-buttons">
+                <button class="btn btn-primary btn-lg w-100 new-btn" (click)="openNewMatchModal()">
+                    <img class="add-icon" src="/icons/add-icon.png"> Nuova partita
+                </button>
+                <button class="btn btn-success btn-lg w-100 new-btn" (click)="openNewTeamModal()">
+                    <img class="add-icon" src="/icons/add-icon.png"> Crea nuova squadra
+                </button>
+                <button class="btn btn-lg w-100 new-btn new-player-btn" (click)="openNewPlayerModal()">
+                    <img class="add-icon" src="/icons/add-icon.png"> Aggiungi giocatore
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <app-new-match-modal></app-new-match-modal>
+    <app-new-team-modal></app-new-team-modal>
+    <app-new-player-modal></app-new-player-modal>
+
+</body>
+</html>
+

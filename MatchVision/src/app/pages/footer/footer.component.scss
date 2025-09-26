@@ -1,0 +1,18 @@
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #253f60;
+    z-index: 99;
+
+    .text {
+        color: #e8e8e8;
+        font-size: 0.9rem;
+    }
+
+    .name {
+        font-weight:100;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
